@@ -1,0 +1,18 @@
+{
+  "name": "snapod-main",
+  "productName": "Snapod",
+  "version": "0.0.1",
+  "description": "Podcasts Self-hosting Solution",
+  "main": "./main.prod.js",
+  "author": {
+    "name": "TonyHe",
+    "email": "tony.hlp@hotmail.com",
+    "url": "https://www.ouorz.com"
+  },
+  "scripts": {
+    "electron-rebuild": "node -r ../.erb/scripts/BabelRegister.js ../.erb/scripts/ElectronRebuild.js",
+    "postinstall": "yarn electron-rebuild"
+  },
+  "license": "MIT",
+  "dependencies": {}
+}
