@@ -10,7 +10,7 @@ export default function Head({
 }) {
   const { head, setHead } = React.useContext(HeadContext);
   React.useEffect(() => {
-    if (head.title !== title || head.description !== description) {
+    if (head && (head.title !== title || head.description !== description)) {
       setHead({
         title,
         description,

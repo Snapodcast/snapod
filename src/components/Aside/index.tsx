@@ -42,10 +42,7 @@ export default function Aside() {
     storage.setDataPath(rootPath);
 
     // Get current main data file
-    storage.get('snapod_main_data', function (
-      error,
-      data: { podcasts: Podcast[] }
-    ) {
+    storage.get('snapod_main_data', (error, data: { podcasts: Podcast[] }) => {
       if (error) throw error;
       setPodcasts(data.podcasts);
     });

@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import { rootPath } from 'electron-root-path';
 
 import Header from './components/Header';
@@ -37,7 +32,7 @@ export default function App() {
   const headValue = React.useMemo(() => ({ head, setHead }), [head]);
 
   return (
-    <Router>
+    <BrowserRouter>
       <PodcastContextProvider value={podcastValue}>
         <div className="flex w-full h-full">
           <Aside />
@@ -45,25 +40,23 @@ export default function App() {
             <HeadContextProvider value={headValue}>
               <Header />
               <section className="body no-drag p-4">
-                <Switch>
-                  <StorageContextProvider value={storageValue}>
-                    <Route exact path="">
-                      <Redirect to="/start" />
-                    </Route>
-                    <Route exact path="/start" component={Start} />
-                    <Route exact path="/new" component={New} />
-                    <Route exact path="/import" component={Import} />
-                    <Route exact path="/podcast" component={Podcast} />
-                    <Route exact path="/episodes" component={Episodes} />
-                    <Route exact path="/publish" component={Publish} />
-                    <Route exact path="/hosting" component={Hosting} />
-                  </StorageContextProvider>
-                </Switch>
+                <StorageContextProvider value={storageValue}>
+                  <Route exact path="">
+                    <Redirect to="/start" />
+                  </Route>
+                  <Route exact path="/start" component={Start} />
+                  <Route exact path="/new" component={New} />
+                  <Route exact path="/import" component={Import} />
+                  <Route exact path="/podcast" component={Podcast} />
+                  <Route exact path="/episodes" component={Episodes} />
+                  <Route exact path="/publish" component={Publish} />
+                  <Route exact path="/hosting" component={Hosting} />
+                </StorageContextProvider>
               </section>
             </HeadContextProvider>
           </main>
         </div>
       </PodcastContextProvider>
-    </Router>
+    </BrowserRouter>
   );
 }
