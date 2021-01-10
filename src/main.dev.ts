@@ -11,7 +11,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -79,11 +79,22 @@ const createWindow = async () => {
     vibrancy: 'sidebar',
     transparent: true,
     webPreferences: {
+      webSecurity: false,
       nodeIntegration: true,
+      enableRemoteModule: true,
     },
   });
 
   mainWindow.loadURL(`file://${__dirname}/index.html`);
+
+  mainWindow.webContents.once('dom-ready', () => {
+    if (
+      process.env.NODE_ENV === 'development' ||
+      process.env.DEBUG_PROD === 'true'
+    ) {
+      mainWindow.webContents.openDevTools({ mode: 'undocked' });
+    }
+  });
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
@@ -96,7 +107,6 @@ const createWindow = async () => {
     } else {
       mainWindow.show();
       mainWindow.focus();
-      mainWindow.webContents.openDevTools({ mode: 'undocked' });
     }
   });
 
@@ -155,4 +165,12 @@ ipcMain.on('window-full', () => {
 // Close window
 ipcMain.on('window-close', () => {
   if (mainWindow !== null) mainWindow.close();
+});
+
+// Select directory
+ipcMain.on('select-dir', async (event) => {
+  const result = await dialog.showOpenDialog(mainWindow, {
+    properties: ['openDirectory'],
+  });
+  event.returnValue = result.filePaths;
 });

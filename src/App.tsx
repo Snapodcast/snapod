@@ -1,30 +1,69 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
+import { rootPath } from 'electron-root-path';
+
 import Header from './components/Header';
 import Aside from './components/Aside';
-import Podcast from './Podcast';
-import Episodes from './Episodes';
-import Publish from './Publish';
+import Podcast from './pages/Options/Podcast';
+import Episodes from './pages/Options/Episodes';
+import Publish from './pages/Options/Publish';
+import Start from './pages/Start';
+import New from './pages/Create/New';
+import Import from './pages/Create/Import';
+import Hosting from './pages/Settings/Hosting';
+
+import { StorageContextProvider } from './lib/Context/storage';
+import { HeadContextProvider } from './lib/Context/head';
+import { PodcastContextProvider } from './lib/Context/podcast';
 
 export default function App() {
+  const [podcast, setPodcast] = React.useState<string>('none');
+  const podcastValue = { podcast, setPodcast };
+
+  const [storageDir, setStorageDir] = React.useState<string>(rootPath);
+  const storageValue = React.useMemo(() => ({ storageDir, setStorageDir }), [
+    storageDir,
+  ]);
+
+  const [head, setHead] = React.useState<any>({
+    title: 'Snapod',
+    description: 'Podcasts Self-hosting Solution',
+  });
+  const headValue = React.useMemo(() => ({ head, setHead }), [head]);
+
   return (
     <Router>
-      <div className="flex w-full h-full">
-        <Aside />
-        <main className="main h-full bg-white">
-          <Header />
-          <section className="body no-drag">
-            <Switch>
-              <Route exact path="/">
-                <p>home</p>
-              </Route>
-              <Route exact path="/podcast" component={Podcast} />
-              <Route exact path="/episodes" component={Episodes} />
-              <Route exact path="/publish" component={Publish} />
-            </Switch>
-          </section>
-        </main>
-      </div>
+      <PodcastContextProvider value={podcastValue}>
+        <div className="flex w-full h-full">
+          <Aside />
+          <main className="main h-full bg-white">
+            <HeadContextProvider value={headValue}>
+              <Header />
+              <section className="body no-drag p-4">
+                <Switch>
+                  <StorageContextProvider value={storageValue}>
+                    <Route exact path="">
+                      <Redirect to="/start" />
+                    </Route>
+                    <Route exact path="/start" component={Start} />
+                    <Route exact path="/new" component={New} />
+                    <Route exact path="/import" component={Import} />
+                    <Route exact path="/podcast" component={Podcast} />
+                    <Route exact path="/episodes" component={Episodes} />
+                    <Route exact path="/publish" component={Publish} />
+                    <Route exact path="/hosting" component={Hosting} />
+                  </StorageContextProvider>
+                </Switch>
+              </section>
+            </HeadContextProvider>
+          </main>
+        </div>
+      </PodcastContextProvider>
     </Router>
   );
 }

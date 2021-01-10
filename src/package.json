@@ -13,6 +13,10 @@
     "electron-rebuild": "node -r ../.erb/scripts/BabelRegister.js ../.erb/scripts/ElectronRebuild.js",
     "postinstall": "yarn electron-rebuild"
   },
-  "license": "MIT",
-  "dependencies": {}
+  "license": "GPL-3.0-only",
+  "dependencies": {
+    "electron-json-storage": "^4.3.0",
+    "md5": "^2.3.0"
+  },
+  "devDependencies": {}
 }

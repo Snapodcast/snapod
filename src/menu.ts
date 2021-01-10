@@ -61,8 +61,6 @@ export default class MenuBuilder {
           selector: 'orderFrontStandardAboutPanel:',
         },
         { type: 'separator' },
-        { label: 'Services', submenu: [] },
-        { type: 'separator' },
         {
           label: 'Hide Snapod',
           accelerator: 'Command+H',
@@ -103,13 +101,6 @@ export default class MenuBuilder {
     const subMenuViewDev: MenuItemConstructorOptions = {
       label: 'View',
       submenu: [
-        {
-          label: 'Reload',
-          accelerator: 'Command+R',
-          click: () => {
-            this.mainWindow.webContents.reload();
-          },
-        },
         {
           label: 'Toggle Full Screen',
           accelerator: 'Ctrl+Command+F',

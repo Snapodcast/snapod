@@ -6,8 +6,12 @@ import path from 'path';
 import webpack from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import { merge } from 'webpack-merge';
+import {
+  BundleAnalyzerPlugin
+} from 'webpack-bundle-analyzer';
+import {
+  merge
+} from 'webpack-merge';
 import TerserPlugin from 'terser-webpack-plugin';
 import baseConfig from './webpack.config.base';
 import CheckNodeEnv from '../scripts/CheckNodeEnv';
@@ -44,8 +48,7 @@ export default merge(baseConfig, {
       // Extract all .global.css to style.css as is
       {
         test: /\.global\.css$/,
-        use: [
-          {
+        use: [{
             loader: MiniCssExtractPlugin.loader,
           },
           {
@@ -54,13 +57,21 @@ export default merge(baseConfig, {
               sourceMap: true,
             },
           },
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                ident: 'postcss',
+                plugins: [require('tailwindcss'), require('autoprefixer')]
+              }
+            }
+          }
         ],
       },
       // Pipe other styles through css modules and append to style.css
       {
         test: /^((?!\.global).)*\.css$/,
-        use: [
-          {
+        use: [{
             loader: MiniCssExtractPlugin.loader,
           },
           {
@@ -77,8 +88,7 @@ export default merge(baseConfig, {
       // Add SASS support  - compile all .global.scss files and pipe it to style.css
       {
         test: /\.global\.(scss|sass)$/,
-        use: [
-          {
+        use: [{
             loader: MiniCssExtractPlugin.loader,
           },
           {
@@ -99,8 +109,7 @@ export default merge(baseConfig, {
       // Add SASS support  - compile all other .scss files and pipe it to style.css
       {
         test: /^((?!\.global).)*\.(scss|sass)$/,
-        use: [
-          {
+        use: [{
             loader: MiniCssExtractPlugin.loader,
           },
           {
@@ -179,20 +188,19 @@ export default merge(baseConfig, {
   },
 
   optimization: {
-    minimizer:
-      [
-          new TerserPlugin({
-            parallel: true,
-          }),
-          new OptimizeCSSAssetsPlugin({
-            cssProcessorOptions: {
-              map: {
-                inline: false,
-                annotation: true,
-              },
-            },
-          }),
-        ],
+    minimizer: [
+      new TerserPlugin({
+        parallel: true,
+      }),
+      new OptimizeCSSAssetsPlugin({
+        cssProcessorOptions: {
+          map: {
+            inline: false,
+            annotation: true,
+          },
+        },
+      }),
+    ],
   },
 
   plugins: [
@@ -215,8 +223,7 @@ export default merge(baseConfig, {
     }),
 
     new BundleAnalyzerPlugin({
-      analyzerMode:
-        process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
+      analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
       openAnalyzer: process.env.OPEN_ANALYZER === 'true',
     }),
   ],
