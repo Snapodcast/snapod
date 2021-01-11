@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
-import { rootPath } from 'electron-root-path';
+import rootPath from './utilities/path';
+import usePodcasts, { refetchPodcasts } from './lib/DataFetching/podcasts';
 
 import Header from './components/Header';
 import Aside from './components/Aside';
@@ -17,10 +18,12 @@ import { HeadContextProvider } from './lib/Context/head';
 import { PodcastContextProvider } from './lib/Context/podcast';
 
 export default function App() {
+  const { podcastsData, isLoading, isError } = usePodcasts();
+
   const [podcast, setPodcast] = React.useState<string>('none');
   const podcastValue = { podcast, setPodcast };
 
-  const [storageDir, setStorageDir] = React.useState<string>(rootPath);
+  const [storageDir, setStorageDir] = React.useState<string>(rootPath());
   const storageValue = React.useMemo(() => ({ storageDir, setStorageDir }), [
     storageDir,
   ]);
@@ -35,7 +38,11 @@ export default function App() {
     <BrowserRouter>
       <PodcastContextProvider value={podcastValue}>
         <div className="flex w-full h-full">
-          <Aside />
+          <Aside
+            podcasts={podcastsData}
+            isLoading={isLoading}
+            isError={isError}
+          />
           <main className="main h-full bg-white">
             <HeadContextProvider value={headValue}>
               <Header />
@@ -45,7 +52,9 @@ export default function App() {
                     <Redirect to="/start" />
                   </Route>
                   <Route exact path="/start" component={Start} />
-                  <Route exact path="/new" component={New} />
+                  <Route exact path="/new">
+                    <New mutate={refetchPodcasts} />
+                  </Route>
                   <Route exact path="/import" component={Import} />
                   <Route exact path="/podcast" component={Podcast} />
                   <Route exact path="/episodes" component={Episodes} />

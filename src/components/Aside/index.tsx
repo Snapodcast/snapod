@@ -2,30 +2,19 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
 import { Titlebar } from 'react-titlebar-osx';
-import storage from 'electron-json-storage';
-import { rootPath } from 'electron-root-path';
 import Icons from '../Icons/index';
 import PodcastContext from '../../lib/Context/podcast';
 
-interface Podcast {
-  dir: string;
-  logo: string;
-  name: string;
-  description: string;
-  author: string;
-  advisory: string;
-  owner: {
-    name: string;
-    email: string;
-  };
-}
-
-export default function Aside() {
+export default function Aside({
+  podcasts,
+  isLoading,
+  isError,
+}: {
+  podcasts: any;
+  isLoading: boolean;
+  isError: boolean;
+}) {
   const { podcast, setPodcast } = React.useContext(PodcastContext);
-  const [podcasts, setPodcasts] = React.useState<Podcast[]>([]);
-  const [updatePodcastsList, setUpdatePodcastsList] = React.useState<boolean>(
-    false
-  );
 
   const minimizeWin = () => {
     ipcRenderer.send('window-min');
@@ -36,17 +25,6 @@ export default function Aside() {
   const closeWin = () => {
     ipcRenderer.send('window-close');
   };
-
-  React.useEffect(() => {
-    // Set current data path
-    storage.setDataPath(rootPath);
-
-    // Get current main data file
-    storage.get('snapod_main_data', (error, data: { podcasts: Podcast[] }) => {
-      if (error) throw error;
-      setPodcasts(data.podcasts);
-    });
-  }, [updatePodcastsList]);
 
   return (
     <aside className="aside border-r border-gray-200 h-full bg-transparent">
@@ -67,19 +45,20 @@ export default function Aside() {
           onChange={(e) => {
             setPodcast(e.target.value);
           }}
-          onClick={() => setUpdatePodcastsList(!updatePodcastsList)}
           className="rounded-md text-sm text-gray-500 p-1.5 px-2 w-full focus:outline-none bg-select mt-1"
         >
-          <option value="none" disabled selected>
+          <option value="none" disabled>
             Choose a podcast...
           </option>
-          {podcasts.map((item) => {
-            return (
-              <option value={item.name} key={item.name}>
-                {item.name}
-              </option>
-            );
-          })}
+          {!isLoading &&
+            !isError &&
+            podcasts.map((item) => {
+              return (
+                <option value={item.name} key={item.name}>
+                  {item.name}
+                </option>
+              );
+            })}
         </select>
         <div className="mt-5 mb-1.5 pl-1.5">
           <h4 className="font-medium text-xs text-gray-400">Create</h4>

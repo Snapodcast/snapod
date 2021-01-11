@@ -174,3 +174,9 @@ ipcMain.on('select-dir', async (event) => {
   });
   event.returnValue = result.filePaths;
 });
+
+// Get userData path
+ipcMain.handle('get-user-data-path', async () => {
+  const path = app.getPath('userData');
+  return path;
+});

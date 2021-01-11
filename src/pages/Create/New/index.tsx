@@ -8,7 +8,7 @@ import Head from '../../../components/Head';
 import Icons from '../../../components/Icons';
 import podcastCreate from '../../../lib/Database/create';
 
-export default function New() {
+export default function New({ mutate }: { mutate: any }) {
   const { storageDir, setStorageDir } = React.useContext(StorageContext);
   const { setPodcast } = React.useContext(PodcastContext);
 
@@ -52,7 +52,11 @@ export default function New() {
   };
 
   // Create
-  const doCreate = () => {
+
+  const [createLoading, setCreateLoading] = React.useState<boolean>(false);
+
+  const doCreate = async () => {
+    setCreateLoading(true);
     // Determine if any required field is empty
     if (
       confirmImage &&
@@ -68,7 +72,7 @@ export default function New() {
       } else if (!validator.isURL(imageUrl)) {
         alert(`Podcast logo does not have a valid url.`);
       } else {
-        podcastCreate({
+        const statusJson = await podcastCreate({
           dir: podcastStorageDir,
           logo: imageUrl,
           name: podcastName,
@@ -80,13 +84,19 @@ export default function New() {
             email: podcastOwnerEmail,
           },
         });
-        setPodcast(podcastName);
-        setStorageDir(podcastStorageDir);
-        history.push('/start');
+        if (statusJson.status) {
+          mutate();
+          setPodcast(podcastName);
+          setStorageDir(podcastStorageDir);
+          history.push('/podcast');
+        } else {
+          alert(statusJson.msg);
+        }
       }
     } else {
       alert('Imcomplete Infomation');
     }
+    setCreateLoading(false);
   };
 
   return (
@@ -219,7 +229,9 @@ export default function New() {
           <button
             type="button"
             onClick={() => doCreate()}
-            className="focus:outline-none tracking-wide text-base rounded-md mt-7 w-full py-1.5 justify-center items-center text-white bg-blue-500 shadow-sm flex"
+            className={`focus:outline-none tracking-wide text-base rounded-md mt-7 w-full py-1.5 justify-center items-center text-white bg-blue-500 shadow-sm flex ${
+              createLoading ? 'animate-pulse' : ''
+            }`}
           >
             Create
             <span className="w-4 h-4 ml-1">
