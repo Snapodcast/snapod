@@ -5,11 +5,9 @@
     ".prettierrc": "jsonc",
     ".eslintignore": "ignore"
   },
-
   "javascript.validate.enable": false,
   "javascript.format.enable": false,
   "typescript.format.enable": false,
-
   "search.exclude": {
     ".git": true,
     ".eslintcache": true,
@@ -25,5 +23,6 @@
     "yarn.lock": true,
     "*.{css,sass,scss}.d.ts": true
   },
-  "cSpell.words": ["snapod"]
+  "cSpell.words": ["snapod"],
+  "css.validate": false
 }
