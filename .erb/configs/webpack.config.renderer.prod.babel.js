@@ -5,7 +5,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import {
   BundleAnalyzerPlugin
 } from 'webpack-bundle-analyzer';
@@ -188,17 +188,13 @@ export default merge(baseConfig, {
   },
 
   optimization: {
+    minimize: true,
     minimizer: [
       new TerserPlugin({
         parallel: true,
       }),
-      new OptimizeCSSAssetsPlugin({
-        cssProcessorOptions: {
-          map: {
-            inline: false,
-            annotation: true,
-          },
-        },
+      new CssMinimizerPlugin({
+        sourceMap: false,
       }),
     ],
   },
