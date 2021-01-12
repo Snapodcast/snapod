@@ -70,16 +70,18 @@ const createWindow = async () => {
   // Create main window
   mainWindow = new BrowserWindow({
     show: false,
+    center: true,
     minWidth: 950,
     minHeight: 500,
     width: 950,
     height: 640,
     icon: getAssetPath('icon.png'),
     frame: false,
+    titleBarStyle: 'hidden',
+    trafficLightPosition: { x: 20, y: 38 },
     vibrancy: 'sidebar',
     transparent: true,
     webPreferences: {
-      webSecurity: false,
       nodeIntegration: true,
       enableRemoteModule: true,
     },
@@ -108,6 +110,13 @@ const createWindow = async () => {
       mainWindow.show();
       mainWindow.focus();
     }
+  });
+
+  mainWindow.on('enter-full-screen', () => {
+    mainWindow.webContents.send('full-screen-change', 'change');
+  });
+  mainWindow.on('leave-full-screen', () => {
+    mainWindow.webContents.send('full-screen-change', 'change');
   });
 
   mainWindow.on('closed', () => {

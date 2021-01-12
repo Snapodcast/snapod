@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
-import { Titlebar } from 'react-titlebar-osx';
 import Icons from '../Icons/index';
 import PodcastContext from '../../lib/Context/podcast';
 
@@ -15,29 +14,19 @@ export default function Aside({
   isError: boolean;
 }) {
   const { podcast, setPodcast } = React.useContext(PodcastContext);
+  const [fullScreen, setFullScreen] = React.useState<boolean>(false);
 
-  const minimizeWin = () => {
-    ipcRenderer.send('window-min');
-  };
-  const fullWin = () => {
-    ipcRenderer.send('window-full');
-  };
-  const closeWin = () => {
-    ipcRenderer.send('window-close');
-  };
+  // Listen to full screen behavior
+  ipcRenderer.on('full-screen-change', () => {
+    setFullScreen(!fullScreen);
+  });
 
   return (
-    <aside className="aside border-r border-gray-200 h-full bg-transparent">
-      <div className="controls p-3">
-        <Titlebar
-          transparent
-          draggable
-          onClose={() => closeWin()}
-          onMaximize={() => fullWin()}
-          onFullscreen={() => fullWin()}
-          onMinimize={() => minimizeWin()}
-        />
-      </div>
+    <aside
+      className={`aside border-r border-gray-200 h-full bg-transparent ${
+        fullScreen ? 'pt-3.5' : 'pt-12'
+      }`}
+    >
       <div className="menu no-drag overflow-hidden overflow-y-auto px-4">
         <select
           defaultValue="none"
