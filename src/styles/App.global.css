@@ -38,6 +38,7 @@ html {
 
 .no-drag {
   -webkit-app-region: no-drag;
+  -webkit-user-select: none;
 }
 
 .drag {
