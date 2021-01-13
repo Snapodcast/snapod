@@ -16,20 +16,19 @@ export default function Aside({
   const { podcast, setPodcast } = React.useContext(PodcastContext);
   const [fullScreen, setFullScreen] = React.useState<boolean>(false);
 
-  // Listen to full screen behavior
+  // Listen to full screen event
   ipcRenderer.on('full-screen-change', () => {
     setFullScreen(!fullScreen);
   });
 
   return (
     <aside
-      className={`aside border-r border-gray-200 h-full bg-transparent ${
-        fullScreen ? 'pt-3.5' : 'pt-12'
+      className={`aside border-r border-gray-200 h-full bg-transparent absolute ${
+        fullScreen ? 'pt-1.5' : 'pt-12'
       }`}
     >
       <div className="menu no-drag overflow-hidden overflow-y-auto px-4">
         <select
-          defaultValue="none"
           value={podcast}
           onChange={(e) => {
             setPodcast(e.target.value);

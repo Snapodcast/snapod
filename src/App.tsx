@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { ipcRenderer } from 'electron';
 import rootPath from './utilities/path';
 import usePodcasts, { refetchPodcasts } from './lib/DataFetching/podcasts';
 
@@ -34,16 +35,33 @@ export default function App() {
   });
   const headValue = React.useMemo(() => ({ head, setHead }), [head]);
 
+  const [extend, setExtend] = React.useState<'true' | 'false' | 'unset'>(
+    'unset'
+  );
+  // Listen to hiding sidebar event
+  ipcRenderer.on('hide-sidebar', () => {
+    setExtend(extend === 'true' ? 'false' : 'true');
+  });
+
   return (
     <BrowserRouter>
       <PodcastContextProvider value={podcastValue}>
-        <div className="flex w-full h-full">
+        <div className="snapod animate-firstShow flex w-full h-full">
           <Aside
             podcasts={podcastsData}
             isLoading={isLoading}
             isError={isError}
           />
-          <main className="main h-full bg-white">
+          <main
+            className={`main h-full bg-white absolute ${
+              // eslint-disable-next-line no-nested-ternary
+              extend === 'true'
+                ? 'animate-extendMainBody'
+                : extend === 'unset'
+                ? 'left-220'
+                : 'animate-restoreMainBody'
+            }`}
+          >
             <HeadContextProvider value={headValue}>
               <Header />
               <section className="body no-drag p-4">

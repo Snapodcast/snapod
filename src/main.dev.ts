@@ -78,7 +78,7 @@ const createWindow = async () => {
     icon: getAssetPath('icon.png'),
     frame: false,
     titleBarStyle: 'hidden',
-    trafficLightPosition: { x: 20, y: 38 },
+    trafficLightPosition: { x: 20, y: 33 },
     vibrancy: 'sidebar',
     transparent: true,
     webPreferences: {
@@ -161,21 +161,6 @@ app.on('activate', () => {
  * ICP event listeners...
  */
 
-// Minimize window
-ipcMain.on('window-min', () => {
-  if (mainWindow !== null) mainWindow.minimize();
-});
-
-// Fullscreen
-ipcMain.on('window-full', () => {
-  if (mainWindow !== null) mainWindow.setFullScreen(!mainWindow.isFullScreen());
-});
-
-// Close window
-ipcMain.on('window-close', () => {
-  if (mainWindow !== null) mainWindow.close();
-});
-
 // Select directory
 ipcMain.on('select-dir', async (event) => {
   const result = await dialog.showOpenDialog(mainWindow, {
@@ -184,8 +169,7 @@ ipcMain.on('select-dir', async (event) => {
   event.returnValue = result.filePaths;
 });
 
-// Get userData path
-ipcMain.handle('get-user-data-path', async () => {
-  const path = app.getPath('userData');
-  return path;
+// Hide sidebar
+ipcMain.on('hide-sidebar', async () => {
+  mainWindow.webContents.send('hide-sidebar', 'hide');
 });

@@ -38,20 +38,21 @@ html {
 
 .no-drag {
   -webkit-app-region: no-drag;
-  -webkit-user-select: none;
 }
 
 .drag {
   -webkit-app-region: drag;
+  -webkit-user-select: none;
 }
 
 .aside {
   width: 220px;
-  backdrop-filter: blur(50px);
+  animation-fill-mode: forwards;
 }
 
 .main {
   width: calc(100% - 220px);
+  animation-fill-mode: forwards;
 }
 
 .titlebar-stoplight .titlebar-close,
@@ -88,4 +89,13 @@ html {
   align-items: center;
   width: 40px;
   justify-content: center;
+}
+
+.left-220 {
+  left: 220px;
+}
+
+.snapod {
+  opacity: 0;
+  animation-fill-mode: forwards;
 }
