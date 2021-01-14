@@ -12,23 +12,31 @@ export default function Header() {
   );
   const history = useHistory();
 
-  // Listen to hiding sidebar event
-  ipcRenderer.on('hide-sidebar', () => {
+  const hideSideBarListener = () => {
     setExtend(extend === 'true' ? 'false' : 'true');
+  };
+
+  React.useEffect(() => {
+    return () => {
+      ipcRenderer.removeListener('hide-sidebar', hideSideBarListener);
+    };
   });
+
+  // Listen to hiding sidebar event
+  ipcRenderer.on('hide-sidebar', hideSideBarListener);
 
   return (
     <div
-      className={`main drag header fixed z-50 flex py-1 px-4 items-center cursor-default ${
+      className={`main drag header fixed z-30 flex py-1 px-4 items-center cursor-default border-b ${
         // eslint-disable-next-line no-nested-ternary
         extend === 'true'
           ? 'animate-extendMainHeader pl-24'
           : extend === 'unset'
-          ? ''
+          ? 'snapod animate-firstShow'
           : 'animate-restoreMainHeader'
       }`}
     >
-      <div className="items-center text-gray-500 mr-3 pr-2 border-r border-gray-200">
+      <div className="items-center control mr-3 pr-2 border-r border-gray-200">
         <button
           type="button"
           className="focus:outline-none w-7 h-7 p-1 hover:bg-select rounded-md cursor-default"

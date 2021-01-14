@@ -16,14 +16,23 @@ export default function Aside({
   const { podcast, setPodcast } = React.useContext(PodcastContext);
   const [fullScreen, setFullScreen] = React.useState<boolean>(false);
 
-  // Listen to full screen event
-  ipcRenderer.on('full-screen-change', () => {
+  // ICP event and listeners for fullscreen
+  const fullScreenListener = () => {
     setFullScreen(!fullScreen);
+  };
+
+  React.useEffect(() => {
+    return () => {
+      ipcRenderer.removeListener('full-screen-change', fullScreenListener);
+    };
   });
+
+  // Listen to full screen event
+  ipcRenderer.on('full-screen-change', fullScreenListener);
 
   return (
     <aside
-      className={`aside border-r border-gray-200 h-full bg-transparent absolute ${
+      className={`animate-firstShow aside border-r h-full bg-transparent absolute ${
         fullScreen ? 'pt-1.5' : 'pt-12'
       }`}
     >

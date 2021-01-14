@@ -38,33 +38,43 @@ export default function App() {
   const [extend, setExtend] = React.useState<'true' | 'false' | 'unset'>(
     'unset'
   );
-  // Listen to hiding sidebar event
-  ipcRenderer.on('hide-sidebar', () => {
+
+  const hideSideBarListener = () => {
     setExtend(extend === 'true' ? 'false' : 'true');
+  };
+
+  React.useEffect(() => {
+    return () => {
+      ipcRenderer.removeListener('hide-sidebar', hideSideBarListener);
+    };
   });
+
+  // Listen to hiding sidebar event
+  ipcRenderer.on('hide-sidebar', hideSideBarListener);
 
   return (
     <BrowserRouter>
       <PodcastContextProvider value={podcastValue}>
-        <div className="snapod animate-firstShow flex w-full h-full">
+        <div className="flex w-full h-full">
           <Aside
             podcasts={podcastsData}
             isLoading={isLoading}
             isError={isError}
           />
+          <div className="absolute bg-white z-10 main h-full main left-220" />
           <main
-            className={`main h-full bg-white absolute ${
+            className={`main h-full bg-white z-30 absolute ${
               // eslint-disable-next-line no-nested-ternary
               extend === 'true'
                 ? 'animate-extendMainBody'
                 : extend === 'unset'
-                ? 'left-220'
+                ? 'left-220 snapod animate-firstShow'
                 : 'animate-restoreMainBody'
             }`}
           >
             <HeadContextProvider value={headValue}>
               <Header />
-              <section className="body no-drag p-4">
+              <section className="body p-4 z-20">
                 <StorageContextProvider value={storageValue}>
                   <Route exact path="">
                     <Redirect to="/start" />
