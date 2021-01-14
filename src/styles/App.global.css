@@ -10,17 +10,24 @@ html {
 
 .header {
   height: 50px;
-  box-shadow: 0px 1.2px 1px rgb(235 235 235);
-  backdrop-filter: blur(50px);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(100px);
+  box-shadow: none;
+  border-color: rgb(236, 236, 236);
 }
 
 .header p {
   padding: 0px;
 }
 
+.control {
+  color: rgb(97, 97, 97);
+}
+
 .body {
-  margin-top: 50px;
-  height: calc(100vh - 50px);
+  margin-top: 0px;
+  padding-top: calc(50px + 1rem);
+  height: 100vh;
   @apply overflow-hidden overflow-y-auto;
 }
 
@@ -48,18 +55,12 @@ html {
 .aside {
   width: 220px;
   animation-fill-mode: forwards;
+  border-color: rgb(217, 217, 217);
 }
 
 .main {
   width: calc(100% - 220px);
   animation-fill-mode: forwards;
-}
-
-.titlebar-stoplight .titlebar-close,
-.titlebar-stoplight .titlebar-minimize,
-.titlebar-stoplight .titlebar-fullscreen {
-  width: 12px !important;
-  height: 12px !important;
 }
 
 .active li {
