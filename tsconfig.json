@@ -30,6 +30,7 @@
     "release",
     "src/main.prod.js",
     "src/renderer.prod.js",
+    "src/main.dev.ts",
     "src/dist",
     ".erb/dll"
   ]
