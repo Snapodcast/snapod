@@ -1,19 +1,6 @@
 import storage from 'electron-json-storage';
 import electron from 'electron';
 
-interface Podcast {
-  dir: string;
-  logo: string;
-  name: string;
-  description: string;
-  author: string;
-  advisory: string;
-  owner: {
-    name: string;
-    email: string;
-  };
-}
-
 export default async function updateMain(params: Podcast) {
   const processData = async (): Promise<any> => {
     return new Promise((resolve, reject) => {
@@ -33,11 +20,10 @@ export default async function updateMain(params: Podcast) {
           });
         } else {
           // Get current main data file
-          storage.get(
-            'snapod_main_data',
-            (error3, data: { podcasts: Podcast[] }) => {
-              if (error3) reject(error3);
-              // Update main data file
+          storage.get('snapod_main_data', (error3, data: MainData) => {
+            if (error3 || !data.podcasts) reject(error3);
+            // Update main data file
+            else
               storage.set(
                 `snapod_main_data`,
                 { podcasts: data.podcasts.concat(params) },
@@ -46,8 +32,7 @@ export default async function updateMain(params: Podcast) {
                   resolve(true);
                 }
               );
-            }
-          );
+          });
         }
       });
     });

@@ -22,7 +22,9 @@
     "resolveJsonModule": true,
     "allowJs": true
   },
-  "include": ["types/*.d.ts"],
+  "paths": {
+    "*": ["types/*.d.ts"]
+  },
   "exclude": [
     "test",
     "release",

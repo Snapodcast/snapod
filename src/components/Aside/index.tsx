@@ -40,7 +40,7 @@ export default function Aside({
           </option>
           {!isLoading &&
             !isError &&
-            podcasts.map((item) => {
+            podcasts.map((item: Podcast) => {
               return (
                 <option value={item.name} key={item.name}>
                   {item.name}

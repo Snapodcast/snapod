@@ -2,19 +2,6 @@ import storage from 'electron-json-storage';
 import md5 from 'md5';
 import updateMain from './updateMain';
 
-interface Podcast {
-  dir: string;
-  logo: string;
-  name: string;
-  description: string;
-  author: string;
-  advisory: string;
-  owner: {
-    name: string;
-    email: string;
-  };
-}
-
 export default async function podcastCreate(params: Podcast) {
   const processData = async (): Promise<any> => {
     return new Promise((resolve, reject) => {
