@@ -8,6 +8,7 @@ module.exports = {
     'no-alert': 'off',
     'import/order': 'off',
     'promise/always-return': 'off',
+    'no-nested-ternary': 'off',
   },
   parserOptions: {
     ecmaVersion: 2020,

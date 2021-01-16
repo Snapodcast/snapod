@@ -8,7 +8,7 @@ export default function Start() {
     <div className="h-full flex justify-center items-center">
       <Head title="Snapod" description="Podcasts Self-hosting Solution" />
       <div className="h-full w-full grid grid-cols-2 gap-x-3">
-        <Link to="/new">
+        <Link to="/new/podcast">
           <div className="col-auto bg-green-100 dark:bg-green-900 h-full rounded-md text-center items-center justify-center flex">
             <div>
               <div className="w-20 h-20 mx-auto text-green-500">
@@ -18,13 +18,15 @@ export default function Start() {
             </div>
           </div>
         </Link>
-        <Link to="/import">
+        <Link to="/new/episode">
           <div className="col-auto bg-yellow-100 dark:bg-yellow-900 h-full rounded-md text-center items-center justify-center flex">
             <div>
               <div className="w-20 h-20 mx-auto text-yellow-500">
-                <Icons name="import" />
+                <Icons name="addEpisode" />
               </div>
-              <p className="text-yellow-500 font-medium">Import a podcast</p>
+              <p className="text-yellow-500 font-medium">
+                Create a new episode
+              </p>
             </div>
           </div>
         </Link>

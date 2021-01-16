@@ -33,8 +33,16 @@ export default function Aside({
   ipcRenderer.on('full-screen-change', fullScreenListener);
 
   return (
-    <aside className="animate-firstShow aside border-r border-asideBorder dark:border-black h-full bg-transparent absolute">
-      <div className={`${fullScreen ? 'h-1.5' : 'h-12'} drag`} />
+    <aside
+      className={`animate-firstShow aside border-r border-asideBorder ${
+        process.platform !== 'darwin' ? 'dark:bg-gray-333' : 'dark:border-black'
+      } h-full bg-transparent absolute`}
+    >
+      <div
+        className={`${
+          fullScreen || process.platform !== 'darwin' ? 'h-1.5' : 'h-12'
+        } drag`}
+      />
       <div className="menu no-drag overflow-hidden overflow-y-auto px-4">
         <select
           value={

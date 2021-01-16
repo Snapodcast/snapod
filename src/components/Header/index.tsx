@@ -28,11 +28,16 @@ export default function Header() {
   return (
     <div
       className={`main drag header border-headerBorder bg-headerBg dark:bg-darkHeader dark:border-darkSelect fixed z-30 flex py-1 px-4 items-center cursor-default border-b ${
-        // eslint-disable-next-line no-nested-ternary
+        process.platform !== 'darwin' && 'border-t'
+      } ${
         extend === 'true'
-          ? 'animate-extendMainHeader pl-24'
+          ? `animate-extendMainHeader ${
+              process.platform !== 'darwin' ? 'extendWinHeader' : 'pl-24'
+            }`
           : extend === 'unset'
           ? 'snapod animate-firstShow'
+          : process.platform !== 'darwin'
+          ? 'animate-restoreMainHeaderWin'
           : 'animate-restoreMainHeader'
       }`}
     >

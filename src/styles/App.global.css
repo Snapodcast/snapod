@@ -101,3 +101,7 @@ html {
 .header-title {
   max-width: 450px;
 }
+
+.extendWinHeader {
+  padding-left: 1rem !important;
+}

@@ -68,24 +68,41 @@ const createWindow = async () => {
   };
 
   // Create main window
-  mainWindow = new BrowserWindow({
-    show: false,
-    center: true,
-    minWidth: 950,
-    minHeight: 500,
-    width: 950,
-    height: 640,
-    icon: getAssetPath('icon.png'),
-    frame: false,
-    titleBarStyle: 'hidden',
-    trafficLightPosition: { x: 20, y: 33 },
-    vibrancy: 'sidebar',
-    transparent: true,
-    webPreferences: {
-      nodeIntegration: true,
-      enableRemoteModule: true,
-    },
-  });
+  // macOS
+  if (process.platform === 'darwin') {
+    mainWindow = new BrowserWindow({
+      show: false,
+      center: true,
+      minWidth: 950,
+      minHeight: 500,
+      width: 950,
+      height: 640,
+      icon: getAssetPath('icon.png'),
+      frame: false,
+      titleBarStyle: 'hidden',
+      trafficLightPosition: { x: 20, y: 33 },
+      vibrancy: 'sidebar',
+      transparent: true,
+      webPreferences: {
+        nodeIntegration: true,
+        enableRemoteModule: true,
+      },
+    });
+  } else {
+    mainWindow = new BrowserWindow({
+      show: false,
+      center: true,
+      minWidth: 950,
+      minHeight: 500,
+      width: 950,
+      height: 625,
+      icon: getAssetPath('icon.png'),
+      webPreferences: {
+        nodeIntegration: true,
+        enableRemoteModule: true,
+      },
+    });
+  }
 
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 

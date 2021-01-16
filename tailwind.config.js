@@ -17,6 +17,9 @@ module.exports = {
         asideBorder: 'rgb(217, 217, 217)',
         headerBg: 'rgba(255, 255, 255, 0.9)',
         headerBorder: 'rgb(236, 236, 236)',
+        gray: {
+          '333': '#333333',
+        },
       },
       keyframes: {
         extendMainHeaderKey: {
@@ -41,6 +44,16 @@ module.exports = {
             width: 'calc(100% - 220px)',
             left: '220px',
             paddingLeft: '1rem',
+          },
+        },
+        restoreMainHeaderKeyWin: {
+          '0%': {
+            width: '100%',
+            left: '0px',
+          },
+          '100%': {
+            width: 'calc(100% - 220px)',
+            left: '220px',
           },
         },
         extendMainBodyKey: {
@@ -77,6 +90,7 @@ module.exports = {
         restoreMainBody: 'restoreMainBodyKey .5s ease-in-out',
         extendMainHeader: 'extendMainHeaderKey .5s ease-in-out',
         restoreMainHeader: 'restoreMainHeaderKey .5s ease-in-out',
+        restoreMainHeaderWin: 'restoreMainHeaderKeyWin .5s ease-in-out',
         firstShow: 'firstShowKey .25s ease-in-out',
       },
     },
