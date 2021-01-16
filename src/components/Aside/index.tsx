@@ -35,7 +35,9 @@ export default function Aside({
   return (
     <aside
       className={`animate-firstShow aside border-r border-asideBorder ${
-        process.platform !== 'darwin' ? 'dark:bg-gray-333' : 'dark:border-black'
+        process.platform !== 'darwin'
+          ? 'dark:bg-gray-333 border-t'
+          : 'dark:border-black'
       } h-full bg-transparent absolute`}
     >
       <div
