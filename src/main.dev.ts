@@ -130,7 +130,7 @@ const createWindow = async () => {
   const handleRedirect = (e, url) => {
     if (url !== mainWindow.webContents.getURL()) {
       e.preventDefault();
-      require('electron').shell.openExternal(url);
+      shell.openExternal(url);
     }
   };
 
