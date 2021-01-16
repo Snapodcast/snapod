@@ -34,11 +34,11 @@ export default function Aside({
 
   return (
     <aside
-      className={`animate-firstShow aside border-r border-asideBorder ${
+      className={`animate-firstShow aside border-r ${
         process.platform !== 'darwin'
-          ? 'dark:bg-gray-333 border-t'
+          ? 'dark:bg-gray-333 border-t border-headerBorder'
           : 'dark:border-black'
-      } h-full bg-transparent absolute`}
+      } h-full bg-transparent absolute border-asideBorder`}
     >
       <div
         className={`${
