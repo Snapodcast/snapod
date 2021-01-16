@@ -35,6 +35,7 @@ release
 src/main.prod.js
 src/main.prod.js.map
 src/renderer.prod.js
+src/renderer.prod.js.LICENSE.txt
 src/renderer.prod.js.map
 src/style.css
 src/style.css.map
@@ -48,3 +49,5 @@ npm-debug.log.*
 *.css.d.ts
 *.sass.d.ts
 *.scss.d.ts
+
+.yarnrc
