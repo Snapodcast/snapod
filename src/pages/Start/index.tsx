@@ -9,7 +9,7 @@ export default function Start() {
       <Head title="Snapod" description="Podcasts Self-hosting Solution" />
       <div className="h-full w-full grid grid-cols-2 gap-x-3">
         <Link to="/new">
-          <div className="col-auto bg-green-100 h-full rounded-md text-center items-center justify-center flex">
+          <div className="col-auto bg-green-100 dark:bg-green-900 h-full rounded-md text-center items-center justify-center flex">
             <div>
               <div className="w-20 h-20 mx-auto text-green-500">
                 <Icons name="add" />
@@ -19,7 +19,7 @@ export default function Start() {
           </div>
         </Link>
         <Link to="/import">
-          <div className="col-auto bg-yellow-100 h-full rounded-md text-center items-center justify-center flex">
+          <div className="col-auto bg-yellow-100 dark:bg-yellow-900 h-full rounded-md text-center items-center justify-center flex">
             <div>
               <div className="w-20 h-20 mx-auto text-yellow-500">
                 <Icons name="import" />

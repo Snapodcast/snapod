@@ -27,7 +27,7 @@ export default function Header() {
 
   return (
     <div
-      className={`main drag header fixed z-30 flex py-1 px-4 items-center cursor-default border-b ${
+      className={`main drag header border-headerBorder bg-headerBg dark:bg-darkHeader dark:border-darkSelect fixed z-30 flex py-1 px-4 items-center cursor-default border-b ${
         // eslint-disable-next-line no-nested-ternary
         extend === 'true'
           ? 'animate-extendMainHeader pl-24'
@@ -36,7 +36,7 @@ export default function Header() {
           : 'animate-restoreMainHeader'
       }`}
     >
-      <div className="items-center control mr-3 pr-2 border-r border-gray-200">
+      <div className="items-center control mr-3 pr-2 border-r border-gray-200 dark:border-darkSelect">
         <button
           type="button"
           className="focus:outline-none w-7 h-7 p-1 hover:bg-select rounded-md cursor-default"
@@ -47,11 +47,11 @@ export default function Header() {
           <Icons name="switch" />
         </button>
       </div>
-      <div className="w-full">
-        <h1 className="text-lg font-medium tracking-normal text-gray-900">
+      <div className="w-full -mt-1">
+        <h1 className="text-lg header-title font-medium tracking-normal text-gray-900 dark:text-white whitespace-nowrap overflow-hidden overflow-ellipsis">
           {head.title}
         </h1>
-        <p className="text-xs tracking-wide -mt-1 text-gray-500">
+        <p className="text-xs tracking-wide -mt-1 text-gray-500 dark:text-gray-400">
           {head.description}
         </p>
       </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Import() {
+export default function NewEpisode() {
   return (
     <div>
       <p>Import</p>

@@ -9,11 +9,9 @@ html {
 }
 
 .header {
-  height: 50px;
-  background: rgba(255, 255, 255, 0.9);
+  height: 53px;
   backdrop-filter: blur(100px);
   box-shadow: none;
-  border-color: rgb(236, 236, 236);
 }
 
 .header p {
@@ -26,17 +24,17 @@ html {
 
 .body {
   margin-top: 0px;
-  padding-top: calc(50px + 1rem);
+  padding-top: calc(53px + 1rem);
   height: 100vh;
   @apply overflow-hidden overflow-y-auto;
 }
 
 .controls {
-  height: 50px;
+  height: 53px;
 }
 
 .menu {
-  height: calc(100vh - 50px);
+  height: calc(100vh - 53px);
 }
 
 .menu::-webkit-scrollbar {
@@ -55,7 +53,6 @@ html {
 .aside {
   width: 220px;
   animation-fill-mode: forwards;
-  border-color: rgb(217, 217, 217);
 }
 
 .main {
@@ -64,7 +61,7 @@ html {
 }
 
 .active li {
-  @apply bg-active;
+  @apply bg-active dark:bg-darkActive;
 }
 
 .menu-list a {
@@ -99,4 +96,8 @@ html {
 .snapod {
   opacity: 0;
   animation-fill-mode: forwards;
+}
+
+.header-title {
+  max-width: 450px;
 }

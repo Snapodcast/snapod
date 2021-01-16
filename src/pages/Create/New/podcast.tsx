@@ -7,8 +7,10 @@ import PodcastContext from '../../../lib/Context/podcast';
 import Head from '../../../components/Head';
 import Icons from '../../../components/Icons';
 import podcastCreate from '../../../lib/Database/create';
+import CateSelect from '../../../components/CateSelect';
+import LangSelect from '../../../components/LangSelect';
 
-export default function New({ mutate }: { mutate: any }) {
+export default function NewPodcast({ mutate }: { mutate: any }) {
   const { storageDir, setStorageDir } = React.useContext(StorageContext);
   const { setPodcast } = React.useContext(PodcastContext);
 
@@ -24,10 +26,14 @@ export default function New({ mutate }: { mutate: any }) {
   // Podcast info
   const [podcastName, setName] = React.useState<string>('');
   const [podcastDes, setDes] = React.useState<string>('');
-  const [podcastAdvisory, setAdvisory] = React.useState<string>('clean');
+  const [podcastAdvisory, setAdvisory] = React.useState<string>('');
   const [podcastAuthor, setAuthor] = React.useState<string>('');
   const [podcastOwnerName, setOwnerName] = React.useState<string>('');
   const [podcastOwnerEmail, setOwnerEmail] = React.useState<string>('');
+  const [podcastType, setType] = React.useState<string>('');
+  const [podcastCate, setCate] = React.useState<string>('');
+  const [podcastLang, setLang] = React.useState<string>('');
+  const [podcastUrl, setUrl] = React.useState<'snapod' | string>('snapod');
 
   // Podcast logo
   const fetchImage = () => {
@@ -65,7 +71,10 @@ export default function New({ mutate }: { mutate: any }) {
       podcastDes &&
       podcastAuthor &&
       podcastAdvisory &&
-      podcastOwnerName
+      podcastOwnerName &&
+      podcastUrl &&
+      podcastLang &&
+      podcastType
     ) {
       if (!validator.isEmail(podcastOwnerEmail)) {
         alert(`${podcastOwnerEmail} is not a valid email.`);
@@ -77,6 +86,10 @@ export default function New({ mutate }: { mutate: any }) {
           logo: imageUrl,
           name: podcastName,
           description: podcastDes,
+          cate: podcastCate,
+          type: podcastType,
+          lang: podcastLang,
+          url: podcastUrl,
           author: podcastAuthor,
           advisory: podcastAdvisory,
           owner: {
@@ -86,8 +99,8 @@ export default function New({ mutate }: { mutate: any }) {
         });
         if (statusJson.status) {
           mutate();
-          setPodcast(podcastName);
-          setStorageDir(podcastStorageDir);
+          await setPodcast(statusJson.id);
+          await setStorageDir(podcastStorageDir);
           history.push('/podcast');
         } else {
           alert(statusJson.msg);
@@ -100,7 +113,7 @@ export default function New({ mutate }: { mutate: any }) {
   };
 
   return (
-    <div className="p-5 h-full w-full">
+    <div className="p-5 h-auto w-full">
       <Head title="New Podcast" description="Create a new podcast" />
       <div className="flex h-full">
         <div>
@@ -148,7 +161,6 @@ export default function New({ mutate }: { mutate: any }) {
           <p className="w-full">
             <input
               type="text"
-              value={podcastName}
               onChange={(e) => {
                 setName(e.target.value);
               }}
@@ -158,7 +170,6 @@ export default function New({ mutate }: { mutate: any }) {
           </p>
           <p className="w-full mt-2">
             <textarea
-              value={podcastDes}
               onChange={(e) => {
                 setDes(e.target.value);
               }}
@@ -166,56 +177,130 @@ export default function New({ mutate }: { mutate: any }) {
               className="tracking-wide resize-none focus:outline-none border h-20 rounded-md w-full shadow-sm text-sm py-1.5 px-3 text-gray-700"
             />
           </p>
-          <p className="w-full mt-5">
-            <select
-              value={podcastAdvisory}
-              onChange={(e) => {
-                setAdvisory(e.target.value);
+          <p className="w-full mt-5 grid grid-cols-2 shadow-sm rounded-md">
+            <button
+              type="button"
+              onClick={() => {
+                setUrl('snapod');
               }}
-              className="tracking-wide focus:outline-none border rounded-md w-full shadow-sm text-sm py-1.5 px-2 text-gray-700"
+              className={`focus:outline-none text-sm rounded-tl-md rounded-bl-md py-1.5 px-2 ${
+                podcastUrl === 'snapod'
+                  ? 'bg-blue-500 text-white'
+                  : 'text-gray-700 border border-r-0'
+              }`}
             >
-              <option value="clean">Clean</option>
-              <option value="explicit">Explicit</option>
-            </select>
+              Snapod Hosting
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setUrl('');
+              }}
+              className={`focus:outline-none text-sm rounded-tr-md rounded-br-md py-1.5 px-2 ${
+                podcastUrl !== 'snapod'
+                  ? 'bg-blue-500 text-white'
+                  : 'text-gray-700 border border-l-0'
+              }`}
+            >
+              Custom site URL
+            </button>
           </p>
-          <p className="w-full mt-2">
+          {podcastUrl === 'snapod' && (
+            <p className="text-gray-400 text-xs mt-2">
+              Note: You will still be able to assign a custom domain to your
+              Snapod site later,{' '}
+              <a
+                href="https://snapodcast.com/help/customize-domain"
+                className="text-blue-500"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Learn more →
+              </a>
+            </p>
+          )}
+          {podcastUrl !== 'snapod' && (
+            <p>
+              <input
+                type="text"
+                onChange={(e) => {
+                  setUrl(e.target.value);
+                }}
+                placeholder="Site URL"
+                className="mt-2 tracking-wide focus:outline-none border rounded-md w-full shadow-sm text-sm py-1.5 px-3 text-gray-700"
+              />
+            </p>
+          )}
+          <p className="w-full mt-5">
             <input
               type="text"
-              value={podcastAuthor}
               onChange={(e) => {
                 setAuthor(e.target.value);
               }}
-              placeholder="Author Name"
+              placeholder="Author's Name"
               className="tracking-wide focus:outline-none border rounded-md w-full shadow-sm text-sm py-1.5 px-3 text-gray-700"
             />
           </p>
           <p className="w-full mt-2">
             <input
               type="text"
-              value={podcastOwnerName}
               onChange={(e) => {
                 setOwnerName(e.target.value);
               }}
-              placeholder="Owner Name"
+              placeholder="Owner's Name"
               className="tracking-wide focus:outline-none border rounded-md w-full shadow-sm text-sm py-1.5 px-3 text-gray-700"
             />
           </p>
           <p className="w-full mt-2">
             <input
               type="email"
-              value={podcastOwnerEmail}
               onChange={(e) => {
                 setOwnerEmail(e.target.value);
               }}
-              placeholder="Owner Email"
+              placeholder="Owner's Email"
               className="tracking-wide focus:outline-none border rounded-md w-full shadow-sm text-sm py-1.5 px-3 text-gray-700"
             />
+          </p>
+          <p className="w-full mt-5">
+            <CateSelect podcastCate={podcastCate} setCate={setCate} />
+          </p>
+          <p className="w-full mt-2">
+            <LangSelect podcastLang={podcastLang} setLang={setLang} />
+          </p>
+          <p className="w-full mt-2">
+            <select
+              defaultValue="none"
+              onChange={(e) => {
+                setType(e.target.value);
+              }}
+              className="tracking-wide focus:outline-none border rounded-md w-full shadow-sm text-sm py-1.5 px-2 text-gray-700"
+            >
+              <option value="none" disabled>
+                Podcast Type
+              </option>
+              <option value="episodic">Episodic</option>
+              <option value="serial">Serial</option>
+            </select>
+          </p>
+          <p className="w-full mt-2">
+            <select
+              defaultValue="none"
+              onChange={(e) => {
+                setAdvisory(e.target.value);
+              }}
+              className="tracking-wide focus:outline-none border rounded-md w-full shadow-sm text-sm py-1.5 px-2 text-gray-700"
+            >
+              <option value="none" disabled>
+                Content advisory
+              </option>
+              <option value="clean">Clean</option>
+              <option value="explicit">Explicit</option>
+            </select>
           </p>
           <div className="w-full mt-6 flex">
             <input
               disabled
-              value={podcastStorageDir}
-              placeholder={`Local files folder (${storageDir})`}
+              placeholder={`Data folder (${storageDir})`}
               className="tracking-wide focus:outline-none border rounded-md w-full shadow-sm text-sm py-1.5 px-3 text-gray-400"
             />
             <button

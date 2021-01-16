@@ -6,7 +6,7 @@ export const refetchPodcasts = () => {
   mutate('podcasts');
 };
 
-const getData = async (): Promise<Podcast[]> => {
+const getData = async (): Promise<PodcastFull[]> => {
   return new Promise((resolve, reject) => {
     // Set current data path
     storage.setDataPath(rootPath());

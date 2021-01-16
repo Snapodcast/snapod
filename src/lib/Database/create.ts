@@ -1,45 +1,63 @@
 import storage from 'electron-json-storage';
-import md5 from 'md5';
+import { v4 as uuidv4 } from 'uuid';
 import updateMain from './updateMain';
 
 export default async function podcastCreate(params: Podcast) {
-  const processData = async (): Promise<any> => {
-    return new Promise((resolve, reject) => {
+  const processData = async (): Promise<{
+    status: boolean;
+    id?: string;
+    msg: string;
+  }> => {
+    return new Promise((resolve) => {
       // Set current data path
       storage.setDataPath(params.dir);
 
+      // Generate podcast ID
+      const id = uuidv4();
+
       // Determine if podcast already exists
-      storage.has(
-        `snapod_podcast_data_${md5(params.name)}`,
-        (error1, hasKey) => {
-          if (error1) reject(error1);
+      storage.has(`snapod_podcast_data_${id}`, (error1, hasKey) => {
+        if (error1)
+          resolve({
+            status: false,
+            msg: `An internal error has occurred`,
+          });
 
-          // Create data file
-          if (!hasKey) {
-            storage.set(
-              `snapod_podcast_data_${md5(params.name)}`,
-              params,
-              async (error2) => {
-                if (error2) reject(error2);
-
-                // Update main data file
-                await updateMain(params);
+        // Create data file
+        if (!hasKey) {
+          // Set id key
+          const paramsFull = {
+            id,
+            ...params,
+          };
+          // Create json file
+          storage.set(
+            `snapod_podcast_data_${id}`,
+            paramsFull,
+            async (error2) => {
+              if (error2)
                 resolve({
-                  status: true,
-                  msg: `${params.name} has been created and added to your podcast list`,
+                  status: false,
+                  msg: `An internal error has occurred`,
                 });
-              }
-            );
-          } else {
-            resolve({
-              status: false,
-              msg: 'Podcast already exists, no change has been made',
-            });
-          }
+
+              // Update main data file
+              await updateMain(paramsFull);
+              resolve({
+                status: true,
+                id,
+                msg: `${params.name} has been created and added to your podcast list`,
+              });
+            }
+          );
+        } else {
+          resolve({
+            status: false,
+            msg: 'Podcast already exists, no change has been made',
+          });
         }
-      );
+      });
     });
   };
-  const statusJson = await processData();
-  return statusJson;
+  return processData();
 }
