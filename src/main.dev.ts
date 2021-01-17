@@ -77,7 +77,7 @@ const createWindow = async () => {
       minHeight: 500,
       width: 950,
       height: 640,
-      icon: getAssetPath('icon.png'),
+      icon: getAssetPath('icon.icns'),
       frame: false,
       titleBarStyle: 'hidden',
       trafficLightPosition: { x: 20, y: 33 },
@@ -96,7 +96,7 @@ const createWindow = async () => {
       minHeight: 500,
       width: 950,
       height: 625,
-      icon: getAssetPath('icon.png'),
+      icon: getAssetPath('icon.ico'),
       webPreferences: {
         nodeIntegration: true,
         enableRemoteModule: true,
