@@ -1,7 +1,9 @@
 {
   "name": "snapod",
+  "private": true,
+  "licence": "SEE LICENCE IN LICENCE",
   "productName": "Snapod",
-  "description": "Podcasts Self-hosting Solution",
+  "description": "Grow your podcasts with ease",
   "scripts": {
     "build": "concurrently \"yarn build:main\" \"yarn build:renderer\"",
     "build:main": "cross-env NODE_ENV=production webpack --config ./.erb/configs/webpack.config.main.prod.babel.js",
@@ -228,7 +230,7 @@
     "rimraf": "^3.0.0",
     "sass-loader": "^10.1.0",
     "style-loader": "^2.0.0",
-    "swr": "^0.4.0",
+    "swr": "^0.4.2",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "terser-webpack-plugin": "^5.0.3",
     "typescript": "^4.0.5",
@@ -247,8 +249,8 @@
     "electron-log": "^4.2.4",
     "electron-updater": "^4.3.4",
     "history": "^5.0.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
     "regenerator-runtime": "^0.13.5",
     "source-map-support": "^0.5.19"
