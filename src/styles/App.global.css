@@ -105,3 +105,13 @@ html {
 .extendWinHeader {
   padding-left: 1rem !important;
 }
+
+.theme-background {
+  backdrop-filter: blur(50px);
+  background-image: linear-gradient(
+    40deg,
+    #ffb64661 0%,
+    rgba(9, 9, 121, 0) 50%,
+    #46d4ff36 100%
+  );
+}

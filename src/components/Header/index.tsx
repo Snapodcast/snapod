@@ -74,7 +74,7 @@ export default function Header() {
           type="button"
           className="focus:outline-none w-7 h-7 p-1 hover:bg-select rounded-md cursor-default"
           onClick={() => {
-            history.push('/start');
+            history.push('/snapod/start');
           }}
         >
           <Icons name="home" />

@@ -18,7 +18,7 @@ export default function Start() {
             </div>
           </div>
         </Link>
-        <Link to="/new/episode">
+        <Link to="/snapod/new">
           <div className="col-auto bg-yellow-100 dark:bg-yellow-900 h-full rounded-md text-center items-center justify-center flex">
             <div>
               <div className="w-20 h-20 mx-auto text-yellow-500">

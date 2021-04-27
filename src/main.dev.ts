@@ -16,6 +16,10 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 
+const Store = require('electron-store');
+
+const store = new Store();
+
 export default class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -190,6 +194,36 @@ ipcMain.on('select-dir', async (event) => {
   });
   event.returnValue = result.filePaths;
 });
+
+// Get from store
+ipcMain.on(
+  'store-get',
+  async (
+    event,
+    arg: {
+      key: string;
+      value?: string;
+    }
+  ) => {
+    const result = store.get(arg.key);
+    event.returnValue = result;
+  }
+);
+
+// Set in store
+ipcMain.on(
+  'store-set',
+  async (
+    event,
+    arg: {
+      key: string;
+      value?: string;
+    }
+  ) => {
+    store.set(arg.key, arg.value);
+    event.returnValue = true;
+  }
+);
 
 // Hide sidebar
 ipcMain.on('hide-sidebar', async () => {

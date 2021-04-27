@@ -16,6 +16,7 @@
   "license": "GPL-3.0-only",
   "dependencies": {
     "electron-json-storage": "^4.3.0",
+    "electron-store": "^8.0.0",
     "md5": "^2.3.0"
   },
   "devDependencies": {}
