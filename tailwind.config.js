@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 module.exports = {
   purge: ['./src/**/*.tsx'],
   darkMode: 'media', // or 'media' or 'class'
@@ -6,6 +7,7 @@ module.exports = {
       spacing: {
         main: 'calc(100% - 220px)',
         input: '34px',
+        "17": "4.1rem"
       },
       colors: {
         active: 'rgba(51,51,51,10%)',
@@ -84,6 +86,32 @@ module.exports = {
             opacity: 0,
           },
         },
+        slideUpKey: {
+          '0%': {
+            opacity: 0,
+            marginBottom: '-50px'
+          },
+          '75%': {
+            opacity: 1,
+          },
+          '100%': {
+            opacity: 1,
+            marginBottom: '0px'
+          },
+        },
+        slideDownKey: {
+          '0%': {
+            opacity: 1,
+            marginBottom: '0px'
+          },
+          '75%': {
+            opacity: 0,
+          },
+          '100%': {
+            opacity: 0,
+            marginBottom: '-50px'
+          },
+        },
       },
       animation: {
         extendMainBody: 'extendMainBodyKey .5s ease-in-out',
@@ -92,6 +120,8 @@ module.exports = {
         restoreMainHeader: 'restoreMainHeaderKey .5s ease-in-out',
         restoreMainHeaderWin: 'restoreMainHeaderKeyWin .5s ease-in-out',
         firstShow: 'firstShowKey .25s ease-in-out',
+        slideUp: 'slideUpKey 1s ease-in-out',
+        slideDown: 'slideDownKey .5s ease-in-out'
       },
     },
   },

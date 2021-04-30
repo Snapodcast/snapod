@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
 import HeadContext from '../../lib/Context/head';
 
@@ -11,6 +11,7 @@ export default function Header() {
     'unset'
   );
   const history = useHistory();
+  const location = useLocation();
 
   const hideSideBarListener = () => {
     setExtend(extend === 'true' ? 'false' : 'true');
@@ -61,15 +62,17 @@ export default function Header() {
         </p>
       </div>
       <div className="items-center flex justify-end text-gray-500 space-x-2">
-        <button
-          type="button"
-          className="focus:outline-none w-7 h-7 p-1 hover:bg-select rounded-md cursor-default"
-          onClick={() => {
-            history.goBack();
-          }}
-        >
-          <Icons name="back" />
-        </button>
+        {location.pathname !== '/snapod/start' && (
+          <button
+            type="button"
+            className="focus:outline-none w-7 h-7 p-1 hover:bg-select rounded-md cursor-default"
+            onClick={() => {
+              history.goBack();
+            }}
+          >
+            <Icons name="back" />
+          </button>
+        )}
         <button
           type="button"
           className="focus:outline-none w-7 h-7 p-1 hover:bg-select rounded-md cursor-default"

@@ -114,4 +114,16 @@ html {
     rgba(9, 9, 121, 0) 50%,
     #46d4ff36 100%
   );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.pwd-toggle {
+  @apply w-3 h-3;
+}
+
+button,
+input {
+  @apply outline-none focus:outline-none transition-all;
 }

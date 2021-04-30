@@ -3,6 +3,7 @@
   "productName": "Snapod",
   "version": "0.0.1",
   "description": "Podcasts Self-hosting Solution",
+  "license": "SEE LICENSE IN ../LICENSE",
   "main": "./main.prod.js",
   "author": {
     "name": "TonyHe",
@@ -13,7 +14,6 @@
     "electron-rebuild": "node -r ../.erb/scripts/BabelRegister.js ../.erb/scripts/ElectronRebuild.js",
     "postinstall": "yarn electron-rebuild"
   },
-  "license": "GPL-3.0-only",
   "dependencies": {
     "electron-json-storage": "^4.3.0",
     "electron-store": "^8.0.0",

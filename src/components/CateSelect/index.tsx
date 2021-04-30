@@ -13,7 +13,7 @@ export default function CateSelect({
       onChange={(e) => {
         setCate(e.target.value);
       }}
-      className="tracking-wide focus:outline-none border rounded-md w-full shadow-sm text-sm py-1.5 px-2 text-gray-700"
+      className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
     >
       {podcastCate.indexOf('|') > -1 ? (
         <option value={podcastCate} disabled>
@@ -21,7 +21,7 @@ export default function CateSelect({
         </option>
       ) : (
         <option value="" disabled>
-          Podcast category
+          选择播客分类...
         </option>
       )}
       <option value="Arts">Arts</option>

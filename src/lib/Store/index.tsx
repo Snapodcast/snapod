@@ -13,6 +13,12 @@ export const set = (key: string, value: string): any => {
   });
 };
 
+export const remove = (key: string): any => {
+  return ipcRenderer.sendSync('store-delete', {
+    key,
+  });
+};
+
 export interface StoreInterface {
   currentUser: {
     cuid: string;

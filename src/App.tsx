@@ -1,16 +1,36 @@
 import React from 'react';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { MemoryRouter, Route, Redirect } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
 import * as Store from './lib/Store';
 
 import Header from './components/Header';
 import Aside from './components/Aside';
-import Start from './pages/Start';
-import Login from './pages/Landing/Login';
-import SignUp from './pages/Landing/SignUp';
-import NewEpisode from './pages/Create/New/episode';
+import Start from './pages/embed/Start';
+import Login from './pages/single/Login';
+import SignUp from './pages/single/SignUp';
+import ForgotRequest from './pages/single/Forgot/request';
+import ForgotRecover from './pages/single/Forgot/recover';
 
 import { HeadContextProvider } from './lib/Context/head';
+import { PodcastContextProvider } from './lib/Context/podcast';
+import StartSingle from './pages/single/Start';
+import Configs from './configs';
+import CreatePodcast from './pages/embed/Create/podcast';
+
+const heartBeatCheck = async (token: string) => {
+  const result = await fetch(`${Configs.backend_url}/ping/auth`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch(() => {
+      return null;
+    });
+  return result;
+};
 
 export default function App() {
   /* Header Info */
@@ -20,6 +40,17 @@ export default function App() {
     description: 'Podcasts Self-hosting Solution',
   });
   const headValue = React.useMemo(() => ({ head, setHead }), [head]);
+
+  /* Podcast Info */
+  // podcast info state
+  const [podcast, setPodcast] = React.useState({
+    cuid: '',
+    name: '',
+    description: '',
+  });
+  const podcastValue = React.useMemo(() => ({ podcast, setPodcast }), [
+    podcast,
+  ]);
 
   /* Sidebar Hiding */
   // sidebar status state
@@ -39,44 +70,63 @@ export default function App() {
     };
   });
 
+  const userToken = Store.get('currentUser.token');
+
   return (
-    <BrowserRouter>
+    <MemoryRouter>
+      {/* Entry */}
       <Route exact path="">
-        {!Store.get('currentUser.token') ? (
+        {!userToken || !heartBeatCheck(userToken) ? (
           <Redirect to="/landing/login" />
         ) : (
-          <Redirect to="/snapod" />
+          <Redirect to="/landing/start" />
         )}
       </Route>
-      <Route path="/landing/login" component={Login} />
-      <Route path="/landing/signup" component={SignUp} />
-      <Route path="/snapod">
-        <div className="flex w-full h-full transition-all">
-          <Aside />
-          <div className="absolute bg-white z-10 main h-full main left-220" />
-          <main
-            className={`main h-full bg-white dark:bg-darkMain z-30 absolute ${
-              // eslint-disable-next-line no-nested-ternary
-              extend === 'true'
-                ? 'animate-extendMainBody'
-                : extend === 'unset'
-                ? 'left-220 snapod animate-firstShow'
-                : 'animate-restoreMainBody'
-            }`}
-          >
-            <HeadContextProvider value={headValue}>
-              <Header />
-              <section className="body p-4 z-20">
-                <Route exact path="/snapod">
-                  <Redirect to="/snapod/start" />
-                </Route>
-                <Route exact path="/snapod/start" component={Start} />
-                <Route exact path="/snapod/new" component={NewEpisode} />
-              </section>
-            </HeadContextProvider>
+      {/* Landing */}
+      <Route path="/landing">
+        <div className="w-full h-full theme-background drag">
+          <main className="flex align-middle items-center h-full justify-center">
+            <Route exact path="/landing">
+              <Redirect to="/snapod/login" />
+            </Route>
+            <Route path="/landing/login" component={Login} />
+            <Route path="/landing/signup" component={SignUp} />
+            <Route path="/landing/forgot/request" component={ForgotRequest} />
+            <Route path="/landing/forgot/recover" component={ForgotRecover} />
+            <Route path="/landing/start" component={StartSingle} />
+            <Route path="/landing/create/podcast" component={CreatePodcast} />
           </main>
         </div>
       </Route>
-    </BrowserRouter>
+      {/* Podcast */}
+      <Route path="/snapod">
+        <PodcastContextProvider value={podcastValue}>
+          <div className="flex w-full h-full transition-all">
+            <Aside />
+            <div className="absolute bg-white z-10 main h-full main left-220" />
+            <main
+              className={`main h-full bg-white dark:bg-darkMain z-30 absolute ${
+                // eslint-disable-next-line no-nested-ternary
+                extend === 'true'
+                  ? 'animate-extendMainBody'
+                  : extend === 'unset'
+                  ? 'left-220 snapod animate-firstShow'
+                  : 'animate-restoreMainBody'
+              }`}
+            >
+              <HeadContextProvider value={headValue}>
+                <Header />
+                <section className="body p-4 z-20">
+                  <Route exact path="/snapod">
+                    <Redirect to="/snapod/start" />
+                  </Route>
+                  <Route exact path="/snapod/start" component={Start} />
+                </section>
+              </HeadContextProvider>
+            </main>
+          </div>
+        </PodcastContextProvider>
+      </Route>
+    </MemoryRouter>
   );
 }

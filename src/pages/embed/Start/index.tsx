@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Head from '../../components/Head';
-import Icons from '../../components/Icons';
+import Head from '../../../components/Head';
+import Icons from '../../../components/Icons';
 
 export default function Start() {
   return (
     <div className="h-full flex justify-center items-center">
-      <Head title="Snapod" description="Podcasts Self-hosting Solution" />
+      <Head title="Snapod" description="Grow your podcast with ease" />
       <div className="h-full w-full grid grid-cols-2 gap-x-3">
         <Link to="/new/podcast">
           <div className="col-auto bg-green-100 dark:bg-green-900 h-full rounded-md text-center items-center justify-center flex">

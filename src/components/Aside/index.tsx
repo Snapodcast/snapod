@@ -1,9 +1,18 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
 import Icons from '../Icons/index';
+import * as Store from '../../lib/Store';
+import logout from '../../services/logout';
+import ApolloClient from '../../lib/GraphQL';
 
 export default function Aside() {
+  // apollo client hook
+
+  // router navigation hook
+  const history = useHistory();
+
+  // fullscreen state
   const [fullScreen, setFullScreen] = React.useState<boolean>(false);
 
   // ICP event and listeners for fullscreen
@@ -103,6 +112,30 @@ export default function Aside() {
             </li>
           </NavLink>
         </ul>
+      </div>
+      <div className="grid grid-cols-7 absolute bottom-0 w-full pb-5 px-6 items-center">
+        <div className="col-start-1 col-end-7">
+          <h1 className="text-sm font-medium -mb-0.5 text-gray-700 whitespace-nowrap overflow-hidden overflow-ellipsis">
+            {Store.get('currentUser.name') || 'Snapod'}
+          </h1>
+          <p className="text-xs text-gray-600 whitespace-nowrap overflow-hidden overflow-ellipsis">
+            {Store.get('currentUser.email') || 'Grow your podcast with ease'}
+          </p>
+        </div>
+        <button
+          onClick={() => {
+            logout();
+            ApolloClient.resetStore();
+            history.push('/landing/login');
+          }}
+          aria-label="logout"
+          type="button"
+          className="col-start-7 col-end-8 hover:bg-gray-200 w-6 h-6 p-1 rounded-md bg-gray-100 justify-center flex items-center"
+        >
+          <span className="w-3.5 h-3.5">
+            <Icons name="out" />
+          </span>
+        </button>
       </div>
     </aside>
   );

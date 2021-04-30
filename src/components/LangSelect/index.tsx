@@ -13,10 +13,10 @@ export default function LangSelect({
       onChange={(e) => {
         setLang(e.target.value);
       }}
-      className="tracking-wide focus:outline-none border rounded-md w-full shadow-sm text-sm py-1.5 px-2 text-gray-700"
+      className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
     >
       <option value="" disabled>
-        Content language
+        选择节目语言
       </option>
       <option value="af">Afrikaans</option>
       <option value="ak">Akan</option>
