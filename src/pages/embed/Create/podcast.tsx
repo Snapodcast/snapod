@@ -1,27 +1,96 @@
 import React from 'react';
+import { ipcRenderer } from 'electron';
 import { useHistory } from 'react-router-dom';
 import CateSelect from '../../../components/CateSelect';
 import LangSelect from '../../../components/LangSelect';
 import Switch from 'react-switch';
+import Icons from '../../../components/Icons';
+import fs from 'fs';
+import path from 'path';
+import uploadFileToCDN from '../../../lib/Qiniu';
+import { CREATE_PODCAST } from '../../../lib/GraphQL/queries';
+import { useMutation } from '@apollo/client';
+import * as Store from '../../../lib/Store';
 
 interface ContainerInterface {
   stepNumber: number;
   setStep: any;
   podcastInfo: any;
   setPodcastInfo: any;
+  podcastImage: string;
+  selectImage: any;
+  uploading: boolean;
 }
+
+const toBase64 = (podcastImage: string) => {
+  const image = fs.readFileSync(podcastImage, { encoding: 'base64' });
+  const extensionName = path.extname(podcastImage);
+  return `data:image/${extensionName.split('.').pop()};base64,${image}`;
+};
 
 const StepContainer = ({
   stepNumber,
   setStep,
   podcastInfo,
   setPodcastInfo,
+  podcastImage,
+  selectImage,
+  uploading,
 }: ContainerInterface) => {
   switch (stepNumber) {
+    case 6:
+      return (
+        <div className="justify-center mt-5 text-center">
+          <p className="animate-spin w-full flex justify-center mb-2">
+            <span className="w-6 h-6">
+              <Icons name="spinner" />
+            </span>
+          </p>
+          <p className="ml-1 text-xs font-medium text-gray-500">
+            创建中 / Creating your podcast
+          </p>
+        </div>
+      );
     case 5:
       return (
-        <div>
-          <p className="w-full mt-5">Image</p>
+        <div className="mt-5 w-full rounded-md bg-gray-100 h-25 flex p-2.5 gap-x-2">
+          <button
+            aria-label="upload image"
+            type="button"
+            onClick={() => {
+              if (!uploading) {
+                selectImage();
+              }
+            }}
+            className="bg-gray-200 rounded-md h-20 w-20 flex items-center justify-center flex-2 border"
+            style={{
+              backgroundImage: `url(${
+                podcastImage ? toBase64(podcastImage) : ''
+              })`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+            }}
+          >
+            {!podcastImage && (
+              <span className="w-6 h-6 text-gray-500">
+                <Icons name="image" />
+              </span>
+            )}
+          </button>
+          <div className="flex-1 flex items-center">
+            <div>
+              <p className="ml-1 text-xs font-medium text-gray-500 not-italic">
+                播客封面图像 / Cover Art
+              </p>
+              <p className="text-xs text-gray-400 ml-1 mt-1">
+                {!uploading
+                  ? `封面图像建议最小 1400 x 1400px, 最大 3000 x 3000px, 使用
+                JPEG(.jpg) 或者 PNG(.png) 格式文件, 72 dpi`
+                  : '上传中'}
+              </p>
+            </div>
+          </div>
         </div>
       );
     case 4:
@@ -69,7 +138,7 @@ const StepContainer = ({
               你的播客是否包含少儿不宜内容
             </span>
           </p>
-          <p className="w-full mt-5">
+          <div className="w-full mt-5">
             <span className="flex items-center">
               <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
                 版权字段 / Copyright
@@ -106,11 +175,11 @@ const StepContainer = ({
             <span className="text-xs text-gray-400 ml-1 mt-1">
               (可选) 你的播客版权信息
             </span>
-          </p>
-          <p className="w-full mt-5">
+          </div>
+          <div className="w-full mt-5">
             <span className="flex items-center">
               <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
-                播客所有
+                播客所有 Owner Info
               </em>
               <Switch
                 onChange={() => {
@@ -156,7 +225,7 @@ const StepContainer = ({
             <span className="text-xs text-gray-400 ml-1 mt-1">
               (可选) 你的播客实际所有人信息
             </span>
-          </p>
+          </div>
         </div>
       );
     case 3:
@@ -267,9 +336,14 @@ const StepContainer = ({
 
 export default function CreatePodcast() {
   const history = useHistory();
+  const [creatPodcast] = useMutation(CREATE_PODCAST);
+
   const [stepNumber, setStepNumber] = React.useState(0);
+  const [podcastImage, setImage] = React.useState('');
+  const [podcastImageUrl, setImageUrl] = React.useState('');
+  const [podcastImageUploading, setUploading] = React.useState(false);
   const [podcastInfo, setPodcastInfo] = React.useState({
-    name: null,
+    name: '',
     des: '',
     type: 'episodic',
     contentType: 'no',
@@ -279,7 +353,44 @@ export default function CreatePodcast() {
     useOwner: false,
     ownerName: '',
     ownerEmail: '',
+    copyRight: '',
   });
+
+  const selectImage = async () => {
+    setUploading(true);
+    const imagePaths = await ipcRenderer.invoke('select-image');
+    if (imagePaths.length) {
+      setImage(imagePaths[0]);
+      await uploadFileToCDN(imagePaths[0], setImageUrl);
+    }
+    setUploading(false);
+  };
+
+  const doCreatePodcast = async () => {
+    await creatPodcast({
+      variables: {
+        authorCuid: Store.get('currentUser.cuid'),
+        name: podcastInfo.name,
+        description: podcastInfo.des,
+        type: podcastInfo.type,
+        language: podcastInfo.lang,
+        category: podcastInfo.cate,
+        contentClean: podcastInfo.contentType === 'no',
+        coverImageUrl: podcastImageUrl,
+        copyright: podcastInfo.useCr ? podcastInfo.copyRight : null,
+        ownerName: podcastInfo.useOwner ? podcastInfo.ownerName : null,
+        ownerEmail: podcastInfo.useOwner ? podcastInfo.ownerEmail : null,
+      },
+    })
+      .catch(() => {
+        alert(`创建失败\n请检查信息已填写完整`);
+      })
+      .then((res: any) => {
+        Store.set('currentPodcast.cuid', res.cuid);
+        alert(`创建成功`);
+        history.push('/snapod');
+      });
+  };
 
   return (
     <div className="z-10 shadow-md rounded-md w-2/5 bg-white px-8 py-7 no-drag animate-slideUp">
@@ -302,38 +413,47 @@ export default function CreatePodcast() {
           </span>
           {podcastInfo.name || '新建播客'}
         </h2>
-        <span className="text-gray-500 text-sm">步骤 {stepNumber + 1} / 5</span>
+        <span className="text-gray-500 text-sm">步骤 {stepNumber + 1} / 7</span>
       </div>
       <StepContainer
         stepNumber={stepNumber}
         setStep={setStepNumber}
         podcastInfo={podcastInfo}
         setPodcastInfo={setPodcastInfo}
+        podcastImage={podcastImage}
+        selectImage={selectImage}
+        uploading={podcastImageUploading}
       />
-      <div className="mt-5 w-full flex gap-x-3">
-        {stepNumber > 0 && (
+      {stepNumber < 6 && (
+        <div className="mt-5 w-full flex gap-x-3">
+          {stepNumber > 0 && (
+            <button
+              aria-label="previous step"
+              className="flex px-3 items-center text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md py-1 text-center"
+              type="button"
+              onClick={() => {
+                setStepNumber(stepNumber - 1);
+              }}
+            >
+              ← 上一步
+            </button>
+          )}
           <button
-            aria-label="previous step"
+            aria-label="next step"
             className="flex px-3 items-center text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md py-1 text-center"
             type="button"
             onClick={() => {
-              setStepNumber(stepNumber - 1);
+              if (stepNumber === 5) {
+                doCreatePodcast();
+              } else {
+                setStepNumber(stepNumber + 1);
+              }
             }}
           >
-            ← 上一步
+            下一步 →
           </button>
-        )}
-        <button
-          aria-label="next step"
-          className="flex px-3 items-center text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md py-1 text-center"
-          type="button"
-          onClick={() => {
-            setStepNumber(stepNumber + 1);
-          }}
-        >
-          下一步 →
-        </button>
-      </div>
+        </div>
+      )}
     </div>
   );
 }

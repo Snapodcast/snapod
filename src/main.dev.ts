@@ -159,6 +159,21 @@ ipcMain.on('select-dir', async (event) => {
   event.returnValue = result.filePaths;
 });
 
+// Select image
+ipcMain.handle('select-image', async () => {
+  const result = await dialog.showOpenDialog({
+    title: '选择图像 Select an image file',
+    filters: [
+      {
+        name: 'Image Files',
+        extensions: ['jpg', 'png'],
+      },
+    ],
+    properties: ['openFile'],
+  });
+  return result.filePaths;
+});
+
 // Get from store
 ipcMain.on(
   'store-get',

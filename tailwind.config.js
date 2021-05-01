@@ -91,9 +91,6 @@ module.exports = {
             opacity: 0,
             marginBottom: '-50px'
           },
-          '75%': {
-            opacity: 1,
-          },
           '100%': {
             opacity: 1,
             marginBottom: '0px'
@@ -103,9 +100,6 @@ module.exports = {
           '0%': {
             opacity: 1,
             marginBottom: '0px'
-          },
-          '75%': {
-            opacity: 0,
           },
           '100%': {
             opacity: 0,
@@ -129,7 +123,7 @@ module.exports = {
     extend: {
       borderRadius: ['hover', 'group-hover', 'group-focus'],
       display: ['group-focus', 'group-hover'],
-      borderWidth: ['group-hover', 'dark', 'hover'],
+      borderWidth: ['group-hover', 'dark', 'hover', 'last'],
       borderColor: ['dark', 'hover'],
       backgroundOpacity: ['hover'],
     },

@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import { useQuery, ApolloError } from '@apollo/client';
 import { GET_PODCASTS } from '../../../lib/GraphQL/queries';
@@ -48,11 +50,33 @@ const PodcastsContainer = ({
 
   return (
     <div>
-      {data.length ? (
-        data.map((podcast: any) => (
-          <div key={podcast.cuid}>
-            <h3>{podcast.name}</h3>
-            <p>{podcast.description}</p>
+      {data && data.podcasts.length ? (
+        data.podcasts.map((podcast: any) => (
+          <div
+            key={podcast.cuid}
+            className="rounded-md border shadow-sm grid grid-cols-7 h-24 cursor-pointer hover:bg-gray-50 transition-all"
+            onClick={() => {
+              Store.set('currentPodcast.name', podcast.name);
+              Store.set('currentPodcast.cuid', podcast.cuid);
+              history.push('/snapod');
+            }}
+          >
+            <div
+              style={{
+                backgroundImage: `url(${podcast.profile.cover_art_image_url})`,
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+              }}
+              className="col-start-1 col-end-3 border-r"
+            />
+            <div className="col-start-3 col-end-8 px-3 py-2 text-left flex items-center">
+              <div>
+                <h3 className="text-sm text-gray-600 font-medium mb-1">
+                  {podcast.name}
+                </h3>
+                <p className="text-xs text-gray-500">{podcast.description}</p>
+              </div>
+            </div>
           </div>
         ))
       ) : (
@@ -78,7 +102,9 @@ const PodcastsContainer = ({
 
 export default function StartSingle() {
   const authorCuid = Store.get('currentUser.cuid');
-  const { loading, error, data, refetch } = useQuery(GET_PODCASTS(authorCuid));
+  const { loading, error, data, refetch } = useQuery(GET_PODCASTS, {
+    variables: { authorCuid },
+  });
   const history = useHistory();
   const [showAnimation, setShowAnimation] = React.useState(false);
 

@@ -7,7 +7,8 @@ import logout from '../../services/logout';
 import ApolloClient from '../../lib/GraphQL';
 
 export default function Aside() {
-  // apollo client hook
+  // current podcast
+  const currentPodcastName = Store.get('currentPodcast.name');
 
   // router navigation hook
   const history = useHistory();
@@ -43,6 +44,21 @@ export default function Aside() {
         } drag`}
       />
       <div className="menu no-drag overflow-hidden overflow-y-auto px-4">
+        <select
+          value={currentPodcastName}
+          onChange={(e) => {
+            if (e.target.value === 'create') {
+              history.push('/landing/create/podcast');
+            } else if (e.target.value === 'select') {
+              history.push('/landing/start');
+            }
+          }}
+          className="rounded-md text-sm text-gray-500 dark:text-white p-1.5 px-2 w-full focus:outline-none bg-select dark:bg-darkSelect dark:border-gray-300 mt-1"
+        >
+          <option value="origin">{currentPodcastName}</option>
+          <option value="select">选择已有播客</option>
+          <option value="create">新建播客</option>
+        </select>
         <div className="mt-5 mb-1.5 pl-1.5">
           <h4 className="font-medium text-xs text-gray-400 dark:text-gray-500">
             Create
