@@ -127,3 +127,7 @@ button,
 input {
   @apply outline-none focus:outline-none transition-all;
 }
+
+div::-webkit-scrollbar {
+  width: 0;
+}

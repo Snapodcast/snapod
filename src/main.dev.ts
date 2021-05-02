@@ -192,14 +192,18 @@ ipcMain.on(
 // Set in store
 ipcMain.on(
   'store-set',
-  async (
+  (
     event,
     arg: {
-      key: string;
+      key: any;
       value?: string;
     }
   ) => {
-    store.set(arg.key, arg.value);
+    if (arg.value) {
+      store.set(arg.key, arg.value);
+    } else {
+      store.set(arg.key);
+    }
     event.returnValue = true;
   }
 );
@@ -207,7 +211,7 @@ ipcMain.on(
 // Delete in store
 ipcMain.on(
   'store-delete',
-  async (
+  (
     event,
     arg: {
       key: string;

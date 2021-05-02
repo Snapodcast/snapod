@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/accessible-emoji */
 import React from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
@@ -56,75 +57,80 @@ export default function Aside() {
           className="rounded-md text-sm text-gray-500 dark:text-white p-1.5 px-2 w-full focus:outline-none bg-select dark:bg-darkSelect dark:border-gray-300 mt-1"
         >
           <option value="origin">{currentPodcastName}</option>
-          <option value="select">选择已有播客</option>
-          <option value="create">新建播客</option>
+          <option value="select">选择已有播客👉</option>
+          <option value="create">新建播客🎉</option>
         </select>
+        <div className="my-3">
+          <button
+            type="submit"
+            aria-label="create episode"
+            className="flex justify-center align-middle items-center my-3 text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md w-full py-1.5 text-center"
+          >
+            <span className="h-5 w-5 mr-1.5">
+              <Icons name="addEpisode" />
+            </span>
+            新建节目
+          </button>
+        </div>
         <div className="mt-5 mb-1.5 pl-1.5">
           <h4 className="font-medium text-xs text-gray-400 dark:text-gray-500">
-            Create
+            管理
           </h4>
         </div>
         <ul className="menu-list text-sm text-gray-600 dark:text-white">
-          <NavLink exact to="/new/podcast" activeClassName="active">
-            <li className="rounded-md py-1.5 px-2 flex items-center">
-              <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
-                <Icons name="add" />
-              </span>
-              New Podcast
-            </li>
-          </NavLink>
-          <NavLink exact to="/snapod/new" activeClassName="active">
+          <NavLink exact to="/snapod/manage/podcast" activeClassName="active">
             <li className="rounded-md py-1.5 px-2 flex items-center mt-1">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
-                <Icons name="addEpisode" />
+                <Icons name="info" />
               </span>
-              New Episode
+              播客信息
+            </li>
+          </NavLink>
+          <NavLink exact to="/episodes" activeClassName="active">
+            <li className="rounded-md py-1.5 px-2 flex items-center">
+              <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
+                <Icons name="episodes" />
+              </span>
+              节目列表
+            </li>
+          </NavLink>
+          <NavLink exact to="/podcast" activeClassName="active">
+            <li className="rounded-md py-1.5 px-2 flex items-center">
+              <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
+                <Icons name="presentation-chart" />
+              </span>
+              节目数据
+            </li>
+          </NavLink>
+          <NavLink exact to="/podcast" activeClassName="active">
+            <li className="rounded-md py-1.5 px-2 flex items-center">
+              <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
+                <Icons name="globe" />
+              </span>
+              播客站点
             </li>
           </NavLink>
         </ul>
         <div className="mt-5 mb-1.5 pl-1.5">
           <h4 className="font-medium text-xs text-gray-400 dark:text-gray-500">
-            Options
+            设置
           </h4>
         </div>
         <ul className="menu-list text-sm text-gray-600 dark:text-white">
           <NavLink exact to="/podcast" activeClassName="active">
             <li className="rounded-md py-1.5 px-2 flex items-center">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
-                <Icons name="info" />
-              </span>
-              Podcast
-            </li>
-          </NavLink>
-          <NavLink exact to="/episodes" activeClassName="active">
-            <li className="rounded-md py-1.5 px-2 flex items-center mt-1">
-              <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
-                <Icons name="episodes" />
-              </span>
-              Episodes
-            </li>
-          </NavLink>
-          <NavLink exact to="/publish" activeClassName="active">
-            <li className="rounded-md py-1.5 px-2 flex items-center mt-1">
-              <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="publish" />
               </span>
-              Publish
+              发布渠道
             </li>
           </NavLink>
-        </ul>
-        <div className="mt-5 mb-1.5 pl-1.5">
-          <h4 className="font-medium text-xs text-gray-400 dark:text-gray-500">
-            Settings
-          </h4>
-        </div>
-        <ul className="menu-list text-sm text-gray-600 dark:text-white">
           <NavLink exact to="/hosting" activeClassName="active">
             <li className="rounded-md py-1.5 px-2 flex items-center">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
-                <Icons name="hosting" />
+                <Icons name="gear" />
               </span>
-              Hosting
+              偏好设置
             </li>
           </NavLink>
         </ul>
@@ -146,7 +152,7 @@ export default function Aside() {
           }}
           aria-label="logout"
           type="button"
-          className="col-start-7 col-end-8 hover:bg-gray-200 w-6 h-6 p-1 rounded-md bg-gray-100 justify-center flex items-center"
+          className="col-start-7 col-end-8 hover:shadow-md w-6 h-6 p-1 rounded-md bg-gray-100 justify-center flex items-center"
         >
           <span className="w-3.5 h-3.5">
             <Icons name="out" />

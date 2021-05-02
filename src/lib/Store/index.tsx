@@ -6,7 +6,7 @@ export const get = (key: string): any => {
   });
 };
 
-export const set = (key: string, value: string): any => {
+export const set = (key: any, value?: string): any => {
   return ipcRenderer.sendSync('store-set', {
     key,
     value,

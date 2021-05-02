@@ -13,6 +13,29 @@ export const GET_PODCASTS = gql`
   }
 `;
 
+export const GET_PODCAST = gql`
+  query Podcast($podcastCuid: String!) {
+    podcast(podcastCuid: $podcastCuid) {
+      cuid
+      name
+      description
+      type
+      profile {
+        cover_art_image_url
+        category_name
+        clean_content
+        language
+        copyright
+        ownerName
+        ownerEmail
+        block
+        complete
+        new_feed_url
+      }
+    }
+  }
+`;
+
 export const GET_EPISODES = gql`
   query Episodes($podcastCuid: String!) {
     episodes(podcastCuid: $podcastCuid) {
@@ -55,6 +78,7 @@ export const CREATE_PODCAST = gql`
       }
     ) {
       cuid
+      name
     }
   }
 `;

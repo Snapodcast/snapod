@@ -16,6 +16,7 @@ import { PodcastContextProvider } from './lib/Context/podcast';
 import StartSingle from './pages/single/Start';
 import Configs from './configs';
 import CreatePodcast from './pages/embed/Create/podcast';
+import ManagePodcast from './pages/embed/Manage/info';
 
 const heartBeatCheck = async (token: string) => {
   const result = await fetch(`${Configs.backend_url}/ping/auth`, {
@@ -121,6 +122,11 @@ export default function App() {
                     <Redirect to="/snapod/start" />
                   </Route>
                   <Route exact path="/snapod/start" component={Start} />
+                  <Route
+                    exact
+                    path="/snapod/manage/podcast"
+                    component={ManagePodcast}
+                  />
                 </section>
               </HeadContextProvider>
             </main>

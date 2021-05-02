@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import React from 'react';
 import { ipcRenderer } from 'electron';
 import { useHistory } from 'react-router-dom';
@@ -282,6 +283,7 @@ const StepContainer = ({
             </em>
           </span>
           <textarea
+            autoFocus
             placeholder="播客描述"
             value={podcastInfo.des}
             maxLength={255}
@@ -311,6 +313,7 @@ const StepContainer = ({
             </em>
           </span>
           <input
+            autoFocus
             placeholder="播客名"
             value={podcastInfo.name}
             maxLength={255}
@@ -382,13 +385,16 @@ export default function CreatePodcast() {
         ownerEmail: podcastInfo.useOwner ? podcastInfo.ownerEmail : null,
       },
     })
-      .catch(() => {
-        alert(`创建失败\n请检查信息已填写完整`);
-      })
       .then((res: any) => {
-        Store.set('currentPodcast.cuid', res.cuid);
+        Store.set({
+          currentPodcast: res.data.createPodcast,
+        });
         alert(`创建成功`);
         history.push('/snapod');
+      })
+      .catch(() => {
+        alert(`创建失败\n请检查信息已填写完整`);
+        setStepNumber(5);
       });
   };
 
@@ -443,14 +449,13 @@ export default function CreatePodcast() {
             className="flex px-3 items-center text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md py-1 text-center"
             type="button"
             onClick={() => {
+              setStepNumber(stepNumber + 1);
               if (stepNumber === 5) {
                 doCreatePodcast();
-              } else {
-                setStepNumber(stepNumber + 1);
               }
             }}
           >
-            下一步 →
+            {stepNumber === 5 ? '创建播客' : '下一步 →'}
           </button>
         </div>
       )}
