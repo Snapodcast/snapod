@@ -68,9 +68,9 @@ export const CREATE_PODCAST = gql`
         type: $type
         profile: {
           language: $language
-          category: $category
-          contentClean: $contentClean
-          coverImageUrl: $coverImageUrl
+          category_name: $category
+          clean_content: $contentClean
+          cover_art_image_url: $coverImageUrl
           ownerName: $ownerName
           ownerEmail: $ownerEmail
           copyright: $copyright
@@ -78,6 +78,44 @@ export const CREATE_PODCAST = gql`
       }
     ) {
       cuid
+      name
+    }
+  }
+`;
+
+export const MODIFY_PODCAST = gql`
+  mutation ModifyPodcast(
+    $podcastCuid: String!
+    $name: String!
+    $description: String!
+    $type: String!
+    $language: String
+    $category_name: String
+    $clean_content: Boolean
+    $ownerName: String
+    $ownerEmail: String
+    $cover_art_image_url: String
+    $copyright: String
+    $block: Boolean
+    $complete: Boolean
+    $new_feed_url: String
+  ) {
+    modifyPodcast(
+      podcastCuid: $podcastCuid
+      info: { name: $name, description: $description, type: $type }
+      profile: {
+        language: $language
+        category_name: $category_name
+        clean_content: $clean_content
+        cover_art_image_url: $cover_art_image_url
+        ownerName: $ownerName
+        ownerEmail: $ownerEmail
+        copyright: $copyright
+        block: $block
+        complete: $complete
+        new_feed_url: $new_feed_url
+      }
+    ) {
       name
     }
   }

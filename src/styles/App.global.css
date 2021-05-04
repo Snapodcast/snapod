@@ -131,3 +131,7 @@ input {
 div::-webkit-scrollbar {
   width: 0;
 }
+
+.h-fit-content {
+  height: fit-content;
+}

@@ -15,7 +15,7 @@ export default function CateSelect({
       }}
       className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
     >
-      {podcastCate.indexOf('|') > -1 ? (
+      {podcastCate && podcastCate.indexOf('|') > -1 ? (
         <option value={podcastCate} disabled>
           {podcastCate.split('|')[1]}
         </option>

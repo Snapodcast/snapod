@@ -1,19 +1,25 @@
 import React from 'react';
-import HeadContext from '../../lib/Context/head';
+import HeadContext, { HeadContextParams } from '../../lib/Context/head';
 
 export default function Head({
   title,
   description,
-}: {
-  title: string;
-  description: string;
-}) {
+  savable,
+  doSave,
+}: HeadContextParams) {
   const { head, setHead } = React.useContext(HeadContext);
   React.useEffect(() => {
-    if (head && (head.title !== title || head.description !== description)) {
+    if (
+      head &&
+      (head.title !== title ||
+        head.description !== description ||
+        head.savable !== savable)
+    ) {
       setHead({
         title,
         description,
+        savable,
+        doSave,
       });
     }
   });

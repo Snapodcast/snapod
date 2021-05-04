@@ -50,10 +50,9 @@ const PodcastsContainer = ({
 
   return (
     <div>
-      <div className="mb-5">
-        {data &&
-          data.podcasts.length &&
-          data.podcasts.map((podcast: any) => (
+      {data && data.podcasts.length > 0 && (
+        <div className="mb-5">
+          {data.podcasts.map((podcast: any) => (
             <div
               key={podcast.cuid}
               className="mb-3 rounded-md border shadow-sm grid grid-cols-7 h-24 cursor-pointer hover:bg-gray-50 transition-all"
@@ -81,7 +80,8 @@ const PodcastsContainer = ({
               </div>
             </div>
           ))}
-      </div>
+        </div>
+      )}
       <div className="flex justify-center">
         <button
           aria-label="create"
@@ -106,6 +106,9 @@ export default function StartSingle() {
   const { loading, error, data, refetch } = useQuery(GET_PODCASTS, {
     variables: { authorCuid },
     fetchPolicy: 'cache-and-network',
+    onError: (e) => {
+      alert(e.message);
+    },
   });
   const history = useHistory();
   const [showAnimation, setShowAnimation] = React.useState(false);

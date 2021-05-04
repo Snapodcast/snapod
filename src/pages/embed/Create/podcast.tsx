@@ -356,7 +356,7 @@ export default function CreatePodcast() {
     useOwner: false,
     ownerName: '',
     ownerEmail: '',
-    copyRight: '',
+    copyRight: '©️',
   });
 
   const selectImage = async () => {
@@ -413,7 +413,7 @@ export default function CreatePodcast() {
         </button>
       )}
       <div className="mb-2 flex gap-x-2 items-center">
-        <h2 className="font-bold text-xl tracking-wide flex-1">
+        <h2 className="font-bold text-xl tracking-wide flex-1 whitespace-nowrap overflow-hidden overflow-ellipsis">
           <span role="img" aria-label="snapod-logo" className="mr-1">
             🎙️
           </span>
