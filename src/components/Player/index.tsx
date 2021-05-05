@@ -10,15 +10,28 @@ import WaveSurfer from 'wavesurfer.js';
 import { FaPlay, FaUndo, FaRedo, FaPause } from 'react-icons/fa';
 import { useEffectOnce } from 'react-use';
 
-export default function Player(props) {
-  const waveformRef = useRef();
-  const trackRef = useRef(); // Separated track playing from waveplayer to support bigger audio files
-  const [waveSurfer, setWaveSurfer] = useState(null); // Holds the reference to created wavesurfer object
+export default function Player(props: {
+  playBackSpeedOptions: number[];
+  hideWave: any;
+  waveStyles: WaveSurfer.WaveSurferParams;
+  waveJson: (readonly number[] | readonly (readonly number[])[]) | undefined;
+  getWaveSurferInstance: (arg0: null) => void;
+  zoom: number | undefined;
+  events: { [s: string]: unknown } | ArrayLike<unknown>;
+  containerStyles: React.CSSProperties | undefined;
+  hideImage: any;
+  imageUrl: string | undefined;
+  imgStyles: React.CSSProperties | undefined;
+  audioUrl: string | undefined;
+}) {
+  const waveformRef: any = useRef();
+  const trackRef: any = useRef(); // Separated track playing from waveplayer to support bigger audio files
+  const [waveSurfer, setWaveSurfer] = useState<any>(null); // Holds the reference to created wavesurfer object
 
-  const [playingAudio, setPlayingAudio] = useState(false);
-  const [playBackSpeed, setPlayBackSpeed] = useState(1);
-  const [playable, setPlayable] = useState(false);
-  const [error, setError] = useState(false);
+  const [playingAudio, setPlayingAudio] = useState<boolean>(false);
+  const [playBackSpeed, setPlayBackSpeed] = useState<number>(1);
+  const [playable, setPlayable] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   const playBackSpeedOptions = props.playBackSpeedOptions ?? [
     0.5,
@@ -46,7 +59,7 @@ export default function Player(props) {
     trackRef.current.playbackRate = playBackSpeedOptions[newSpeed];
   };
 
-  const seekAudioFifteenSeconds = (ahead) => {
+  const seekAudioFifteenSeconds = (ahead: boolean) => {
     if (ahead) trackRef.current.currentTime += 15;
     else trackRef.current.currentTime -= 15;
   };
