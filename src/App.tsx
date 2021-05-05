@@ -17,6 +17,7 @@ import StartSingle from './pages/single/Start';
 import Configs from './configs';
 import CreatePodcast from './pages/embed/Create/podcast';
 import ManagePodcast from './pages/embed/Manage/info';
+import CreateEpisode from './pages/embed/Create/episode';
 
 const heartBeatCheck = async (token: string) => {
   const result = await fetch(`${Configs.backend_url}/ping/auth`, {
@@ -118,14 +119,17 @@ export default function App() {
               <HeadContextProvider value={headValue}>
                 <Header />
                 <section className="body p-4 z-20">
-                  <Route exact path="/snapod">
+                  <Route path="/snapod">
                     <Redirect to="/snapod/start" />
                   </Route>
-                  <Route exact path="/snapod/start" component={Start} />
+                  <Route path="/snapod/start" component={Start} />
                   <Route
-                    exact
                     path="/snapod/manage/podcast"
                     component={ManagePodcast}
+                  />
+                  <Route
+                    path="/snapod/create/episode"
+                    component={CreateEpisode}
                   />
                 </section>
               </HeadContextProvider>

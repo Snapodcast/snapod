@@ -120,3 +120,33 @@ export const MODIFY_PODCAST = gql`
     }
   }
 `;
+
+export const CREATE_EPISODE = gql`
+  mutation CreateEpisode(
+    $podcastCuid: String!
+    $title: String!
+    $content: String!
+    $audio_url: String!
+    $audio_size: Int!
+    $audio_length: Int!
+    $episode_type: String!
+    $clean_content: Boolean!
+  ) {
+    createEpisode(
+      podcastCuid: $podcastCuid
+      data: {
+        title: $title
+        content: $content
+        profile: {
+          audio_url: $audio_url
+          audio_length: $audio_length
+          audio_size: $audio_size
+          episode_type: $episode_type
+          clean_content: $clean_content
+        }
+      }
+    ) {
+      cuid
+    }
+  }
+`;

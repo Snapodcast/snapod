@@ -8,10 +8,7 @@ import CateSelect from '../../../components/CateSelect';
 import Switch from 'react-switch';
 import LangSelect from '../../../components/LangSelect';
 import Icons from '../../../components/Icons';
-import { ipcRenderer } from 'electron';
-import uploadFileToCDN from '../../../lib/Qiniu';
-import fs from 'fs';
-import path from 'path';
+import selectImageAndUploadToCDN from '../../../lib/Upload/Image';
 
 export default function ManagePodcast() {
   const podcastCuid = Store.get('currentPodcast.cuid');
@@ -62,7 +59,7 @@ export default function ManagePodcast() {
       })
         .then((res: any) => {
           Store.set('currentPodcast.name', res.data.modifyPodcast.name);
-          refetch();
+          setSavable(false);
           alert('修改成功');
         })
         .catch(() => {
@@ -75,22 +72,13 @@ export default function ManagePodcast() {
   /* Select cover art image action */
   const selectImage = async () => {
     setUploading(true);
-    const imagePaths = await ipcRenderer.invoke('select-image');
-    if (imagePaths.length) {
-      const url = await uploadFileToCDN(imagePaths[0]);
-      setInfo({
-        ...podcastInfo,
-        image: imagePaths[0],
-        cover_art_image_url: url,
-      });
-    }
+    const result = await selectImageAndUploadToCDN();
+    setInfo({
+      ...podcastInfo,
+      image: result.imagePath,
+      cover_art_image_url: result.remotePath,
+    });
     setUploading(false);
-  };
-
-  const toBase64 = (podcastImage: string) => {
-    const image = fs.readFileSync(podcastImage, { encoding: 'base64' });
-    const extensionName = path.extname(podcastImage);
-    return `data:image/${extensionName.split('.').pop()};base64,${image}`;
   };
 
   /* Fill in default values */
@@ -175,9 +163,7 @@ export default function ManagePodcast() {
             }}
             style={{
               backgroundImage: `url(${
-                podcastInfo.image
-                  ? toBase64(podcastInfo.image)
-                  : podcastInfo.cover_art_image_url
+                podcastInfo.image || podcastInfo.cover_art_image_url
               })`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',

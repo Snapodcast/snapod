@@ -135,3 +135,31 @@ div::-webkit-scrollbar {
 .h-fit-content {
   height: fit-content;
 }
+
+#waveform wave {
+  display: none !important;
+}
+
+#waveform wave:last-child {
+  display: block !important;
+}
+
+.wave-player div:nth-child(1) div:nth-child(1) div:nth-child(2) {
+  column-gap: 1.5rem;
+  align-items: center;
+  color: #6b7280;
+  @apply my-0.5;
+}
+
+.wave-player > div {
+  height: calc(100% - 25px - 0.25rem);
+}
+
+.wave-player svg,
+.wave-player span {
+  margin: 0px !important;
+}
+
+.reupload-btn {
+  height: 25px;
+}

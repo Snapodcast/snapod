@@ -26,3 +26,5 @@ declare interface PodcastUpdated extends PodcastFull {
 declare interface MainData {
   podcasts?: PodcastFull[];
 }
+
+declare module 'react-wavy-audio';

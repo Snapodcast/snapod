@@ -1,11 +1,27 @@
 import { ipcRenderer } from 'electron';
 import uploadFileToCDN from '../Qiniu';
+import fs from 'fs';
+import path from 'path';
 
-/* Select cover art image action */
-const selectImage = async () => {
-  const imagePaths = await ipcRenderer.invoke('select-image');
-  if (imagePaths.length) {
-    return uploadFileToCDN(imagePaths[0]);
-  }
-  return '';
+const toBase64 = (imagePath: string) => {
+  const image = fs.readFileSync(imagePath, { encoding: 'base64' });
+  const extensionName = path.extname(imagePath);
+  return `data:image/${extensionName.split('.').pop()};base64,${image}`;
 };
+
+const selectImageAndUploadToCDN = async () => {
+  let localPath = '';
+  let remotePath = '';
+  const imagePaths: string[] = await ipcRenderer.invoke('select-image');
+  if (imagePaths.length) {
+    [localPath] = imagePaths;
+    remotePath = await uploadFileToCDN(imagePaths[0]);
+  }
+  return {
+    localPath,
+    remotePath,
+    imagePath: localPath ? toBase64(localPath) : '',
+  };
+};
+
+export default selectImageAndUploadToCDN;

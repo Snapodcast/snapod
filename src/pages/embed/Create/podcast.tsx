@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 import React from 'react';
-import { ipcRenderer } from 'electron';
 import { useHistory } from 'react-router-dom';
 import CateSelect from '../../../components/CateSelect';
 import LangSelect from '../../../components/LangSelect';
@@ -8,10 +7,10 @@ import Switch from 'react-switch';
 import Icons from '../../../components/Icons';
 import fs from 'fs';
 import path from 'path';
-import uploadFileToCDN from '../../../lib/Qiniu';
 import { CREATE_PODCAST } from '../../../lib/GraphQL/queries';
 import { useMutation } from '@apollo/client';
 import * as Store from '../../../lib/Store';
+import selectImageAndUploadToCDN from '../../../lib/Upload/Image';
 
 interface ContainerInterface {
   stepNumber: number;
@@ -361,11 +360,9 @@ export default function CreatePodcast() {
 
   const selectImage = async () => {
     setUploading(true);
-    const imagePaths = await ipcRenderer.invoke('select-image');
-    if (imagePaths.length) {
-      setImage(imagePaths[0]);
-      await uploadFileToCDN(imagePaths[0], setImageUrl);
-    }
+    const result = await selectImageAndUploadToCDN();
+    setImage(result.localPath);
+    setImageUrl(result.remotePath);
     setUploading(false);
   };
 

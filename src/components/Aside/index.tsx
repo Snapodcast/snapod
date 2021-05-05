@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import React from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
 import Icons from '../Icons/index';
 import * as Store from '../../lib/Store';
@@ -61,16 +61,18 @@ export default function Aside() {
           <option value="create">新建播客🎉</option>
         </select>
         <div className="my-3">
-          <button
-            type="submit"
-            aria-label="create episode"
-            className="flex justify-center align-middle items-center my-3 text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md w-full py-1.5 text-center"
-          >
-            <span className="h-5 w-5 mr-1.5">
-              <Icons name="addEpisode" />
-            </span>
-            新建节目
-          </button>
+          <Link to="/snapod/create/episode">
+            <button
+              type="submit"
+              aria-label="create episode"
+              className="flex justify-center align-middle items-center my-3 text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md w-full py-1.5 text-center"
+            >
+              <span className="h-5 w-5 mr-1.5">
+                <Icons name="addEpisode" />
+              </span>
+              新建节目
+            </button>
+          </Link>
         </div>
         <div className="mt-5 mb-1.5 pl-1.5">
           <h4 className="font-medium text-xs text-gray-400 dark:text-gray-500">

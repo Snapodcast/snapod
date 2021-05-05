@@ -174,6 +174,21 @@ ipcMain.handle('select-image', async () => {
   return result.filePaths;
 });
 
+// Select audio file
+ipcMain.handle('select-audio-file', async () => {
+  const result = await dialog.showOpenDialog({
+    title: '选择节目音频 Select an audio file',
+    filters: [
+      {
+        name: 'Audio Files',
+        extensions: ['mp3', 'm4a'],
+      },
+    ],
+    properties: ['openFile'],
+  });
+  return result.filePaths;
+});
+
 // Get from store
 ipcMain.on(
   'store-get',
