@@ -1,29 +1,43 @@
 import React from 'react';
 import * as Store from '../../../lib/Store';
-import { useMutation } from '@apollo/client';
-import { CREATE_EPISODE } from '../../../lib/GraphQL/queries';
+import { useQuery, useMutation } from '@apollo/client';
+import { GET_EPISODE, MODIFY_EPISODE } from '../../../lib/GraphQL/queries';
 import { Input } from '../../../components/Form';
 import Head from '../../../components/Head';
+import Switch from 'react-switch';
+import Editor from 'rich-markdown-editor';
 import Icons from '../../../components/Icons';
 import selectImageAndUploadToCDN from '../../../lib/Upload/Image';
-import Editor from 'rich-markdown-editor';
-import { uploadFile } from '../../../lib/Qiniu';
-import selectAudioFileAndUploadToCDN from '../../../lib/Upload/Audio';
 import Player from '../../../components/Player';
-import Switch from 'react-switch';
-import { useHistory } from 'react-router';
+import selectAudioFileAndUploadToCDN from '../../../lib/Upload/Audio';
+import { uploadFile } from '../../../lib/Qiniu';
 
-export default function CreateEpisode() {
-  const podcastCuid = Store.get('currentPodcast.cuid');
-  const history = useHistory();
-  const [createEpisode] = useMutation(CREATE_EPISODE);
-  const [episodeInfo, setInfo] = React.useState<any>({
-    clean_content: true,
-    episode_type: 'full',
+export default function ManageEpisode() {
+  const episodeCuid = Store.get('currentEpisode.cuid');
+  const episodeTitle = Store.get('currentEpisode.title');
+  const { loading, error, data, refetch } = useQuery(GET_EPISODE, {
+    variables: { episodeCuid },
+    fetchPolicy: 'network-only',
   });
+  const [modifyEpisode] = useMutation(MODIFY_EPISODE);
+  const [episodeInfo, setInfo] = React.useState<any>({
+    title: '',
+    content: '',
+    published: false,
+    audio_url: '',
+    audio_duration: '',
+    audio_size: 0,
+    cover_art_image_url: '',
+    episode_type: '',
+    clean_content: true,
+    season_number: 1,
+    episode_number: 1,
+    useSeason: false,
+  });
+  const [savable, setSavable] = React.useState(false);
+  const [saving, setSaving] = React.useState(false);
   const [uploading, setUploading] = React.useState(false);
   const [audioUploading, setAudioUploading] = React.useState(false);
-  const [creating, setCreating] = React.useState(false);
 
   /* Select cover art image action */
   const selectImage = async () => {
@@ -51,55 +65,115 @@ export default function CreateEpisode() {
     setAudioUploading(false);
   };
 
-  /* Create episode action */
-  const doCreate = async () => {
-    setCreating(true);
-    const variables = {
-      podcastCuid,
-      published: true,
-      ...episodeInfo,
-      episode_number:
-        typeof episodeInfo.episode_number !== 'number'
-          ? parseInt(episodeInfo.episode_number, 10)
-          : episodeInfo.episode_number,
-    };
-    await createEpisode({
-      variables,
-    })
-      .then(() => {
-        alert(`创建成功`);
-        setCreating(false);
-        history.push('/snapod/manage/episodes');
+  /* Save action */
+  const doSave = async () => {
+    if (!uploading) {
+      setSaving(true);
+      const variables = {
+        ...episodeInfo,
+        episodeCuid,
+        clean_content: episodeInfo.clean_content === 'true',
+        published: episodeInfo.published === 'true',
+        episode_number:
+          typeof episodeInfo.episode_number !== 'number'
+            ? parseInt(episodeInfo.episode_number, 10)
+            : episodeInfo.episode_number,
+      };
+
+      await modifyEpisode({
+        variables,
       })
-      .catch(() => {
-        alert(`创建失败\n请检查信息已填写完整`);
-        setCreating(false);
-      });
+        .then(() => {
+          setSavable(false);
+          alert('修改成功');
+        })
+        .catch(() => {
+          alert(`修改失败`);
+        });
+      setSaving(false);
+    }
   };
+
+  /* Fill in default values */
+  const isDataFirstRun = React.useRef(true);
+  if (data && isDataFirstRun.current) {
+    setInfo({
+      title: data.episode.title,
+      content: data.episode.content,
+      published: data.episode.published.toString(),
+      audio_url: data.episode.profile.audio_url,
+      audio_path: data.episode.profile.audio_url,
+      audio_duration: data.episode.profile.audio_duration,
+      audio_size: data.episode.profile.audio_size,
+      cover_art_image_url: data.episode.profile.cover_art_image_url,
+      episode_type: data.episode.profile.episode_type,
+      clean_content: data.episode.profile.clean_content.toString(),
+      season_number: data.episode.profile.season_number,
+      episode_number: data.episode.profile.episode_number,
+      useSeason: !!data.episode.profile.season_number,
+    });
+    isDataFirstRun.current = false;
+  }
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <span className="animate-spin w-5 h-5">
+          <Icons name="spinner" />
+        </span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center error-container">
+        <div>
+          <p className="mb-3 flex justify-center">
+            <span className="h-28 w-28 text-gray-200">
+              <Icons name="warning" />
+            </span>
+          </p>
+          <div className="justify-center flex">
+            <button
+              aria-label="refetch"
+              type="button"
+              className="flex justify-center align-middle items-center text-white text-sm hover:bg-gray-600 bg-gray-500 focus:outline-none rounded-md shadow-md py-1.5 px-4 text-center"
+              onClick={() => {
+                refetch();
+              }}
+            >
+              重新加载
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-4 mb-14">
-      <Head title="新建播客节目" description="为你的播客新增一期音频节目" />
-      <div className="flex justify-center items-center w-full">
-        <div className="flex absolute bottom-5 z-10 gap-x-3">
-          <button
-            className="bg-blue-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white hover:bg-blue-600"
-            aria-label="create episode"
-            type="button"
-            onClick={() => {
-              if (!uploading && !audioUploading) {
-                doCreate();
-              }
-            }}
-          >
-            {uploading || audioUploading
-              ? '上传中...'
-              : creating
-              ? '创建中...'
-              : '完成新建'}
-          </button>
+      <Head title="修改节目信息" description={episodeTitle} />
+      {savable && (
+        <div className="flex justify-center items-center w-full">
+          <div className="flex absolute bottom-5 z-10 gap-x-3">
+            <button
+              className="bg-blue-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white hover:bg-blue-600"
+              aria-label="create episode"
+              type="button"
+              onClick={() => {
+                doSave();
+              }}
+            >
+              {uploading || audioUploading
+                ? '上传中...'
+                : saving
+                ? '保存中...'
+                : '保存更改'}
+            </button>
+          </div>
         </div>
-      </div>
+      )}
       <section className="flex gap-x-8 pb-8 mx-5">
         <div>
           <button
@@ -109,9 +183,10 @@ export default function CreateEpisode() {
               episodeInfo.image && 'hover:opacity-90'
             }`}
             onClick={() => {
-              if (!uploading && !audioUploading) {
+              if (!uploading) {
                 if (!episodeInfo.image) {
                   selectImage();
+                  setSavable(true);
                 } else {
                   setInfo({
                     ...episodeInfo,
@@ -122,13 +197,15 @@ export default function CreateEpisode() {
               }
             }}
             style={{
-              backgroundImage: `url(${episodeInfo.image || ''})`,
+              backgroundImage: `url(${
+                episodeInfo.image || episodeInfo.cover_art_image_url
+              })`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
             }}
           >
-            {!episodeInfo.image && (
+            {!episodeInfo.image && !episodeInfo.cover_art_image_url && (
               <span className="text-gray-500">
                 <span className="h-20 w-20">
                   <Icons name="microphone" />
@@ -149,7 +226,7 @@ export default function CreateEpisode() {
         <div className="flex-1">
           <div>
             <Input
-              disabled={uploading || audioUploading}
+              defaultValue={episodeInfo.title}
               name="节目标题 / Title"
               placeholder="节目标题"
               onChange={(e: { target: { value: any } }) => {
@@ -157,6 +234,7 @@ export default function CreateEpisode() {
                   ...episodeInfo,
                   title: e.target.value,
                 });
+                setSavable(true);
               }}
             />
           </div>
@@ -168,10 +246,10 @@ export default function CreateEpisode() {
                 </em>
               </span>
               <select
-                defaultValue="full"
-                disabled={uploading || audioUploading}
+                defaultValue={episodeInfo.episode_type}
                 onChange={(e) => {
                   setInfo({ ...episodeInfo, episode_type: e.target.value });
+                  setSavable(true);
                 }}
                 className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
               >
@@ -190,13 +268,13 @@ export default function CreateEpisode() {
                 </em>
               </span>
               <select
-                defaultValue="true"
-                disabled={uploading || audioUploading}
+                defaultValue={episodeInfo.clean_content}
                 onChange={(e) => {
                   setInfo({
                     ...episodeInfo,
                     clean_content: e.target.value === 'true',
                   });
+                  setSavable(true);
                 }}
                 className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
               >
@@ -217,6 +295,7 @@ export default function CreateEpisode() {
             onClick={() => {
               if (!episodeInfo.audio_url) {
                 selectAudio();
+                setSavable(true);
               }
             }}
             aria-hidden="true"
@@ -267,7 +346,10 @@ export default function CreateEpisode() {
                   hideImage="true"
                 />
                 <button
-                  onClick={() => selectAudio()}
+                  onClick={() => {
+                    selectAudio();
+                    setSavable(true);
+                  }}
                   type="button"
                   aria-label="select audio file"
                   className="reupload-btn border-t w-full py-1 rounded-bl-lg rounded-br-lg text-center text-xs mt-1 pt-1 text-gray-500 bg-gray-100 hover:bg-gray-200"
@@ -287,13 +369,14 @@ export default function CreateEpisode() {
         </span>
         <div className="rounded-lg border py-4 w-full mt-1 text-base px-8">
           <Editor
-            readOnly={uploading || audioUploading}
+            defaultValue={episodeInfo.content}
             placeholder="节目描述..."
             onChange={(value) => {
               setInfo({
                 ...episodeInfo,
                 content: value(),
               });
+              setSavable(true);
             }}
             uploadImage={async (file) => {
               const result = await uploadFile(file);
@@ -310,12 +393,12 @@ export default function CreateEpisode() {
                 节目季数 / Season Number
               </em>
               <Switch
-                disabled={uploading || audioUploading}
                 onChange={() => {
                   setInfo({
                     ...episodeInfo,
                     useSeason: !episodeInfo.useSeason,
                   });
+                  setSavable(true);
                 }}
                 checked={!!episodeInfo.useSeason}
                 handleDiameter={14}
@@ -328,7 +411,8 @@ export default function CreateEpisode() {
               />
             </span>
             <input
-              disabled={!episodeInfo.useSeason || uploading || audioUploading}
+              disabled={!episodeInfo.useSeason}
+              defaultValue={episodeInfo.season_number}
               placeholder="季集类型播客可用"
               type="number"
               min="0"
@@ -337,22 +421,24 @@ export default function CreateEpisode() {
                   ...episodeInfo,
                   season_number: e.target.value,
                 });
+                setSavable(true);
               }}
               className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
             />
           </div>
           <div className="flex-1">
             <Input
-              disabled={uploading || audioUploading}
               name="节目期数 / Episode Number"
               type="number"
               min="0"
               placeholder="1, 2..."
+              defaultValue={episodeInfo.episode_number}
               onChange={(e: { target: { value: any } }) => {
                 setInfo({
                   ...episodeInfo,
                   episode_number: e.target.value,
                 });
+                setSavable(true);
               }}
             />
           </div>

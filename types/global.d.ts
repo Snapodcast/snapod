@@ -28,3 +28,4 @@ declare interface MainData {
 }
 
 declare module 'react-wavy-audio';
+declare module 'mp3-duration';

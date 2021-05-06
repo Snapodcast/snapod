@@ -12,12 +12,13 @@ import ForgotRequest from './pages/single/Forgot/request';
 import ForgotRecover from './pages/single/Forgot/recover';
 
 import { HeadContextProvider } from './lib/Context/head';
-import { PodcastContextProvider } from './lib/Context/podcast';
 import StartSingle from './pages/single/Start';
 import Configs from './configs';
 import CreatePodcast from './pages/embed/Create/podcast';
 import ManagePodcast from './pages/embed/Manage/info';
 import CreateEpisode from './pages/embed/Create/episode';
+import EpisodeList from './pages/embed/Manage/episodeList';
+import ManageEpisode from './pages/embed/Manage/episode';
 
 const heartBeatCheck = async (token: string) => {
   const result = await fetch(`${Configs.backend_url}/ping/auth`, {
@@ -42,17 +43,6 @@ export default function App() {
     description: 'Podcasts Self-hosting Solution',
   });
   const headValue = React.useMemo(() => ({ head, setHead }), [head]);
-
-  /* Podcast Info */
-  // podcast info state
-  const [podcast, setPodcast] = React.useState({
-    cuid: '',
-    name: '',
-    description: '',
-  });
-  const podcastValue = React.useMemo(() => ({ podcast, setPodcast }), [
-    podcast,
-  ]);
 
   /* Sidebar Hiding */
   // sidebar status state
@@ -102,40 +92,43 @@ export default function App() {
       </Route>
       {/* Podcast */}
       <Route path="/snapod">
-        <PodcastContextProvider value={podcastValue}>
-          <div className="flex w-full h-full transition-all">
-            <Aside />
-            <div className="absolute bg-white z-10 main h-full main left-220" />
-            <main
-              className={`main h-full bg-white dark:bg-darkMain z-30 absolute ${
-                // eslint-disable-next-line no-nested-ternary
-                extend === 'true'
-                  ? 'animate-extendMainBody'
-                  : extend === 'unset'
-                  ? 'left-220 snapod animate-firstShow'
-                  : 'animate-restoreMainBody'
-              }`}
-            >
-              <HeadContextProvider value={headValue}>
-                <Header />
-                <section className="body p-4 z-20">
-                  <Route path="/snapod">
-                    <Redirect to="/snapod/start" />
-                  </Route>
-                  <Route path="/snapod/start" component={Start} />
-                  <Route
-                    path="/snapod/manage/podcast"
-                    component={ManagePodcast}
-                  />
-                  <Route
-                    path="/snapod/create/episode"
-                    component={CreateEpisode}
-                  />
-                </section>
-              </HeadContextProvider>
-            </main>
-          </div>
-        </PodcastContextProvider>
+        <div className="flex w-full h-full transition-all">
+          <Aside />
+          <div className="absolute bg-white z-10 main h-full main left-220" />
+          <main
+            className={`main h-full bg-white dark:bg-darkMain z-30 absolute ${
+              // eslint-disable-next-line no-nested-ternary
+              extend === 'true'
+                ? 'animate-extendMainBody'
+                : extend === 'unset'
+                ? 'left-220 snapod animate-firstShow'
+                : 'animate-restoreMainBody'
+            }`}
+          >
+            <HeadContextProvider value={headValue}>
+              <Header />
+              <section className="body p-4 z-20">
+                <Route path="/snapod">
+                  <Redirect to="/snapod/start" />
+                </Route>
+                <Route path="/snapod/start" component={Start} />
+                <Route
+                  path="/snapod/create/episode"
+                  component={CreateEpisode}
+                />
+                <Route
+                  path="/snapod/manage/podcast"
+                  component={ManagePodcast}
+                />
+                <Route path="/snapod/manage/episodes" component={EpisodeList} />
+                <Route
+                  path="/snapod/manage/episode"
+                  component={ManageEpisode}
+                />
+              </section>
+            </HeadContextProvider>
+          </main>
+        </div>
       </Route>
     </MemoryRouter>
   );

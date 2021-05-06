@@ -121,11 +121,13 @@ module.exports = {
   },
   variants: {
     extend: {
+      opacity: ['hover'],
       borderRadius: ['hover', 'group-hover', 'group-focus'],
       display: ['group-focus', 'group-hover'],
       borderWidth: ['group-hover', 'dark', 'hover', 'last'],
       borderColor: ['dark', 'hover'],
       backgroundOpacity: ['hover'],
+      boxShadow: ['focus-within', 'focus']
     },
   },
   plugins: [],

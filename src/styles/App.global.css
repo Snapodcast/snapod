@@ -163,3 +163,61 @@ div::-webkit-scrollbar {
 .reupload-btn {
   height: 25px;
 }
+
+.react-dropdown-select-input {
+  display: none;
+}
+
+.react-dropdown-select-content,
+.react-dropdown-select-content span {
+  width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.react-dropdown-select {
+  @apply rounded-md text-sm text-gray-500 dark:text-white py-0.5 px-3 w-full focus:outline-none bg-select dark:bg-darkSelect dark:border-gray-300 mt-1 border-none hover:border-gray-300 focus-within:shadow-none !important;
+}
+
+.react-dropdown-select-dropdown {
+  top: 40px !important;
+  border: none !important;
+  border-radius: 5px !important;
+}
+
+.react-dropdown-select-item {
+  @apply border-gray-100 py-1.5 px-3 !important;
+}
+
+.episode-item {
+  height: 125px;
+}
+
+.episode-item-image {
+  width: 250px;
+  height: 125px;
+}
+
+.episode-item-info span {
+  @apply px-2 py-0.5 rounded-md border border-gray-400;
+}
+
+.error-container {
+  position: absolute;
+  top: 0;
+  left: calc(50% - 118px / 2);
+  bottom: 0;
+}
+
+.episode-item .episode-item-delete {
+  display: none;
+}
+
+.episode-item:hover .episode-item-delete {
+  display: flex;
+}
+
+.episode-item-content {
+  flex: 4;
+}

@@ -1,14 +1,15 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 
-export default function LangSelect({
-  podcastLang,
-  setLang,
-}: {
+export default function LangSelect(props: {
   podcastLang: string;
   setLang: any;
+  [prop: string]: any;
 }) {
+  const { podcastLang, setLang, ...rest } = props;
   return (
     <select
+      {...rest}
       value={podcastLang}
       onChange={(e) => {
         setLang(e.target.value);

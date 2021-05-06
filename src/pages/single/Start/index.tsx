@@ -106,9 +106,6 @@ export default function StartSingle() {
   const { loading, error, data, refetch } = useQuery(GET_PODCASTS, {
     variables: { authorCuid },
     fetchPolicy: 'cache-and-network',
-    onError: (e) => {
-      alert(e.message);
-    },
   });
   const history = useHistory();
   const [showAnimation, setShowAnimation] = React.useState(false);

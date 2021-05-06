@@ -5,8 +5,6 @@ import CateSelect from '../../../components/CateSelect';
 import LangSelect from '../../../components/LangSelect';
 import Switch from 'react-switch';
 import Icons from '../../../components/Icons';
-import fs from 'fs';
-import path from 'path';
 import { CREATE_PODCAST } from '../../../lib/GraphQL/queries';
 import { useMutation } from '@apollo/client';
 import * as Store from '../../../lib/Store';
@@ -21,12 +19,6 @@ interface ContainerInterface {
   selectImage: any;
   uploading: boolean;
 }
-
-const toBase64 = (podcastImage: string) => {
-  const image = fs.readFileSync(podcastImage, { encoding: 'base64' });
-  const extensionName = path.extname(podcastImage);
-  return `data:image/${extensionName.split('.').pop()};base64,${image}`;
-};
 
 const StepContainer = ({
   stepNumber,
@@ -64,9 +56,7 @@ const StepContainer = ({
             }}
             className="bg-gray-200 rounded-md h-20 w-20 flex items-center justify-center flex-2 border"
             style={{
-              backgroundImage: `url(${
-                podcastImage ? toBase64(podcastImage) : ''
-              })`,
+              backgroundImage: `url(${podcastImage || ''})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
@@ -119,7 +109,6 @@ const StepContainer = ({
               </em>
             </span>
             <select
-              value={podcastInfo.contentType}
               onChange={(e) => {
                 setPodcastInfo({
                   ...podcastInfo,
@@ -163,7 +152,6 @@ const StepContainer = ({
             <input
               disabled={!podcastInfo.useCr}
               placeholder="©️2021 你的播客"
-              value={podcastInfo.copyRight}
               onChange={(e) => {
                 setPodcastInfo({
                   ...podcastInfo,
@@ -201,7 +189,6 @@ const StepContainer = ({
             <input
               disabled={!podcastInfo.useOwner}
               placeholder="所有人名称"
-              value={podcastInfo.ownerName}
               onChange={(e) => {
                 setPodcastInfo({
                   ...podcastInfo,
@@ -213,7 +200,6 @@ const StepContainer = ({
             <input
               disabled={!podcastInfo.useOwner}
               placeholder="所有人邮箱"
-              value={podcastInfo.ownerEmail}
               onChange={(e) => {
                 setPodcastInfo({
                   ...podcastInfo,
@@ -237,7 +223,6 @@ const StepContainer = ({
             </em>
           </span>
           <select
-            value={podcastInfo.type}
             onChange={(e) => {
               setPodcastInfo({ ...podcastInfo, ...{ type: e.target.value } });
             }}
@@ -284,7 +269,6 @@ const StepContainer = ({
           <textarea
             autoFocus
             placeholder="播客描述"
-            value={podcastInfo.des}
             maxLength={255}
             minLength={1}
             rows={3}
@@ -314,7 +298,6 @@ const StepContainer = ({
           <input
             autoFocus
             placeholder="播客名"
-            value={podcastInfo.name}
             maxLength={255}
             minLength={1}
             onChange={(e) => {
@@ -341,8 +324,8 @@ export default function CreatePodcast() {
   const [creatPodcast] = useMutation(CREATE_PODCAST);
 
   const [stepNumber, setStepNumber] = React.useState(0);
-  const [podcastImage, setImage] = React.useState('');
-  const [podcastImageUrl, setImageUrl] = React.useState('');
+  const [podcastImage, setImage] = React.useState<any>('');
+  const [podcastImageUrl, setImageUrl] = React.useState<any>('');
   const [podcastImageUploading, setUploading] = React.useState(false);
   const [podcastInfo, setPodcastInfo] = React.useState({
     name: '',
@@ -361,7 +344,7 @@ export default function CreatePodcast() {
   const selectImage = async () => {
     setUploading(true);
     const result = await selectImageAndUploadToCDN();
-    setImage(result.localPath);
+    setImage(result.imagePath);
     setImageUrl(result.remotePath);
     setUploading(false);
   };
@@ -447,7 +430,7 @@ export default function CreatePodcast() {
             type="button"
             onClick={() => {
               setStepNumber(stepNumber + 1);
-              if (stepNumber === 5) {
+              if (stepNumber === 5 && !podcastImageUploading) {
                 doCreatePodcast();
               }
             }}

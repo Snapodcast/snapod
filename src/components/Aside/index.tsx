@@ -1,6 +1,7 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/accessible-emoji */
 import React from 'react';
-import { Link, NavLink, useHistory } from 'react-router-dom';
+import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
 import Icons from '../Icons/index';
 import * as Store from '../../lib/Store';
@@ -13,6 +14,7 @@ export default function Aside() {
 
   // router navigation hook
   const history = useHistory();
+  const location = useLocation();
 
   // fullscreen state
   const [fullScreen, setFullScreen] = React.useState<boolean>(false);
@@ -88,14 +90,40 @@ export default function Aside() {
               播客信息
             </li>
           </NavLink>
-          <NavLink exact to="/episodes" activeClassName="active">
-            <li className="rounded-md py-1.5 px-2 flex items-center">
-              <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
-                <Icons name="episodes" />
-              </span>
-              节目列表
-            </li>
-          </NavLink>
+
+          {location.pathname === '/snapod/manage/episode' ? (
+            <div>
+              <NavLink exact to="/snapod/manage/episodes" className="active">
+                <li className="rounded-md rounded-br-none py-1.5 px-2 flex items-center active">
+                  <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
+                    <Icons name="episodes" />
+                  </span>
+                  节目列表
+                </li>
+              </NavLink>
+              <a href="#" className="active">
+                <li className="rounded-bl-md rounded-br-md py-1.5 px-2 flex items-center ml-4 mt-1">
+                  <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
+                    <Icons name="episode" />
+                  </span>
+                  节目详情
+                </li>
+              </a>
+            </div>
+          ) : (
+            <NavLink
+              exact
+              to="/snapod/manage/episodes"
+              activeClassName="active"
+            >
+              <li className="rounded-md py-1.5 px-2 flex items-center">
+                <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
+                  <Icons name="episodes" />
+                </span>
+                节目列表
+              </li>
+            </NavLink>
+          )}
           <NavLink exact to="/podcast" activeClassName="active">
             <li className="rounded-md py-1.5 px-2 flex items-center">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">

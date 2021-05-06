@@ -40,22 +40,19 @@ export default function ManagePodcast() {
   const doSave = async () => {
     if (!uploading) {
       setSaving(true);
-      const postBody = { ...podcastInfo };
-      postBody.podcastCuid = podcastCuid;
-      postBody.clean_content = podcastInfo.clean_content === 'true';
-      postBody.copyright = podcastInfo.useCr ? podcastInfo.copyright : null;
-      postBody.ownerName = podcastInfo.useOwner ? podcastInfo.ownerName : null;
-      postBody.ownerEmail = podcastInfo.useOwner
-        ? podcastInfo.ownerEmail
-        : null;
-      postBody.complete = podcastInfo.complete === 'true';
-      postBody.block = podcastInfo.block === 'true';
-      delete postBody.useCr;
-      delete postBody.useOwner;
-      delete postBody.image;
+      const variables = {
+        ...podcastInfo,
+        podcastCuid,
+        clean_content: podcastInfo.clean_content === 'true',
+        copyright: podcastInfo.useCr ? podcastInfo.copyright : null,
+        ownerName: podcastInfo.useOwner ? podcastInfo.ownerName : null,
+        ownerEmail: podcastInfo.useOwner ? podcastInfo.ownerEmail : null,
+        complete: podcastInfo.complete === 'true',
+        block: podcastInfo.block === 'true',
+      };
 
       await modifyPodcast({
-        variables: postBody,
+        variables,
       })
         .then((res: any) => {
           Store.set('currentPodcast.name', res.data.modifyPodcast.name);
@@ -115,24 +112,33 @@ export default function ManagePodcast() {
 
   if (error) {
     return (
-      <div className="flex justify-center">
-        <button
-          aria-label="create"
-          type="button"
-          className="flex justify-center align-middle items-center text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md py-1.5 px-4 text-center"
-          onClick={() => {
-            refetch();
-          }}
-        >
-          重新加载
-        </button>
+      <div className="flex justify-center items-center error-container">
+        <div className="-mt-3">
+          <p className="mb-3 flex justify-center">
+            <span className="h-28 w-28 text-gray-200">
+              <Icons name="warning" />
+            </span>
+          </p>
+          <div className="justify-center flex">
+            <button
+              aria-label="refetch"
+              type="button"
+              className="flex justify-center align-middle items-center text-white text-sm hover:bg-gray-600 bg-gray-500 focus:outline-none rounded-md shadow-md py-1.5 px-4 text-center"
+              onClick={() => {
+                refetch();
+              }}
+            >
+              重新加载
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="mt-4 mb-14">
-      <Head title="管理播客信息" description="修改你的播客信息和元数据" />
+      <Head title="管理播客信息" description="修改播客信息和元数据" />
       {savable && (
         <div className="flex justify-center items-center w-full">
           <div className="flex absolute bottom-5 z-10 gap-x-3">
@@ -181,9 +187,10 @@ export default function ManagePodcast() {
         <div className="flex-1">
           <div>
             <Input
+              disabled={uploading}
               name="播客名称 / Name"
               placeholder={data.podcast.name}
-              value={podcastInfo.name}
+              defaultValue={podcastInfo.name}
               onChange={(e: { target: { value: any } }) => {
                 setInfo({
                   ...podcastInfo,
@@ -195,9 +202,10 @@ export default function ManagePodcast() {
           </div>
           <div className="mt-5">
             <TextArea
+              disabled={uploading}
               name="播客简介 / Description"
               placeholder={data.podcast.description}
-              value={podcastInfo.description}
+              defaultValue={podcastInfo.description}
               onChange={(e: { target: { value: any } }) => {
                 setInfo({
                   ...podcastInfo,
@@ -218,7 +226,8 @@ export default function ManagePodcast() {
                 </em>
               </span>
               <select
-                value={podcastInfo.type}
+                disabled={uploading}
+                defaultValue={podcastInfo.type}
                 onChange={(e) => {
                   setInfo({ ...podcastInfo, type: e.target.value });
                   setSavable(true);
@@ -239,7 +248,8 @@ export default function ManagePodcast() {
                 </em>
               </span>
               <select
-                value={podcastInfo.clean_content}
+                disabled={uploading}
+                defaultValue={podcastInfo.clean_content}
                 onChange={(e) => {
                   setInfo({
                     ...podcastInfo,
@@ -278,6 +288,7 @@ export default function ManagePodcast() {
               </em>
             </span>
             <LangSelect
+              disabled={uploading}
               podcastLang={podcastInfo.language}
               setLang={(language: string) => {
                 setInfo({ ...podcastInfo, language });
@@ -292,6 +303,7 @@ export default function ManagePodcast() {
               </em>
             </span>
             <CateSelect
+              disabled={uploading}
               podcastCate={podcastInfo.category_name}
               setCate={(category_name: string) => {
                 setInfo({ ...podcastInfo, category_name });
@@ -305,6 +317,7 @@ export default function ManagePodcast() {
                 版权字段 / Copyright
               </em>
               <Switch
+                disabled={uploading}
                 onChange={() => {
                   setInfo({
                     ...podcastInfo,
@@ -323,9 +336,9 @@ export default function ManagePodcast() {
               />
             </span>
             <input
-              disabled={!podcastInfo.useCr}
+              disabled={!podcastInfo.useCr || uploading}
               placeholder={data.podcast.profile.copyright}
-              value={podcastInfo.copyright}
+              defaultValue={podcastInfo.copyright}
               onChange={(e: { target: { value: any } }) => {
                 setInfo({
                   ...podcastInfo,
@@ -349,6 +362,7 @@ export default function ManagePodcast() {
                 </em>
               </span>
               <Switch
+                disabled={uploading}
                 onChange={() => {
                   setInfo({
                     ...podcastInfo,
@@ -368,10 +382,10 @@ export default function ManagePodcast() {
             </div>
             <div>
               <Input
-                disabled={!podcastInfo.useOwner}
+                disabled={!podcastInfo.useOwner || uploading}
                 name="所有者名称 / Owner Name"
                 placeholder={data.podcast.profile.ownerName}
-                value={podcastInfo.ownerName}
+                defaultValue={podcastInfo.ownerName}
                 onChange={(e: { target: { value: any } }) => {
                   setInfo({
                     ...podcastInfo,
@@ -383,10 +397,10 @@ export default function ManagePodcast() {
             </div>
             <div className="mt-3">
               <Input
-                disabled={!podcastInfo.useOwner}
+                disabled={!podcastInfo.useOwner || uploading}
                 name="所有者邮箱 / Owner Email"
                 placeholder={data.podcast.profile.ownerEmail}
-                value={podcastInfo.ownerEmail}
+                defaultValue={podcastInfo.ownerEmail}
                 onChange={(e: { target: { value: any } }) => {
                   setInfo({
                     ...podcastInfo,
@@ -405,7 +419,8 @@ export default function ManagePodcast() {
                 </em>
               </span>
               <select
-                value={podcastInfo.complete}
+                disabled={uploading}
+                defaultValue={podcastInfo.complete}
                 onChange={(e) => {
                   setInfo({
                     ...podcastInfo,
@@ -429,7 +444,8 @@ export default function ManagePodcast() {
                 </em>
               </span>
               <select
-                value={podcastInfo.block}
+                disabled={uploading}
+                defaultValue={podcastInfo.block}
                 onChange={(e) => {
                   setInfo({
                     ...podcastInfo,

@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable array-callback-return */
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -9,19 +10,20 @@ import React, { useState, useRef } from 'react';
 import WaveSurfer from 'wavesurfer.js';
 import { FaPlay, FaUndo, FaRedo, FaPause } from 'react-icons/fa';
 import { useEffectOnce } from 'react-use';
+import Icons from '../Icons';
 
 export default function Player(props: {
-  playBackSpeedOptions: number[];
-  hideWave: any;
-  waveStyles: WaveSurfer.WaveSurferParams;
-  waveJson: (readonly number[] | readonly (readonly number[])[]) | undefined;
-  getWaveSurferInstance: (arg0: null) => void;
-  zoom: number | undefined;
-  events: { [s: string]: unknown } | ArrayLike<unknown>;
+  playBackSpeedOptions?: number[];
+  hideWave?: any;
+  waveStyles: WaveSurfer.WaveSurferParams | any;
+  waveJson?: (readonly number[] | readonly (readonly number[])[]) | undefined;
+  getWaveSurferInstance?: (arg0: any) => void;
+  zoom?: number | undefined;
+  events?: { [s: string]: unknown } | ArrayLike<unknown>;
   containerStyles: React.CSSProperties | undefined;
   hideImage: any;
-  imageUrl: string | undefined;
-  imgStyles: React.CSSProperties | undefined;
+  imageUrl?: string;
+  imgStyles?: React.CSSProperties;
   audioUrl: string | undefined;
 }) {
   const waveformRef: any = useRef();
@@ -150,6 +152,13 @@ export default function Player(props: {
               src={props.audioUrl}
               ref={trackRef}
             />
+            {!playable && (
+              <div className="flex justify-center -mt-5">
+                <span className="animate-spin w-5 h-5 text-gray-500">
+                  <Icons name="spinner" />
+                </span>
+              </div>
+            )}
             {error && (
               <p className="text-center text-sm text-gray-500 -mt-5">
                 音频无法加载/识别

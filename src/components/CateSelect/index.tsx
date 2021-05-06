@@ -1,14 +1,15 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 
-export default function CateSelect({
-  podcastCate,
-  setCate,
-}: {
+export default function CateSelect(props: {
   podcastCate: string;
   setCate: any;
+  [prop: string]: any;
 }) {
+  const { podcastCate, setCate, ...rest } = props;
   return (
     <select
+      {...rest}
       value={podcastCate}
       onChange={(e) => {
         setCate(e.target.value);
