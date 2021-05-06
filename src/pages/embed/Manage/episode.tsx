@@ -158,7 +158,7 @@ export default function ManageEpisode() {
         <div className="flex justify-center items-center w-full">
           <div className="flex absolute bottom-5 z-10 gap-x-3">
             <button
-              className="bg-blue-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white hover:bg-blue-600"
+              className="bg-gray-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white"
               aria-label="create episode"
               type="button"
               onClick={() => {
@@ -183,7 +183,7 @@ export default function ManageEpisode() {
               episodeInfo.image && 'hover:opacity-90'
             }`}
             onClick={() => {
-              if (!uploading) {
+              if (!uploading && !audioUploading) {
                 if (!episodeInfo.image) {
                   selectImage();
                   setSavable(true);
@@ -207,11 +207,13 @@ export default function ManageEpisode() {
           >
             {!episodeInfo.image && !episodeInfo.cover_art_image_url && (
               <span className="text-gray-500">
-                <span className="h-20 w-20">
+                <span className="episode-image-placeholder flex justify-center">
                   <Icons name="microphone" />
                 </span>
                 <br />
-                <span>可选 Optional</span>
+                <span>封面图 Cover Art</span>
+                <br />
+                <span className="text-xs">(可选)</span>
               </span>
             )}
           </button>
@@ -227,6 +229,7 @@ export default function ManageEpisode() {
           <div>
             <Input
               defaultValue={episodeInfo.title}
+              disabled={uploading || audioUploading}
               name="节目标题 / Title"
               placeholder="节目标题"
               onChange={(e: { target: { value: any } }) => {
@@ -246,6 +249,7 @@ export default function ManageEpisode() {
                 </em>
               </span>
               <select
+                disabled={uploading || audioUploading}
                 defaultValue={episodeInfo.episode_type}
                 onChange={(e) => {
                   setInfo({ ...episodeInfo, episode_type: e.target.value });
@@ -268,11 +272,12 @@ export default function ManageEpisode() {
                 </em>
               </span>
               <select
+                disabled={uploading || audioUploading}
                 defaultValue={episodeInfo.clean_content}
                 onChange={(e) => {
                   setInfo({
                     ...episodeInfo,
-                    clean_content: e.target.value === 'true',
+                    clean_content: e.target.value,
                   });
                   setSavable(true);
                 }}
@@ -362,30 +367,6 @@ export default function ManageEpisode() {
         </div>
       </section>
       <section className="mx-5 mt-2">
-        <span className="flex items-center">
-          <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
-            节目描述 / Show Notes
-          </em>
-        </span>
-        <div className="rounded-lg border py-4 w-full mt-1 text-base px-8">
-          <Editor
-            defaultValue={episodeInfo.content}
-            placeholder="节目描述..."
-            onChange={(value) => {
-              setInfo({
-                ...episodeInfo,
-                content: value(),
-              });
-              setSavable(true);
-            }}
-            uploadImage={async (file) => {
-              const result = await uploadFile(file);
-              return result;
-            }}
-          />
-        </div>
-      </section>
-      <section className="mx-5 my-5">
         <div className="flex gap-x-3">
           <div className="flex-1">
             <span className="flex items-center">
@@ -393,6 +374,7 @@ export default function ManageEpisode() {
                 节目季数 / Season Number
               </em>
               <Switch
+                disabled={uploading || audioUploading}
                 onChange={() => {
                   setInfo({
                     ...episodeInfo,
@@ -411,7 +393,7 @@ export default function ManageEpisode() {
               />
             </span>
             <input
-              disabled={!episodeInfo.useSeason}
+              disabled={!episodeInfo.useSeason || uploading || audioUploading}
               defaultValue={episodeInfo.season_number}
               placeholder="季集类型播客可用"
               type="number"
@@ -428,6 +410,7 @@ export default function ManageEpisode() {
           </div>
           <div className="flex-1">
             <Input
+              disabled={uploading || audioUploading}
               name="节目期数 / Episode Number"
               type="number"
               min="0"
@@ -442,6 +425,56 @@ export default function ManageEpisode() {
               }}
             />
           </div>
+          <div className="flex-1">
+            <span className="flex items-center">
+              <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
+                节目状态 / Episode Status
+              </em>
+            </span>
+            <select
+              defaultValue={episodeInfo.published}
+              disabled={uploading || audioUploading}
+              onChange={(e) => {
+                setInfo({
+                  ...episodeInfo,
+                  published: e.target.value,
+                });
+                setSavable(true);
+              }}
+              className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
+            >
+              <option value="" disabled>
+                选择节目状态...
+              </option>
+              <option value="false">草稿 (Draft)</option>
+              <option value="true">已发布 (Published)</option>
+            </select>
+          </div>
+        </div>
+      </section>
+      <section className="m-5">
+        <span className="flex items-center">
+          <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
+            节目描述 / Show Notes
+          </em>
+        </span>
+        <div className="rounded-lg border py-4 w-full mt-1 text-base px-8">
+          <Editor
+            defaultValue={episodeInfo.content}
+            readOnly={uploading || audioUploading}
+            placeholder="节目描述..."
+            onChange={(value) => {
+              setInfo({
+                ...episodeInfo,
+                content: value(),
+              });
+              setSavable(true);
+            }}
+            uploadImage={async (file) => {
+              const result = await uploadFile(file);
+              return result;
+            }}
+          />
         </div>
       </section>
     </div>

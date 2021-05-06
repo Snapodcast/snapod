@@ -195,8 +195,7 @@ div::-webkit-scrollbar {
 }
 
 .episode-item-image {
-  width: 250px;
-  height: 125px;
+  width: 125px;
 }
 
 .episode-item-info span {
@@ -211,13 +210,13 @@ div::-webkit-scrollbar {
 }
 
 .episode-item .episode-item-delete {
-  display: none;
-}
-
-.episode-item:hover .episode-item-delete {
   display: flex;
 }
 
 .episode-item-content {
   flex: 4;
+}
+
+.episode-image-placeholder svg {
+  @apply w-20 h-20;
 }

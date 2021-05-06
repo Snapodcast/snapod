@@ -9,9 +9,11 @@ import Switch from 'react-switch';
 import LangSelect from '../../../components/LangSelect';
 import Icons from '../../../components/Icons';
 import selectImageAndUploadToCDN from '../../../lib/Upload/Image';
+import { useHistory } from 'react-router';
 
 export default function ManagePodcast() {
   const podcastCuid = Store.get('currentPodcast.cuid');
+  const history = useHistory();
   const { loading, error, data, refetch } = useQuery(GET_PODCAST, {
     variables: { podcastCuid },
     fetchPolicy: 'network-only',
@@ -142,6 +144,16 @@ export default function ManagePodcast() {
       {savable && (
         <div className="flex justify-center items-center w-full">
           <div className="flex absolute bottom-5 z-10 gap-x-3">
+            <button
+              className="bg-gray-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white hover:bg-gray-600"
+              aria-label="save changes"
+              type="button"
+              onClick={() => {
+                history.push('/snapod/reset');
+              }}
+            >
+              重置
+            </button>
             <button
               className="bg-blue-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white hover:bg-blue-600"
               aria-label="save changes"

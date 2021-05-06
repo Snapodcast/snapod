@@ -75,6 +75,7 @@ export default function EpisodeList() {
         </div>
       </div>
     );
+
   return (
     <div className="my-4 mx-5">
       <Head title="管理节目列表" description="查看和修改全部播客节目" />
@@ -83,7 +84,7 @@ export default function EpisodeList() {
           {data.episodes.map((episode: any) => (
             <div
               key={episode.cuid}
-              className="episode-item flex mb-3 rounded-md border shadow-sm cursor-pointer hover:bg-gray-50 transition-all"
+              className="episode-item flex mb-3 rounded-md border shadow-sm cursor-pointer"
             >
               {episode.profile.cover_art_image_url && (
                 <div
@@ -92,11 +93,14 @@ export default function EpisodeList() {
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
                   }}
-                  className="episode-item-image border-r rounded-tl-md rounded-bl-md flex-1"
+                  className="episode-item-image h-full border-r rounded-tl-md rounded-bl-md bg-gray-100"
                 />
               )}
               <div
-                className="px-5 py-2 text-left flex items-center episode-item-content"
+                className={`px-5 py-2 text-left flex items-center episode-item-content hover:bg-gray-50 transition-all ${
+                  !episode.profile.cover_art_image_url &&
+                  'rounded-tl-md rounded-bl-md'
+                }`}
                 onClick={() => {
                   if (!deleting) {
                     Store.set('currentEpisode.cuid', episode.cuid);
@@ -117,6 +121,21 @@ export default function EpisodeList() {
                     )}
                   </p>
                   <p className="flex episode-item-info text-gray-500 gap-x-2 text-xs">
+                    {episode.published ? (
+                      <span className="flex gap-x-1">
+                        <em className="w-4 h-4">
+                          <Icons name="online" />
+                        </em>
+                        已发布
+                      </span>
+                    ) : (
+                      <span className="flex gap-x-1">
+                        <em className="w-4 h-4">
+                          <Icons name="offline" />
+                        </em>
+                        草稿
+                      </span>
+                    )}
                     {episode.profile.season_number && (
                       <span>{episode.profile.season_number}</span>
                     )}
@@ -137,13 +156,13 @@ export default function EpisodeList() {
                 onClick={() => {
                   doDelete(episode.cuid);
                 }}
-                className={`z-10 episode-item-delete justify-center items-center px-4 border-l bg-white hover:bg-gray-100 ${
+                className={`text-red-400 hover:text-red-500 episode-item-delete justify-center items-center px-4 border-l hover:bg-gray-50 transition-all ${
                   deletingCuid === episode.cuid &&
                   'hover:bg-red-300 bg-red-300 animate-pulse duration-200'
                 }`}
               >
                 <p className="flex justify-center">
-                  <span className="w-6 h-6 text-red-500">
+                  <span className="w-6 h-6">
                     <Icons name="trashBin" />
                   </span>
                 </p>

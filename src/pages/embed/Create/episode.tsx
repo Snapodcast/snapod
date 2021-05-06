@@ -24,6 +24,7 @@ export default function CreateEpisode() {
   const [uploading, setUploading] = React.useState(false);
   const [audioUploading, setAudioUploading] = React.useState(false);
   const [creating, setCreating] = React.useState(false);
+  const [saving, setSaving] = React.useState(false);
 
   /* Select cover art image action */
   const selectImage = async () => {
@@ -52,12 +53,17 @@ export default function CreateEpisode() {
   };
 
   /* Create episode action */
-  const doCreate = async () => {
-    setCreating(true);
+  const doCreate = async (draft: boolean) => {
+    if (draft) {
+      setSaving(true);
+    } else {
+      setCreating(true);
+    }
     const variables = {
       podcastCuid,
-      published: true,
+      published: !draft,
       ...episodeInfo,
+      clean_content: episodeInfo.clean_content === 'true',
       episode_number:
         typeof episodeInfo.episode_number !== 'number'
           ? parseInt(episodeInfo.episode_number, 10)
@@ -68,12 +74,20 @@ export default function CreateEpisode() {
     })
       .then(() => {
         alert(`创建成功`);
-        setCreating(false);
+        if (draft) {
+          setSaving(false);
+        } else {
+          setCreating(false);
+        }
         history.push('/snapod/manage/episodes');
       })
       .catch(() => {
         alert(`创建失败\n请检查信息已填写完整`);
-        setCreating(false);
+        if (draft) {
+          setSaving(false);
+        } else {
+          setCreating(false);
+        }
       });
   };
 
@@ -83,12 +97,28 @@ export default function CreateEpisode() {
       <div className="flex justify-center items-center w-full">
         <div className="flex absolute bottom-5 z-10 gap-x-3">
           <button
+            className="bg-gray-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white hover:bg-gray-600"
+            aria-label="save as draft"
+            type="button"
+            onClick={() => {
+              if (!uploading && !audioUploading) {
+                doCreate(true);
+              }
+            }}
+          >
+            {uploading || audioUploading
+              ? '草稿暂不可存'
+              : saving
+              ? '保存中...'
+              : '保存草稿'}
+          </button>
+          <button
             className="bg-blue-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white hover:bg-blue-600"
             aria-label="create episode"
             type="button"
             onClick={() => {
               if (!uploading && !audioUploading) {
-                doCreate();
+                doCreate(false);
               }
             }}
           >
@@ -195,7 +225,7 @@ export default function CreateEpisode() {
                 onChange={(e) => {
                   setInfo({
                     ...episodeInfo,
-                    clean_content: e.target.value === 'true',
+                    clean_content: e.target.value,
                   });
                 }}
                 className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
@@ -280,29 +310,6 @@ export default function CreateEpisode() {
         </div>
       </section>
       <section className="mx-5 mt-2">
-        <span className="flex items-center">
-          <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
-            节目描述 / Show Notes
-          </em>
-        </span>
-        <div className="rounded-lg border py-4 w-full mt-1 text-base px-8">
-          <Editor
-            readOnly={uploading || audioUploading}
-            placeholder="节目描述..."
-            onChange={(value) => {
-              setInfo({
-                ...episodeInfo,
-                content: value(),
-              });
-            }}
-            uploadImage={async (file) => {
-              const result = await uploadFile(file);
-              return result;
-            }}
-          />
-        </div>
-      </section>
-      <section className="mx-5 my-5">
         <div className="flex gap-x-3">
           <div className="flex-1">
             <span className="flex items-center">
@@ -356,6 +363,29 @@ export default function CreateEpisode() {
               }}
             />
           </div>
+        </div>
+      </section>
+      <section className="m-5">
+        <span className="flex items-center">
+          <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
+            节目描述 / Show Notes
+          </em>
+        </span>
+        <div className="rounded-lg border py-4 w-full mt-1 text-base px-8">
+          <Editor
+            readOnly={uploading || audioUploading}
+            placeholder="节目描述..."
+            onChange={(value) => {
+              setInfo({
+                ...episodeInfo,
+                content: value(),
+              });
+            }}
+            uploadImage={async (file) => {
+              const result = await uploadFile(file);
+              return result;
+            }}
+          />
         </div>
       </section>
     </div>

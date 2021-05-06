@@ -26,6 +26,8 @@ export default function Header() {
   // Listen to hiding sidebar event
   ipcRenderer.on('hide-sidebar', hideSideBarListener);
 
+  const embedPaths = ['/snapod/manage/episode', '/snapod/create/episode'];
+
   return (
     <div
       className={`main drag header border-headerBorder bg-headerBg dark:bg-darkHeader dark:border-darkSelect fixed z-30 flex py-1 px-4 items-center cursor-default border-b ${
@@ -62,7 +64,7 @@ export default function Header() {
         </p>
       </div>
       <div className="items-center flex justify-end text-gray-500 space-x-2">
-        {location.pathname !== '/snapod/start' && (
+        {embedPaths.indexOf(location.pathname) > -1 && (
           <button
             type="button"
             className="focus:outline-none w-7 h-7 p-1 hover:bg-select rounded-md cursor-default"
