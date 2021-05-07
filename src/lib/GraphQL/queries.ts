@@ -21,16 +21,30 @@ export const GET_PODCAST = gql`
       description
       type
       profile {
-        cover_art_image_url
+        language
         category_name
         clean_content
-        language
-        copyright
+        cover_art_image_url
         ownerName
         ownerEmail
+        copyright
         block
         complete
         new_feed_url
+        apple_podcasts_code
+        apple_podcasts_url
+        google_podcasts_url
+        breaker_url
+        castbox_url
+        overcast_url
+        pocketcast_url
+        radiopublic_url
+        spotify
+        netease_url
+        qqmusic_url
+        ximalaya_url
+        xiaoyuzhou_url
+        website_url
       }
     }
   }
@@ -76,9 +90,9 @@ export const CREATE_PODCAST = gql`
 export const MODIFY_PODCAST = gql`
   mutation ModifyPodcast(
     $podcastCuid: String!
-    $name: String!
-    $description: String!
-    $type: String!
+    $name: String
+    $description: String
+    $type: String
     $language: String
     $category_name: String
     $clean_content: Boolean
@@ -89,6 +103,20 @@ export const MODIFY_PODCAST = gql`
     $block: Boolean
     $complete: Boolean
     $new_feed_url: String
+    $apple_podcasts_code: String
+    $apple_podcasts_url: String
+    $google_podcasts_url: String
+    $breaker_url: String
+    $castbox_url: String
+    $overcast_url: String
+    $pocketcast_url: String
+    $radiopublic_url: String
+    $spotify: String
+    $netease_url: String
+    $qqmusic_url: String
+    $ximalaya_url: String
+    $xiaoyuzhou_url: String
+    $website_url: String
   ) {
     modifyPodcast(
       podcastCuid: $podcastCuid
@@ -104,6 +132,20 @@ export const MODIFY_PODCAST = gql`
         block: $block
         complete: $complete
         new_feed_url: $new_feed_url
+        apple_podcasts_code: $apple_podcasts_code
+        apple_podcasts_url: $apple_podcasts_url
+        google_podcasts_url: $google_podcasts_url
+        breaker_url: $breaker_url
+        castbox_url: $castbox_url
+        overcast_url: $overcast_url
+        pocketcast_url: $pocketcast_url
+        radiopublic_url: $radiopublic_url
+        spotify: $spotify
+        netease_url: $netease_url
+        qqmusic_url: $qqmusic_url
+        ximalaya_url: $ximalaya_url
+        xiaoyuzhou_url: $xiaoyuzhou_url
+        website_url: $website_url
       }
     ) {
       name

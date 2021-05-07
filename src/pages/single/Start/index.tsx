@@ -6,6 +6,7 @@ import { GET_PODCASTS } from '../../../lib/GraphQL/queries';
 import * as Store from '../../../lib/Store';
 import Icons from '../../../components/Icons';
 import { useHistory } from 'react-router-dom';
+import podcastInit from '../../../lib/Init';
 
 interface QueryInterface {
   loading: boolean;
@@ -55,10 +56,9 @@ const PodcastsContainer = ({
           {data.podcasts.map((podcast: any) => (
             <div
               key={podcast.cuid}
-              className="mb-3 rounded-md border shadow-sm grid grid-cols-7 h-24 cursor-pointer hover:bg-gray-50 transition-all"
+              className="mb-3 rounded-md border shadow-sm flex podcast-item cursor-pointer hover:bg-gray-50 transition-all"
               onClick={() => {
-                Store.set('currentPodcast.name', podcast.name);
-                Store.set('currentPodcast.cuid', podcast.cuid);
+                podcastInit(podcast);
                 history.push('/snapod');
               }}
             >
@@ -68,9 +68,9 @@ const PodcastsContainer = ({
                   backgroundRepeat: 'no-repeat',
                   backgroundSize: 'cover',
                 }}
-                className="col-start-1 col-end-3 border-r rounded-tl-md rounded-bl-md"
+                className="podcast-item-image border-r rounded-tl-md rounded-bl-md"
               />
-              <div className="col-start-3 col-end-8 px-3 py-2 text-left flex items-center">
+              <div className="podcast-item-content px-3 py-2 text-left flex items-center">
                 <div>
                   <h3 className="text-sm text-gray-600 font-medium mb-1">
                     {podcast.name}

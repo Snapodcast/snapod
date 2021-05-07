@@ -11,8 +11,10 @@ import selectImageAndUploadToCDN from '../../../lib/Upload/Image';
 import Player from '../../../components/Player';
 import selectAudioFileAndUploadToCDN from '../../../lib/Upload/Audio';
 import { uploadFile } from '../../../lib/Qiniu';
+import { useHistory } from 'react-router';
 
 export default function ManageEpisode() {
+  const history = useHistory();
   const episodeCuid = Store.get('currentEpisode.cuid');
   const episodeTitle = Store.get('currentEpisode.title');
   const { loading, error, data, refetch } = useQuery(GET_EPISODE, {
@@ -158,7 +160,17 @@ export default function ManageEpisode() {
         <div className="flex justify-center items-center w-full">
           <div className="flex absolute bottom-5 z-10 gap-x-3">
             <button
-              className="bg-gray-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white"
+              className="bg-gray-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white hover:bg-gray-600"
+              aria-label="save changes"
+              type="button"
+              onClick={() => {
+                history.push('/snapod/reset');
+              }}
+            >
+              重置
+            </button>
+            <button
+              className="bg-blue-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white hover:bg-blue-600"
               aria-label="create episode"
               type="button"
               onClick={() => {

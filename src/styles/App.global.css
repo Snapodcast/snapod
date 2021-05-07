@@ -220,3 +220,16 @@ div::-webkit-scrollbar {
 .episode-image-placeholder svg {
   @apply w-20 h-20;
 }
+
+.podcast-item {
+  height: 90px;
+}
+
+.podcast-item .podcast-item-image {
+  height: 90px;
+  width: 90px;
+}
+
+.podcast-item-content {
+  flex: 4;
+}
