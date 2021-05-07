@@ -234,10 +234,10 @@ export default function CreateEpisode() {
                   选择内容类型...
                 </option>
                 <option value="false">
-                  包含少儿不宜内容 (Explicit content)
+                  包含潜在不当内容 (Explicit content)
                 </option>
                 <option value="true">
-                  不包含少儿不宜内容 (No explicit content)
+                  不包含潜在不当内容 (No explicit content)
                 </option>
               </select>
             </div>

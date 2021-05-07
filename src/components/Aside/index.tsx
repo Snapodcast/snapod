@@ -155,7 +155,7 @@ export default function Aside() {
               发布渠道
             </li>
           </NavLink>
-          <NavLink exact to="/hosting" activeClassName="active">
+          <NavLink exact to="/snapod/settings/podcast" activeClassName="active">
             <li className="rounded-md py-1.5 px-2 flex items-center">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="gear" />

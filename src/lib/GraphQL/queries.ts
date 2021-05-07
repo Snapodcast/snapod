@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 
+/* Podcasts */
 export const GET_PODCASTS = gql`
   query Podcasts($authorCuid: String!) {
     podcasts(authorCuid: $authorCuid) {
@@ -31,80 +32,6 @@ export const GET_PODCAST = gql`
         complete
         new_feed_url
       }
-    }
-  }
-`;
-
-export const GET_EPISODES = gql`
-  query Episodes($podcastCuid: String!) {
-    episodes(podcastCuid: $podcastCuid) {
-      cuid
-      title
-      content
-      createdAt
-      published
-      profile {
-        cover_art_image_url
-        episode_number
-        season_number
-        episode_type
-        audio_duration
-      }
-    }
-  }
-`;
-
-export const GET_EPISODE = gql`
-  query Episode($episodeCuid: String!) {
-    episode(episodeCuid: $episodeCuid) {
-      title
-      content
-      createdAt
-      published
-      profile {
-        audio_url
-        audio_duration
-        audio_size
-        cover_art_image_url
-        episode_type
-        clean_content
-        season_number
-        episode_number
-      }
-    }
-  }
-`;
-
-export const MODIFY_EPISODE = gql`
-  mutation ModifyEpisode(
-    $episodeCuid: String!
-    $title: String
-    $content: String
-    $published: Boolean
-    $audio_url: String
-    $audio_duration: String
-    $audio_size: Float
-    $cover_art_image_url: String
-    $episode_type: String
-    $clean_content: Boolean
-    $season_number: Float
-    $episode_number: Float
-  ) {
-    modifyEpisode(
-      episodeCuid: $episodeCuid
-      info: { title: $title, content: $content, published: $published }
-      profile: {
-        audio_url: $audio_url
-        audio_duration: $audio_duration
-        audio_size: $audio_size
-        episode_type: $episode_type
-        clean_content: $clean_content
-        season_number: $season_number
-        episode_number: $episode_number
-        cover_art_image_url: $cover_art_image_url
-      }
-    ) {
-      status
     }
   }
 `;
@@ -184,6 +111,15 @@ export const MODIFY_PODCAST = gql`
   }
 `;
 
+export const DELETE_PODCAST = gql`
+  mutation DeletePodcast($podcastCuid: String!) {
+    deletePodcast(podcastCuid: $podcastCuid) {
+      status
+    }
+  }
+`;
+
+/* Episodes */
 export const CREATE_EPISODE = gql`
   mutation CreateEpisode(
     $podcastCuid: String!
@@ -218,6 +154,80 @@ export const CREATE_EPISODE = gql`
       }
     ) {
       cuid
+    }
+  }
+`;
+
+export const GET_EPISODES = gql`
+  query Episodes($podcastCuid: String!) {
+    episodes(podcastCuid: $podcastCuid) {
+      cuid
+      title
+      content
+      createdAt
+      published
+      profile {
+        cover_art_image_url
+        episode_number
+        season_number
+        episode_type
+        audio_duration
+      }
+    }
+  }
+`;
+
+export const GET_EPISODE = gql`
+  query Episode($episodeCuid: String!) {
+    episode(episodeCuid: $episodeCuid) {
+      title
+      content
+      createdAt
+      published
+      profile {
+        audio_url
+        audio_duration
+        audio_size
+        cover_art_image_url
+        episode_type
+        clean_content
+        season_number
+        episode_number
+      }
+    }
+  }
+`;
+
+export const MODIFY_EPISODE = gql`
+  mutation ModifyEpisode(
+    $episodeCuid: String!
+    $title: String
+    $content: String
+    $published: Boolean
+    $audio_url: String
+    $audio_duration: String
+    $audio_size: Float
+    $cover_art_image_url: String
+    $episode_type: String
+    $clean_content: Boolean
+    $season_number: Float
+    $episode_number: Float
+  ) {
+    modifyEpisode(
+      episodeCuid: $episodeCuid
+      info: { title: $title, content: $content, published: $published }
+      profile: {
+        audio_url: $audio_url
+        audio_duration: $audio_duration
+        audio_size: $audio_size
+        episode_type: $episode_type
+        clean_content: $clean_content
+        season_number: $season_number
+        episode_number: $episode_number
+        cover_art_image_url: $cover_art_image_url
+      }
+    ) {
+      status
     }
   }
 `;

@@ -20,6 +20,7 @@ import CreateEpisode from './pages/embed/Create/episode';
 import EpisodeList from './pages/embed/Manage/episodeList';
 import ManageEpisode from './pages/embed/Manage/episode';
 import Reset from './components/Refresh';
+import PodcastSettings from './pages/embed/Settings/podcast';
 
 const heartBeatCheck = async (token: string) => {
   const result = await fetch(`${Configs.backend_url}/ping/auth`, {
@@ -126,6 +127,10 @@ export default function App() {
                 <Route
                   path="/snapod/manage/episode"
                   component={ManageEpisode}
+                />
+                <Route
+                  path="/snapod/settings/podcast"
+                  component={PodcastSettings}
                 />
               </section>
             </HeadContextProvider>

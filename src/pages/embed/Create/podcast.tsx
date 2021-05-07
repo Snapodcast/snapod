@@ -124,7 +124,7 @@ const StepContainer = ({
               <option value="no">不包含 (No explicit content)</option>
             </select>
             <span className="text-xs text-gray-400 ml-1 mt-1">
-              你的播客是否包含少儿不宜内容
+              你的播客是否包含潜在不当内容
             </span>
           </p>
           <div className="w-full mt-5">
