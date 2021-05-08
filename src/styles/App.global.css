@@ -233,3 +233,59 @@ div::-webkit-scrollbar {
 .podcast-item-content {
   flex: 4;
 }
+
+.react-datepicker__navigation--previous {
+  left: 50px;
+  top: 12px;
+}
+
+.react-datepicker {
+  display: flex !important;
+  border: none !important;
+  @apply z-10;
+}
+
+.react-datepicker__month-container {
+  position: absolute;
+  right: 0px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  top: 35px;
+  @apply shadow-sm;
+}
+
+.react-datepicker__navigation--previous {
+  top: 47px !important;
+  left: -230px;
+}
+
+.react-datepicker__navigation {
+  top: 45px;
+}
+
+.react-datepicker__day--selected {
+  @apply bg-blue-500 !important;
+}
+
+.react-datepicker__day--in-range:hover {
+  @apply bg-blue-500 !important;
+}
+
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range {
+  @apply bg-blue-400 !important;
+}
+
+.react-datepicker__header {
+  @apply border-none !important;
+}
+
+.react-datepicker__month,
+.react-datepicker__month-container {
+  background: #ffffff;
+}
+
+.interval-select {
+  padding-top: 0.26rem;
+  padding-bottom: 0.28rem;
+}

@@ -29,3 +29,19 @@ declare interface MainData {
 
 declare module 'react-wavy-audio';
 declare module 'mp3-duration';
+declare module '@wojtekmaj/react-daterange-picker';
+
+declare interface StatsIntervalResult {
+  name: number;
+  plays: number;
+  countries: {
+    [name: string]: {
+      plays: number;
+      cities: {
+        [name: string]: number;
+      };
+    };
+  };
+  devices: { [name: string]: number };
+  clients: { [name: string]: number };
+}

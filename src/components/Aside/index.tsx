@@ -124,7 +124,7 @@ export default function Aside() {
               </li>
             </NavLink>
           )}
-          <NavLink exact to="/podcast" activeClassName="active">
+          <NavLink exact to="/snapod/manage/metrics" activeClassName="active">
             <li className="rounded-md py-1.5 px-2 flex items-center">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="presentation-chart" />
