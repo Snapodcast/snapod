@@ -137,7 +137,7 @@ div::-webkit-scrollbar {
 }
 
 #waveform wave {
-  display: none !important;
+  display: block !important;
 }
 
 #waveform wave:last-child {
@@ -288,4 +288,21 @@ div::-webkit-scrollbar {
 .interval-select {
   padding-top: 0.26rem;
   padding-bottom: 0.28rem;
+}
+
+.episode-item-container {
+  height: calc(100% - 1.75rem);
+}
+
+.episode-item-info-container {
+  @apply border-t;
+  height: 1.75rem;
+}
+
+.episode-item-info-container div {
+  @apply flex justify-center items-center border-r px-3 flex-1;
+}
+
+.episode-item-info-container div:last-child {
+  @apply border-none;
 }

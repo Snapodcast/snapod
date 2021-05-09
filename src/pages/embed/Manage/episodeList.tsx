@@ -97,7 +97,7 @@ export default function EpisodeList() {
                 />
               )}
               <div
-                className={`px-5 py-2 text-left flex items-center episode-item-content hover:bg-gray-50 transition-all ${
+                className={`text-left episode-item-content hover:bg-gray-50 transition-all ${
                   !episode.profile.cover_art_image_url &&
                   'rounded-tl-md rounded-bl-md'
                 }`}
@@ -110,45 +110,47 @@ export default function EpisodeList() {
                 }}
                 aria-hidden="true"
               >
-                <div>
-                  <h2 className="text-base text-gray-600 font-medium mb-1.5">
-                    {episode.title}
-                  </h2>
-                  <p className="text-sm text-gray-500 mb-2.5">
-                    {subString(htmlToText(episode.content), 100).replaceAll(
-                      '<p>',
-                      ''
-                    )}
-                  </p>
-                  <p className="flex episode-item-info text-gray-500 gap-x-2 text-xs">
-                    {episode.published ? (
-                      <span className="flex gap-x-1">
-                        <em className="w-4 h-4">
-                          <Icons name="online" />
-                        </em>
-                        已发布
-                      </span>
-                    ) : (
-                      <span className="flex gap-x-1">
-                        <em className="w-4 h-4">
-                          <Icons name="offline" />
-                        </em>
-                        草稿
-                      </span>
-                    )}
-                    {episode.profile.season_number && (
-                      <span>{episode.profile.season_number}</span>
-                    )}
-                    <span>第 {episode.profile.episode_number} 期</span>
-                    <span className="capitalize">
-                      {episode.profile.episode_type === 'full'
-                        ? '完整节目'
-                        : episode.profile.episode_type === 'trailer'
-                        ? '先导节目'
-                        : '特别节目'}
-                    </span>
-                    <span>{episode.profile.audio_duration}</span>
-                  </p>
+                <div className="flex items-center episode-item-container px-5 pt-2">
+                  <div>
+                    <h2 className="text-base text-gray-600 font-medium mb-1.5">
+                      {episode.title}
+                    </h2>
+                    <p className="text-sm text-gray-500 mb-2.5">
+                      {subString(htmlToText(episode.content), 100).replaceAll(
+                        '<p>',
+                        ''
+                      )}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex episode-item-info text-gray-500 text-xs episode-item-info-container">
+                  {episode.published ? (
+                    <div className="flex gap-x-1">
+                      <em className="w-4 h-4">
+                        <Icons name="online" />
+                      </em>
+                      已发布
+                    </div>
+                  ) : (
+                    <div className="flex gap-x-1">
+                      <em className="w-4 h-4">
+                        <Icons name="offline" />
+                      </em>
+                      草稿
+                    </div>
+                  )}
+                  {episode.profile.season_number && (
+                    <div>{episode.profile.season_number}</div>
+                  )}
+                  <div>第 {episode.profile.episode_number} 期</div>
+                  <div className="capitalize">
+                    {episode.profile.episode_type === 'full'
+                      ? '完整节目'
+                      : episode.profile.episode_type === 'trailer'
+                      ? '先导节目'
+                      : '特别节目'}
+                  </div>
+                  <div>{episode.profile.audio_duration}</div>
                 </div>
               </div>
               <div

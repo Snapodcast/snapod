@@ -441,7 +441,7 @@ export default function DistributionSettings() {
           <input
             disabled={saving}
             defaultValue={distributions.spotify}
-            placeholder="RadioPublic 播客页地址"
+            placeholder="Spotify 播客页地址"
             onChange={(e: { target: { value: any } }) => {
               setDistributions({
                 ...distributions,

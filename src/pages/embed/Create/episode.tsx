@@ -245,7 +245,7 @@ export default function CreateEpisode() {
           <div
             className="flex justify-center items-center mt-5 rounded-lg w-full h-28 border border-gray-300 shadow-lg cursor-pointer"
             onClick={() => {
-              if (!episodeInfo.audio_url) {
+              if (!episodeInfo.audio_url && !uploading && !audioUploading) {
                 selectAudio();
               }
             }}

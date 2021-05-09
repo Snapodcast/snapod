@@ -166,7 +166,7 @@ ipcMain.handle('select-image', async () => {
     filters: [
       {
         name: 'Image Files',
-        extensions: ['jpg', 'png'],
+        extensions: ['jpg', 'png', 'jpeg'],
       },
     ],
     properties: ['openFile'],

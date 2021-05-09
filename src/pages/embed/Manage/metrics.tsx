@@ -15,6 +15,7 @@ import Head from '../../../components/Head';
 
 const fetchData = async (
   setLoading: any,
+  setError: any,
   startDate: Date,
   endDate: Date,
   dateInterval: string,
@@ -41,9 +42,10 @@ const fetchData = async (
       setDevicesDate(formatDevicesData(json));
       // clients
       setClientsData(formatClientsData(json));
+      setError(false);
     })
-    .catch((error) => {
-      alert(`fetch data failed \n ${error}`);
+    .catch(() => {
+      setError(true);
     });
   setLoading(false);
 };
@@ -67,6 +69,7 @@ export default function ManageMetrics() {
 
   /* Chart data */
   const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(false);
   const [playsData, setPlaysData] = React.useState<any>([]);
   const [countriesData, setCountriesData] = React.useState<any>([]);
   const [devicesData, setDevicesDate] = React.useState<any>([]);
@@ -144,6 +147,11 @@ export default function ManageMetrics() {
           },
         },
       },
+      meta: {
+        plays: {
+          alias: '播放量',
+        },
+      },
     },
     clients: {
       data: clientsData,
@@ -177,6 +185,11 @@ export default function ManageMetrics() {
           },
         },
       },
+      meta: {
+        plays: {
+          alias: '播放量',
+        },
+      },
     },
   };
 
@@ -185,6 +198,7 @@ export default function ManageMetrics() {
       setShowPicker(false);
       fetchData(
         setLoading,
+        setError,
         startDate,
         endDate,
         dateInterval,
@@ -208,6 +222,43 @@ export default function ManageMetrics() {
     );
   }
 
+  if (error) {
+    return (
+      <div className="flex justify-center items-center error-container">
+        <div className="-mt-3">
+          <p className="mb-3 flex justify-center">
+            <span className="h-28 w-28 text-gray-200">
+              <Icons name="warning" />
+            </span>
+          </p>
+          <div className="justify-center flex">
+            <button
+              aria-label="refetch"
+              type="button"
+              className="flex justify-center align-middle items-center text-white text-sm hover:bg-gray-600 bg-gray-500 focus:outline-none rounded-md shadow-md py-1.5 px-4 text-center"
+              onClick={() => {
+                fetchData(
+                  setLoading,
+                  setError,
+                  startDate,
+                  endDate,
+                  dateInterval,
+                  podcastCuid,
+                  setPlaysData,
+                  setCountriesData,
+                  setDevicesDate,
+                  setClientsData
+                );
+              }}
+            >
+              重新加载
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="my-4 mb-12 mx-5">
       <Head title="播客统计数据" description="播客播放数据及听众详情" />
@@ -222,7 +273,7 @@ export default function ManageMetrics() {
               <button
                 type="button"
                 aria-label="select date range"
-                className="flex gap-x-1 justify-center align-middle items-center text-gray-500 text-sm hover:bg-gray-300 bg-gray-200 focus:outline-none rounded-md py-1 px-3 text-center"
+                className="border flex gap-x-1 justify-center align-middle items-center text-gray-500 text-sm hover:bg-gray-300 bg-gray-200 focus:outline-none rounded-md py-1 px-3 text-center"
                 onClick={() => setShowPicker(!showPicker)}
               >
                 <span className="w-4 h-4">
@@ -245,12 +296,13 @@ export default function ManageMetrics() {
             </div>
             <div>
               <select
-                className="interval-select justify-center align-middle items-center text-gray-500 text-sm hover:bg-gray-300 bg-gray-200 focus:outline-none rounded-md py-1 px-3 text-center"
+                className="interval-select justify-center align-middle items-center text-gray-500 text-sm hover:bg-gray-50 border focus:outline-none rounded-md py-1 px-3 text-center"
                 defaultValue={dateInterval}
                 onChange={(e) => {
                   setDateInterval(e.target.value);
                   fetchData(
                     setLoading,
+                    setError,
                     startDate,
                     endDate,
                     e.target.value,
@@ -269,9 +321,15 @@ export default function ManageMetrics() {
             </div>
           </div>
         </div>
-        <div className="mt-6">
-          <Line {...chartConfigs.plays} />
-        </div>
+        {playsData.length ? (
+          <div className="mt-6">
+            <Line {...chartConfigs.plays} />
+          </div>
+        ) : (
+          <div className="mt-5 flex items-center justify-center bg-gray-100 rounded-md h-12">
+            <p className="text-gray-500 text-sm">暂无数据 / Not enough data</p>
+          </div>
+        )}
       </section>
       <section className="mt-7 pt-7 border-t">
         <div className="flex items-center">
@@ -280,9 +338,15 @@ export default function ManageMetrics() {
             <p className="text-xs text-gray-600">Geographic location</p>
           </div>
         </div>
-        <div className="mt-5">
-          <Bar {...chartConfigs.countries} />
-        </div>
+        {countriesData.length ? (
+          <div className="mt-5">
+            <Bar {...chartConfigs.countries} />
+          </div>
+        ) : (
+          <div className="mt-5 flex items-center justify-center bg-gray-100 rounded-md h-12">
+            <p className="text-gray-500 text-sm">暂无数据 / Not enough data</p>
+          </div>
+        )}
       </section>
       <section className="mt-7 pt-7 border-t">
         <div className="flex items-center">
@@ -295,12 +359,18 @@ export default function ManageMetrics() {
             </p>
           </div>
         </div>
-        <div className="mt-7">
-          <div className="grid grid-cols-2 gap-x-3 -ml-5">
-            <Pie {...chartConfigs.devices} />
-            <Pie {...chartConfigs.clients} />
+        {clientsData.length ? (
+          <div className="mt-7">
+            <div className="grid grid-cols-2 gap-x-3 -ml-5">
+              <Pie {...chartConfigs.devices} />
+              <Pie {...chartConfigs.clients} />
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="mt-5 flex items-center justify-center bg-gray-100 rounded-md h-12">
+            <p className="text-gray-500 text-sm">暂无数据 / Not enough data</p>
+          </div>
+        )}
       </section>
     </div>
   );
