@@ -5,7 +5,7 @@ import { useQuery, ApolloError } from '@apollo/client';
 import { GET_PODCASTS } from '../../../lib/GraphQL/queries';
 import * as Store from '../../../lib/Store';
 import Icons from '../../../components/Icons';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import podcastInit from '../../../lib/Init';
 
 interface QueryInterface {
@@ -35,7 +35,7 @@ const PodcastsContainer = ({
     );
   if (error)
     return (
-      <div className="flex justify-center">
+      <div className="flex justify-center gap-x-3">
         <button
           aria-label="create"
           type="button"
@@ -46,6 +46,15 @@ const PodcastsContainer = ({
         >
           重新加载
         </button>
+        <Link to="/landing/login">
+          <button
+            aria-label="create"
+            type="button"
+            className="flex justify-center align-middle items-center text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md py-1.5 px-4 text-center"
+          >
+            重新登录
+          </button>
+        </Link>
       </div>
     );
 
