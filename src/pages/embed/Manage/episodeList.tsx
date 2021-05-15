@@ -7,6 +7,7 @@ import { htmlToText } from 'html-to-text';
 import subString from '../../../utilities/substring';
 import { useHistory } from 'react-router-dom';
 import Head from '../../../components/Head';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 export default function EpisodeList() {
   const podcastCuid = Store.get('currentPodcast.cuid');
@@ -87,12 +88,8 @@ export default function EpisodeList() {
               className="episode-item flex mb-3 rounded-md border shadow-sm cursor-pointer"
             >
               {episode.profile.cover_art_image_url && (
-                <div
-                  style={{
-                    backgroundImage: `url(${episode.profile.cover_art_image_url})`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'cover',
-                  }}
+                <LazyLoadImage
+                  src={episode.profile.cover_art_image_url}
                   className="episode-item-image h-full border-r rounded-tl-md rounded-bl-md bg-gray-100"
                 />
               )}

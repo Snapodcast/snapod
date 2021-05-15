@@ -486,6 +486,7 @@ export default function ManageEpisode() {
               const result = await uploadFile(file);
               return result;
             }}
+            className="text-base"
           />
         </div>
       </section>

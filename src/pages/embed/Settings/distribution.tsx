@@ -183,7 +183,7 @@ export default function DistributionSettings() {
                 <Icons name="globe" />
               </span>
               <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
-                播客站点
+                播客网站
               </em>
               <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
                 Podcast Website

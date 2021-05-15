@@ -306,3 +306,10 @@ div::-webkit-scrollbar {
 .episode-item-info-container div:last-child {
   @apply border-none;
 }
+
+.site-agreement {
+  @apply absolute;
+  top: calc((100% - 350px) / 2);
+  left: calc((100% - 500px) / 2);
+  width: 500px;
+}

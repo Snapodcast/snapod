@@ -39,20 +39,21 @@ export default function PodcastSettings() {
     }
   };
 
-  const doSetNewFeedURL = async () => {
+  const doSetNewFeedURL = async (reset: boolean) => {
     setSetting(true);
     await modifyPodcast({
       variables: {
         podcastCuid,
-        new_feed_url: new_feed_url || '',
+        new_feed_url: reset ? '' : new_feed_url || '',
       },
     })
       .then(async () => {
         setSetting(false);
-        if (apple_podcasts_code) {
+        if (apple_podcasts_code && !reset) {
           Store.set('currentPodcast.newFeedURL', new_feed_url || '');
         } else {
           Store.remove('currentPodcast.newFeedURL');
+          history.push('/snapod/reset');
         }
         alert('设置成功');
       })
@@ -62,20 +63,21 @@ export default function PodcastSettings() {
       });
   };
 
-  const doSetAppleAuthCode = async () => {
+  const doSetAppleAuthCode = async (reset: boolean) => {
     setSettingCode(true);
     await modifyPodcast({
       variables: {
         podcastCuid,
-        apple_podcasts_code: apple_podcasts_code || '',
+        apple_podcasts_code: reset ? '' : apple_podcasts_code || '',
       },
     })
       .then(async () => {
         setSettingCode(false);
-        if (apple_podcasts_code) {
+        if (apple_podcasts_code && !reset) {
           Store.set('currentPodcast.appleAuthCode', apple_podcasts_code);
         } else {
           Store.remove('currentPodcast.appleAuthCode');
+          history.push('/snapod/reset');
         }
         alert('设置成功');
       })
@@ -137,16 +139,28 @@ export default function PodcastSettings() {
             }}
             className="mb-2.5 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
-          <button
-            aria-label="modify feed url"
-            type="button"
-            className="flex justify-center align-middle items-center text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md py-1.5 px-3 text-center"
-            onClick={() => {
-              doSetNewFeedURL();
-            }}
-          >
-            {setting ? '设置中 Setting...' : '确认设置 / Confirm'}
-          </button>
+          <div className="flex gap-x-2">
+            <button
+              aria-label="modify feed url"
+              type="button"
+              className="flex justify-center align-middle items-center text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md py-1.5 px-3 text-center"
+              onClick={() => {
+                doSetNewFeedURL(false);
+              }}
+            >
+              {setting ? '设置中 Setting...' : '确认设置 / Confirm'}
+            </button>
+            <button
+              aria-label="modify feed url"
+              type="button"
+              className="flex justify-center align-middle items-center text-white text-sm hover:bg-gray-600 bg-gray-500 focus:outline-none rounded-md shadow-md py-1.5 px-3 text-center"
+              onClick={() => {
+                doSetNewFeedURL(true);
+              }}
+            >
+              重置 / Reset
+            </button>
+          </div>
         </section>
       </div>
       <div className="flex gap-x-3 mt-3">
@@ -170,16 +184,28 @@ export default function PodcastSettings() {
             }}
             className="mb-2.5 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
-          <button
-            aria-label="modify feed url"
-            type="button"
-            className="flex justify-center align-middle items-center text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md py-1.5 px-3 text-center"
-            onClick={() => {
-              doSetAppleAuthCode();
-            }}
-          >
-            {settingCode ? '设置中 Setting...' : '确认设置 / Confirm'}
-          </button>
+          <div className="flex gap-x-2">
+            <button
+              aria-label="modify feed url"
+              type="button"
+              className="flex justify-center align-middle items-center text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md py-1.5 px-3 text-center"
+              onClick={() => {
+                doSetAppleAuthCode(false);
+              }}
+            >
+              {settingCode ? '设置中 Setting...' : '确认设置 / Confirm'}
+            </button>
+            <button
+              aria-label="modify feed url"
+              type="button"
+              className="flex justify-center align-middle items-center text-white text-sm hover:bg-gray-600 bg-gray-500 focus:outline-none rounded-md shadow-md py-1.5 px-3 text-center"
+              onClick={() => {
+                doSetAppleAuthCode(true);
+              }}
+            >
+              重置 / Reset
+            </button>
+          </div>
         </section>
       </div>
     </div>

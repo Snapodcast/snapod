@@ -117,6 +117,8 @@ export const MODIFY_PODCAST = gql`
     $ximalaya_url: String
     $xiaoyuzhou_url: String
     $website_url: String
+    $snapod_site_url: String
+    $snapod_site_custom_url: String
   ) {
     modifyPodcast(
       podcastCuid: $podcastCuid
@@ -146,6 +148,8 @@ export const MODIFY_PODCAST = gql`
         ximalaya_url: $ximalaya_url
         xiaoyuzhou_url: $xiaoyuzhou_url
         website_url: $website_url
+        snapod_site_url: $snapod_site_url
+        snapod_site_custom_url: $snapod_site_custom_url
       }
     ) {
       name
@@ -219,6 +223,15 @@ export const GET_EPISODES = gql`
   }
 `;
 
+export const GET_EPISODES_TITLE = gql`
+  query EpisodesTitle($podcastCuid: String!) {
+    episodes(podcastCuid: $podcastCuid) {
+      cuid
+      title
+    }
+  }
+`;
+
 export const GET_EPISODE = gql`
   query Episode($episodeCuid: String!) {
     episode(episodeCuid: $episodeCuid) {
@@ -278,6 +291,18 @@ export const DELETE_EPISODE = gql`
   mutation DeleteEpisode($episodeCuid: String!) {
     deleteEpisode(episodeCuid: $episodeCuid) {
       status
+    }
+  }
+`;
+
+export const GET_SITE = gql`
+  query Podcast($podcastCuid: String!) {
+    podcast(podcastCuid: $podcastCuid) {
+      id
+      profile {
+        snapod_site_url
+        snapod_site_custom_url
+      }
     }
   }
 `;

@@ -3,5 +3,6 @@ export default {
   qiniu_ak: '4mGogia1PY-PXaYvct65vITq9PeZtZXa1qxE5Ce8',
   qiniu_sk: 'J-NECV03NfUfVgrdIfA1jkSoqMf6PS5XauY-BcxN',
   qiniu_url: 'https://storage.snapaper.com',
-  stats_url: 'http://dev.zeo.im',
+  stats_url: 'http://analytics.snapodcast.com',
+  site_url: 'https://podcast.snapodcast.com',
 };

@@ -2,7 +2,7 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-import { Line, Bar, Pie } from '@ant-design/charts';
+import { Line, Bar, Pie, Column } from '@ant-design/charts';
 import Icons from '../../../components/Icons';
 import * as Store from '../../../lib/Store';
 import Configs from '../../../configs';
@@ -12,6 +12,9 @@ import formatCountriesData from '../../../utilities/format/countriesData';
 import formatDevicesData from '../../../utilities/format/devicesData';
 import formatClientsData from '../../../utilities/format/clientsData';
 import Head from '../../../components/Head';
+import { GET_EPISODES_TITLE } from '../../../lib/GraphQL/queries';
+import { useQuery } from '@apollo/client';
+import formatEpisodesPlaysData from '../../../utilities/format/episodesPlaysData';
 
 const fetchData = async (
   setLoading: any,
@@ -23,25 +26,33 @@ const fetchData = async (
   setPlaysData: any,
   setCountriesData: any,
   setDevicesDate: any,
-  setClientsData: any
+  setClientsData: any,
+  episodesData: any,
+  setEpisodesPlaysData: any
 ) => {
   setLoading(true);
   const startTime = new Date(toDateString(startDate)).getTime();
   const endTime = new Date(toDateString(endDate)).getTime() + 86400000;
   const interval = parseInt(dateInterval, 10);
+
+  // fetch analytic data
   await fetch(
     `${Configs.stats_url}/stats/podcast/${podcastCuid}/from/${startTime}/to/${endTime}/interval/${interval}`
   )
     .then((response) => response.json())
     .then((json: any) => {
       // plays
-      setPlaysData(formatPlaysData(interval, json));
+      setPlaysData(formatPlaysData(interval, json.intervalData));
       // countries & cities
-      setCountriesData(formatCountriesData(json));
+      setCountriesData(formatCountriesData(json.intervalData));
       // devices
-      setDevicesDate(formatDevicesData(json));
+      setDevicesDate(formatDevicesData(json.intervalData));
       // clients
-      setClientsData(formatClientsData(json));
+      setClientsData(formatClientsData(json.intervalData));
+      // plays by episode
+      setEpisodesPlaysData(
+        formatEpisodesPlaysData(json.episodeData, episodesData.episodes)
+      );
       setError(false);
     })
     .catch(() => {
@@ -52,6 +63,11 @@ const fetchData = async (
 
 export default function ManageMetrics() {
   const podcastCuid = Store.get('currentPodcast.cuid');
+
+  /* Fetch episodes titles */
+  const { loading, error, data } = useQuery(GET_EPISODES_TITLE, {
+    variables: { podcastCuid },
+  });
 
   /* Date picker */
   const [startDate, setStartDate] = React.useState<Date>(
@@ -68,12 +84,13 @@ export default function ManageMetrics() {
   };
 
   /* Chart data */
-  const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState(false);
+  const [fetchLoading, setLoading] = React.useState(true);
+  const [fetchError, setError] = React.useState(false);
   const [playsData, setPlaysData] = React.useState<any>([]);
   const [countriesData, setCountriesData] = React.useState<any>([]);
   const [devicesData, setDevicesDate] = React.useState<any>([]);
   const [clientsData, setClientsData] = React.useState<any>([]);
+  const [episodesPlaysData, setEpisodesPlaysData] = React.useState<any>([]);
 
   const chartConfigs: any = {
     plays: {
@@ -191,6 +208,20 @@ export default function ManageMetrics() {
         },
       },
     },
+    episodes: {
+      data: episodesPlaysData,
+      autoFit: false,
+      height: 300,
+      xField: 'title',
+      yField: 'plays',
+      xAxis: { label: { autoRotate: false } },
+      scrollbar: { type: 'horizontal' },
+      meta: {
+        plays: {
+          alias: '播放量',
+        },
+      },
+    },
   };
 
   React.useEffect(() => {
@@ -206,13 +237,15 @@ export default function ManageMetrics() {
         setPlaysData,
         setCountriesData,
         setDevicesDate,
-        setClientsData
+        setClientsData,
+        data,
+        setEpisodesPlaysData
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, endDate]);
 
-  if (loading) {
+  if (loading || fetchLoading) {
     return (
       <div className="flex justify-center items-center h-full">
         <span className="animate-spin w-5 h-5">
@@ -222,7 +255,7 @@ export default function ManageMetrics() {
     );
   }
 
-  if (error) {
+  if (error || fetchError) {
     return (
       <div className="flex justify-center items-center error-container">
         <div className="-mt-3">
@@ -247,7 +280,9 @@ export default function ManageMetrics() {
                   setPlaysData,
                   setCountriesData,
                   setDevicesDate,
-                  setClientsData
+                  setClientsData,
+                  data,
+                  setEpisodesPlaysData
                 );
               }}
             >
@@ -265,7 +300,7 @@ export default function ManageMetrics() {
       <section>
         <div className="flex items-center">
           <div className="flex-1">
-            <h1 className="text-base font-medium -mb-0.5">播放量统计</h1>
+            <h1 className="text-base font-medium -mb-0.5">播客播放量统计</h1>
             <p className="text-xs text-gray-600">Plays</p>
           </div>
           <div className="flex gap-x-3 items-center">
@@ -310,7 +345,9 @@ export default function ManageMetrics() {
                     setPlaysData,
                     setCountriesData,
                     setDevicesDate,
-                    setClientsData
+                    setClientsData,
+                    data,
+                    setEpisodesPlaysData
                   );
                 }}
               >
@@ -324,6 +361,23 @@ export default function ManageMetrics() {
         {playsData.length ? (
           <div className="mt-6">
             <Line {...chartConfigs.plays} />
+          </div>
+        ) : (
+          <div className="mt-5 flex items-center justify-center bg-gray-100 rounded-md h-12">
+            <p className="text-gray-500 text-sm">暂无数据 / Not enough data</p>
+          </div>
+        )}
+      </section>
+      <section className="mt-7 pt-7 border-t">
+        <div className="flex items-center">
+          <div className="flex-1">
+            <h1 className="text-base font-medium -mb-0.5">节目播放量统计</h1>
+            <p className="text-xs text-gray-600">Plays by episode</p>
+          </div>
+        </div>
+        {episodesPlaysData.length ? (
+          <div className="mt-5">
+            <Column {...chartConfigs.episodes} />
           </div>
         ) : (
           <div className="mt-5 flex items-center justify-center bg-gray-100 rounded-md h-12">

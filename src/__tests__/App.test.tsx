@@ -2,14 +2,14 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import Start from '../pages/embed/Start';
+import Login from '../pages/single/Login';
 
 describe('App', () => {
-  it('should render start page', () => {
+  it('should render login page', () => {
     expect(
       render(
         <BrowserRouter>
-          <Start />
+          <Login />
         </BrowserRouter>
       )
     ).toBeTruthy();
