@@ -1,7 +1,11 @@
 import React from 'react';
 import * as Store from '../../../lib/Store';
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_SITE, MODIFY_PODCAST } from '../../../lib/GraphQL/queries';
+import {
+  GET_SITE,
+  MODIFY_CUSTOM_DOMAIN,
+  MODIFY_PODCAST,
+} from '../../../lib/GraphQL/queries';
 import Head from '../../../components/Head';
 import Icons from '../../../components/Icons';
 import { useHistory } from 'react-router';
@@ -12,55 +16,73 @@ import Configs from '../../../configs';
 export default function ManageSite() {
   const podcastCuid = Store.get('currentPodcast.cuid');
   const history = useHistory();
-  const { loading, error, data, refetch } = useQuery(GET_SITE, {
-    variables: { podcastCuid },
-    fetchPolicy: 'network-only',
-  });
-  const [modifySite] = useMutation(MODIFY_PODCAST);
-  const [podcastInfo, setInfo] = React.useState<any>({
+  const [podcastInfo, setInfo] = React.useState<{
+    snapod_site_url: string;
+    snapod_site_custom_url: string;
+  }>({
     snapod_site_url: '',
     snapod_site_custom_url: '',
   });
-  const [savable, setSavable] = React.useState(false);
   const [saving, setSaving] = React.useState(false);
   const [activating, setActivating] = React.useState(false);
 
-  /* Save action */
-  const doSave = async () => {
-    setSaving(true);
+  const { loading, error, data, refetch } = useQuery(GET_SITE, {
+    variables: { podcastCuid },
+    fetchPolicy: 'network-only',
+    onCompleted: () => {
+      setInfo({
+        snapod_site_url: data.podcast.profile.snapod_site_url,
+        snapod_site_custom_url: data.podcast.profile.snapod_site_custom_url,
+      });
+    },
+  });
+
+  const [modifySite] = useMutation(MODIFY_PODCAST);
+  const [modifyCustomDomain] = useMutation(MODIFY_CUSTOM_DOMAIN);
+
+  /* Activation action */
+  const doActivate = async () => {
+    setActivating(true);
     const variables = {
-      ...podcastInfo,
       podcastCuid,
-      clean_content: podcastInfo.clean_content === 'true',
-      copyright: podcastInfo.useCr ? podcastInfo.copyright : null,
-      ownerName: podcastInfo.useOwner ? podcastInfo.ownerName : null,
-      ownerEmail: podcastInfo.useOwner ? podcastInfo.ownerEmail : null,
-      complete: podcastInfo.complete === 'true',
-      block: podcastInfo.block === 'true',
+      snapod_site_url: `${Configs.site_url}/${
+        46800 + parseInt(data.podcast.id, 10)
+      }`,
     };
 
     await modifySite({
       variables,
     })
       .then(() => {
-        setSavable(false);
-        alert('修改成功');
+        alert('启用成功');
+        history.push('/snapod/reset');
       })
       .catch(() => {
-        alert(`修改失败`);
+        alert(`启用失败`);
+        setActivating(false);
       });
-    setSaving(false);
   };
 
-  /* Fill in default values */
-  const isDataFirstRun = React.useRef(true);
-  if (data && isDataFirstRun.current) {
-    setInfo({
-      snapod_site_url: data.podcast.profile.snapod_site_url,
-      snapod_site_custom_url: data.podcast.profile.snapod_site_custom_url,
-    });
-    isDataFirstRun.current = false;
-  }
+  /* Modification action */
+  const doModifyDomain = async (reset: boolean) => {
+    setSaving(true);
+    const variables = {
+      podcastCuid,
+      customDomain: reset ? '' : podcastInfo.snapod_site_custom_url,
+    };
+
+    await modifyCustomDomain({
+      variables,
+    })
+      .then(() => {
+        alert('提交成功');
+        history.push('/snapod/reset');
+      })
+      .catch(() => {
+        alert(`提交失败`);
+        setSaving(false);
+      });
+  };
 
   if (loading) {
     return (
@@ -98,28 +120,7 @@ export default function ManageSite() {
     );
   }
 
-  /* Activation action */
-  const doActivate = async () => {
-    setActivating(true);
-    const variables = {
-      podcastCuid,
-      snapod_site_url: `${Configs.site_url}/${46800 + data.podcast.id}`,
-    };
-
-    await modifySite({
-      variables,
-    })
-      .then(() => {
-        alert('启用成功');
-        history.push('/snapod/reset');
-      })
-      .catch(() => {
-        alert(`启用失败`);
-        setActivating(false);
-      });
-  };
-
-  // Snapod 站点未启用
+  // Snapod site is not activated
   if (!data.podcast.profile.snapod_site_url) {
     return (
       <div className="my-4 mx-5">
@@ -198,32 +199,6 @@ export default function ManageSite() {
   return (
     <div className="my-4 mx-5">
       <Head title="管理播客站点" description="修改播客站点设置与自定义域名" />
-      {savable && (
-        <div className="flex justify-center items-center w-full">
-          <div className="flex absolute bottom-5 z-10 gap-x-3">
-            <button
-              className="bg-gray-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white hover:bg-gray-600"
-              aria-label="save changes"
-              type="button"
-              onClick={() => {
-                history.push('/snapod/reset');
-              }}
-            >
-              重置
-            </button>
-            <button
-              className="bg-blue-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white hover:bg-blue-600"
-              aria-label="save changes"
-              type="button"
-              onClick={() => {
-                doSave();
-              }}
-            >
-              {saving ? '保存中...' : '保存更改'}
-            </button>
-          </div>
-        </div>
-      )}
       <section className="border rounded-md py-5 text-center">
         <h1 className="text-base font-medium tracking-wide mb-3 flex gap-x-2 justify-center items-center">
           <span className="w-5 h-5">
@@ -232,15 +207,134 @@ export default function ManageSite() {
           播客站点 / Snapod Site
         </h1>
         {data.podcast.profile.snapod_site_custom_url ? (
-          <div>
-            <p>{data.podcast.profile.snapod_site_url}</p>
-            <p>{data.podcast.profile.snapod_site_custom_url}</p>
+          <div className="rounded-md border text-sm inline-block text-gray-600 shadow-sm">
+            <p className="border-b py-2 px-3.5 flex gap-2 items-center">
+              <span className="rounded-full bg-green-500 text-white text-xs h-5 px-2 flex items-center">
+                Default
+              </span>
+              <span>{data.podcast.profile.snapod_site_url}</span>
+            </p>
+            <p className="py-2 px-3.5 flex gap-2 items-center">
+              <span className="rounded-full bg-yellow-500 text-white text-xs h-5 px-2 flex items-center">
+                Custom
+              </span>
+              <span>
+                https://
+                {data.podcast.profile.snapod_site_custom_url}
+              </span>
+            </p>
           </div>
         ) : (
-          <p className="rounded-md bg-gray-100 border py-1.5 px-3.5 text-sm inline-block text-gray-600">
-            {data.podcast.profile.snapod_site_url}
-          </p>
+          <div className="inline-block shadow-sm">
+            <p className="rounded-md border py-2 px-3.5 gap-2 items-center text-sm flex text-gray-600">
+              <span className="rounded-full bg-green-500 text-white text-xs h-5 px-2 flex items-center">
+                Default
+              </span>
+              {data.podcast.profile.snapod_site_url}
+            </p>
+          </div>
         )}
+      </section>
+      <section className="flex gap-x-4 border-t pt-5 mt-5">
+        <div className="flex-1 border rounded-lg p-3">
+          <span className="flex items-center">
+            <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              自定义域名
+            </em>
+            <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              Custom Domain
+            </em>
+          </span>
+          <p className="text-xs text-gray-500 mx-1 py-2">
+            域名格式为 <code>example.com</code>, 不含 <code>http</code> 或{' '}
+            <code>https://</code>, 如 <code>snapodcast.com</code>。
+          </p>
+          <div>
+            <input
+              disabled={saving || activating}
+              placeholder={
+                data.podcast.profile.snapod_site_custom_url || 'example.com'
+              }
+              defaultValue={podcastInfo.snapod_site_custom_url}
+              onChange={(e: { target: { value: any } }) => {
+                setInfo({
+                  ...podcastInfo,
+                  snapod_site_custom_url: e.target.value,
+                });
+              }}
+              className="mb-2.5 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+            />
+            <p className="flex gap-x-2">
+              <button
+                disabled={saving || activating}
+                className="flex justify-center align-middle items-center text-white text-sm hover:bg-gray-500 bg-gray-600 focus:outline-none rounded-md shadow-md py-1.5 px-3 text-center"
+                aria-label="delete podcast"
+                type="button"
+                onClick={() => {
+                  doModifyDomain(false);
+                }}
+              >
+                {saving ? '提交中...' : '提交域名'}
+              </button>
+              <button
+                disabled={saving || activating}
+                className="flex justify-center align-middle items-center text-white text-sm hover:bg-gray-600 bg-gray-500 focus:outline-none rounded-md shadow-md py-1.5 px-3 text-center"
+                aria-label="delete podcast"
+                type="button"
+                onClick={() => {
+                  doModifyDomain(true);
+                }}
+              >
+                重置 / Reset
+              </button>
+            </p>
+          </div>
+        </div>
+        <div className="flex-1 border rounded-lg p-3">
+          <span className="flex items-center">
+            <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              自定义域名配置指南
+            </em>
+            <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              Configuration Guide
+            </em>
+          </span>
+          <div className="text-xs text-gray-500 mx-1 py-2">
+            <p>
+              提交后请前往域名注册/解析服务提供方配置 <b>CNAME</b> 解析记录,
+              预计在 24 小时内生效
+              {podcastInfo.snapod_site_custom_url ? ':' : '。'}
+            </p>
+            {podcastInfo.snapod_site_custom_url && (
+              <div className="mt-3 border-t border-b py-1">
+                {podcastInfo.snapod_site_custom_url.split('.').length >= 3 ? (
+                  <ul>
+                    <li className="flex">
+                      <span className="flex-1">
+                        {podcastInfo.snapod_site_custom_url
+                          .split('.')
+                          .slice(
+                            0,
+                            podcastInfo.snapod_site_custom_url.split('.')
+                              .length - 2
+                          )
+                          .join('.')}
+                      </span>
+                      <span>snapod-site.netlify.app.</span>
+                    </li>
+                  </ul>
+                ) : (
+                  <ul>
+                    <li className="flex">
+                      <span className="flex-1">@</span>
+                      <span>snapod-site.netlify.app.</span>
+                    </li>
+                  </ul>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
       </section>
     </div>
   );

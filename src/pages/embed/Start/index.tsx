@@ -8,7 +8,7 @@ export default function Start() {
     <div className="h-full flex justify-center items-center">
       <Head title="Snapod" description="Grow your podcast with ease" />
       <div className="h-full w-full grid grid-cols-2 gap-x-3">
-        <Link to="/new/podcast">
+        <Link to="/landing/create/podcast">
           <div className="col-auto bg-green-100 dark:bg-green-900 h-full rounded-md text-center items-center justify-center flex">
             <div>
               <div className="w-20 h-20 mx-auto text-green-500">
@@ -18,7 +18,7 @@ export default function Start() {
             </div>
           </div>
         </Link>
-        <Link to="/snapod/new">
+        <Link to="/snapod/create/episode">
           <div className="col-auto bg-yellow-100 dark:bg-yellow-900 h-full rounded-md text-center items-center justify-center flex">
             <div>
               <div className="w-20 h-20 mx-auto text-yellow-500">

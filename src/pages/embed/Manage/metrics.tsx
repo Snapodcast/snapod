@@ -64,11 +64,6 @@ const fetchData = async (
 export default function ManageMetrics() {
   const podcastCuid = Store.get('currentPodcast.cuid');
 
-  /* Fetch episodes titles */
-  const { loading, error, data } = useQuery(GET_EPISODES_TITLE, {
-    variables: { podcastCuid },
-  });
-
   /* Date picker */
   const [startDate, setStartDate] = React.useState<Date>(
     new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
@@ -86,11 +81,34 @@ export default function ManageMetrics() {
   /* Chart data */
   const [fetchLoading, setLoading] = React.useState(true);
   const [fetchError, setError] = React.useState(false);
+  const [firstFetch, setFirstFetch] = React.useState(true);
   const [playsData, setPlaysData] = React.useState<any>([]);
   const [countriesData, setCountriesData] = React.useState<any>([]);
   const [devicesData, setDevicesDate] = React.useState<any>([]);
   const [clientsData, setClientsData] = React.useState<any>([]);
   const [episodesPlaysData, setEpisodesPlaysData] = React.useState<any>([]);
+
+  /* Fetch episodes titles */
+  const { loading, error, data } = useQuery(GET_EPISODES_TITLE, {
+    variables: { podcastCuid },
+    fetchPolicy: 'network-only',
+    onCompleted: () => {
+      fetchData(
+        setLoading,
+        setError,
+        startDate,
+        endDate,
+        dateInterval,
+        podcastCuid,
+        setPlaysData,
+        setCountriesData,
+        setDevicesDate,
+        setClientsData,
+        data,
+        setEpisodesPlaysData
+      );
+    },
+  });
 
   const chartConfigs: any = {
     plays: {
@@ -225,7 +243,7 @@ export default function ManageMetrics() {
   };
 
   React.useEffect(() => {
-    if (startDate && endDate) {
+    if (startDate && endDate && !firstFetch) {
       setShowPicker(false);
       fetchData(
         setLoading,
@@ -241,6 +259,8 @@ export default function ManageMetrics() {
         data,
         setEpisodesPlaysData
       );
+    } else {
+      setFirstFetch(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, endDate]);

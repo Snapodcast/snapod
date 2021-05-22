@@ -306,3 +306,11 @@ export const GET_SITE = gql`
     }
   }
 `;
+
+export const MODIFY_CUSTOM_DOMAIN = gql`
+  mutation ModifyCustomDomain($podcastCuid: String!, $customDomain: String!) {
+    modifyCustomDomain(podcastCuid: $podcastCuid, customDomain: $customDomain) {
+      status
+    }
+  }
+`;

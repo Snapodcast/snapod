@@ -22,8 +22,6 @@ const HeadContext = React.createContext<HeadContextObject>({
   head: {
     title: '',
     description: '',
-    savable: false,
-    doSave: () => {},
   },
   setHead: () => {},
 });

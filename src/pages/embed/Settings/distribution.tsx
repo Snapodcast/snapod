@@ -149,7 +149,7 @@ export default function DistributionSettings() {
       </div>
       <section className="mb-5 grid grid-cols-2 gap-x-3 border-b pb-5">
         <div className="border rounded-lg py-3.5 px-4">
-          <div className="items-center mb-3 flex">
+          <div className="items-center mb-1.5 flex">
             <span className="items-center flex ml-1 flex-1">
               <span className="w-4 h-4 text-gray-500">
                 <Icons name="rss" />
@@ -172,6 +172,9 @@ export default function DistributionSettings() {
               {state.error ? '需手动复制' : state.value ? '已复制' : '复制'}
             </button>
           </div>
+          <p className="text-xs text-gray-500 mb-2 mx-1">
+            此地址可用于泛用性播客客户端订阅、播客平台发布等用途
+          </p>
           <p className="text-gray-600 text-sm whitespace-nowrap overflow-x-auto border shadow-sm rounded-md py-1 px-2">
             https://rss.snapodcast.com/{podcastCuid}
           </p>
@@ -190,12 +193,16 @@ export default function DistributionSettings() {
               </em>
             </span>
           </div>
-          <div className="flex items-center pt-3">
+          <div className="mt-1">
+            <p className="text-xs text-gray-500 mb-2 mx-1">
+              开启 Snapod 站点后播客网站仍可自行设置,
+              但单期节目对应网址链接将失效
+            </p>
             <div className="flex gap-x-2">
               <input
                 disabled={saving}
                 defaultValue={distributions.website_url}
-                placeholder="URL 地址"
+                placeholder={distributions.website_url || 'https://example.com'}
                 onChange={(e: { target: { value: any } }) => {
                   setDistributions({
                     ...distributions,
