@@ -28,7 +28,7 @@ const PodcastsContainer = ({
   if (loading)
     return (
       <div className="flex justify-center">
-        <span className="animate-spin w-5 h-5">
+        <span className="w-5 h-5">
           <Icons name="spinner" />
         </span>
       </div>

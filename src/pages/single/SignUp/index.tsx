@@ -158,7 +158,7 @@ export default function SignUp() {
           className="flex justify-center align-middle items-center mb-3 text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md w-full py-2 text-center"
         >
           {signupLoading ? (
-            <span className="h-5 w-5 animate-spin duration-200">
+            <span className="h-5 w-5 duration-200">
               <Icons name="clock" />
             </span>
           ) : (

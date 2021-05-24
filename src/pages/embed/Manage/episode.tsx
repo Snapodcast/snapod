@@ -17,10 +17,6 @@ export default function ManageEpisode() {
   const history = useHistory();
   const episodeCuid = Store.get('currentEpisode.cuid');
   const episodeTitle = Store.get('currentEpisode.title');
-  const { loading, error, data, refetch } = useQuery(GET_EPISODE, {
-    variables: { episodeCuid },
-    fetchPolicy: 'network-only',
-  });
   const [modifyEpisode] = useMutation(MODIFY_EPISODE);
   const [episodeInfo, setInfo] = React.useState<any>({
     title: '',
@@ -40,6 +36,28 @@ export default function ManageEpisode() {
   const [saving, setSaving] = React.useState(false);
   const [uploading, setUploading] = React.useState(false);
   const [audioUploading, setAudioUploading] = React.useState(false);
+
+  const { loading, error, data, refetch } = useQuery(GET_EPISODE, {
+    variables: { episodeCuid },
+    fetchPolicy: 'network-only',
+    onCompleted: () => {
+      setInfo({
+        title: data.episode.title,
+        content: data.episode.content,
+        published: data.episode.published.toString(),
+        audio_url: data.episode.profile.audio_url,
+        audio_path: data.episode.profile.audio_url,
+        audio_duration: data.episode.profile.audio_duration,
+        audio_size: data.episode.profile.audio_size,
+        cover_art_image_url: data.episode.profile.cover_art_image_url,
+        episode_type: data.episode.profile.episode_type,
+        clean_content: data.episode.profile.clean_content.toString(),
+        season_number: data.episode.profile.season_number,
+        episode_number: data.episode.profile.episode_number,
+        useSeason: !!data.episode.profile.season_number,
+      });
+    },
+  });
 
   /* Select cover art image action */
   const selectImage = async () => {
@@ -96,31 +114,10 @@ export default function ManageEpisode() {
     }
   };
 
-  /* Fill in default values */
-  const isDataFirstRun = React.useRef(true);
-  if (data && isDataFirstRun.current) {
-    setInfo({
-      title: data.episode.title,
-      content: data.episode.content,
-      published: data.episode.published.toString(),
-      audio_url: data.episode.profile.audio_url,
-      audio_path: data.episode.profile.audio_url,
-      audio_duration: data.episode.profile.audio_duration,
-      audio_size: data.episode.profile.audio_size,
-      cover_art_image_url: data.episode.profile.cover_art_image_url,
-      episode_type: data.episode.profile.episode_type,
-      clean_content: data.episode.profile.clean_content.toString(),
-      season_number: data.episode.profile.season_number,
-      episode_number: data.episode.profile.episode_number,
-      useSeason: !!data.episode.profile.season_number,
-    });
-    isDataFirstRun.current = false;
-  }
-
   if (loading) {
     return (
       <div className="flex justify-center items-center h-full">
-        <span className="animate-spin w-5 h-5">
+        <span className="w-5 h-5">
           <Icons name="spinner" />
         </span>
       </div>
@@ -319,7 +316,7 @@ export default function ManageEpisode() {
           >
             {audioUploading ? (
               <div className="flex justify-center items-center h-full">
-                <span className="animate-spin w-5 h-5">
+                <span className="w-5 h-5">
                   <Icons name="spinner" />
                 </span>
               </div>

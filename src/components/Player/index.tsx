@@ -154,7 +154,7 @@ export default function Player(props: {
             />
             {!playable && (
               <div className="flex justify-center -mt-5">
-                <span className="animate-spin w-5 h-5 text-gray-500">
+                <span className="w-5 h-5 text-gray-500">
                   <Icons name="spinner" />
                 </span>
               </div>

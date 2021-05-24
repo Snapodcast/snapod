@@ -336,7 +336,12 @@ export default function Icons({ name }: { name: string }) {
       );
     case 'spinner':
       return (
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          className="animate-spin"
+        >
           <circle
             className="opacity-25"
             cx="12"

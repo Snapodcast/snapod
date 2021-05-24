@@ -91,7 +91,7 @@ export default function ManageMetrics() {
   /* Fetch episodes titles */
   const { loading, error, data } = useQuery(GET_EPISODES_TITLE, {
     variables: { podcastCuid },
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'cache-and-network',
     onCompleted: () => {
       fetchData(
         setLoading,
@@ -268,7 +268,7 @@ export default function ManageMetrics() {
   if (loading || fetchLoading) {
     return (
       <div className="flex justify-center items-center h-full">
-        <span className="animate-spin w-5 h-5">
+        <span className="w-5 h-5">
           <Icons name="spinner" />
         </span>
       </div>

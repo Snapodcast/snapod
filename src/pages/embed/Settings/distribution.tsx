@@ -43,7 +43,24 @@ export default function DistributionSettings() {
 
   const { loading, error, data, refetch } = useQuery(GET_PODCAST, {
     variables: { podcastCuid },
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'cache-and-network',
+    onCompleted: () => {
+      setDistributions({
+        apple_podcasts_url: data.podcast.profile.apple_podcasts_url,
+        google_podcasts_url: data.podcast.profile.google_podcasts_url,
+        breaker_url: data.podcast.profile.breaker_url,
+        castbox_url: data.podcast.profile.castbox_url,
+        overcast_url: data.podcast.profile.overcast_url,
+        pocketcast_url: data.podcast.profile.pocketcast_url,
+        radiopublic_url: data.podcast.profile.radiopublic_url,
+        spotify: data.podcast.profile.spotify,
+        netease_url: data.podcast.profile.netease_url,
+        qqmusic_url: data.podcast.profile.qqmusic_url,
+        ximalaya_url: data.podcast.profile.ximalaya_url,
+        xiaoyuzhou_url: data.podcast.profile.xiaoyuzhou_url,
+        website_url: data.podcast.profile.website_url,
+      });
+    },
   });
 
   const doModify = async () => {
@@ -63,31 +80,10 @@ export default function DistributionSettings() {
     setSaving(false);
   };
 
-  /* Fill in default values */
-  const isDataFirstRun = React.useRef(true);
-  if (data && isDataFirstRun.current) {
-    setDistributions({
-      apple_podcasts_url: data.podcast.profile.apple_podcasts_url,
-      google_podcasts_url: data.podcast.profile.google_podcasts_url,
-      breaker_url: data.podcast.profile.breaker_url,
-      castbox_url: data.podcast.profile.castbox_url,
-      overcast_url: data.podcast.profile.overcast_url,
-      pocketcast_url: data.podcast.profile.pocketcast_url,
-      radiopublic_url: data.podcast.profile.radiopublic_url,
-      spotify: data.podcast.profile.spotify,
-      netease_url: data.podcast.profile.netease_url,
-      qqmusic_url: data.podcast.profile.qqmusic_url,
-      ximalaya_url: data.podcast.profile.ximalaya_url,
-      xiaoyuzhou_url: data.podcast.profile.xiaoyuzhou_url,
-      website_url: data.podcast.profile.website_url,
-    });
-    isDataFirstRun.current = false;
-  }
-
   if (loading) {
     return (
       <div className="flex justify-center items-center h-full">
-        <span className="animate-spin w-5 h-5">
+        <span className="w-5 h-5">
           <Icons name="spinner" />
         </span>
       </div>

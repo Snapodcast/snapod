@@ -180,8 +180,8 @@ export default function Aside() {
         </div>
         <button
           onClick={() => {
-            logout();
             ApolloClient.resetStore();
+            logout();
             history.push('/landing/login');
           }}
           aria-label="logout"

@@ -8,8 +8,7 @@ import Aside from './components/Aside';
 import Start from './pages/embed/Start';
 import Login from './pages/single/Login';
 import SignUp from './pages/single/SignUp';
-import ForgotRequest from './pages/single/Forgot/request';
-import ForgotRecover from './pages/single/Forgot/recover';
+import Forgot from './pages/single/Forgot';
 
 import { HeadContextProvider } from './lib/Context/head';
 import StartSingle from './pages/single/Start';
@@ -88,8 +87,7 @@ export default function App() {
             </Route>
             <Route path="/landing/login" component={Login} />
             <Route path="/landing/signup" component={SignUp} />
-            <Route path="/landing/forgot/request" component={ForgotRequest} />
-            <Route path="/landing/forgot/recover" component={ForgotRecover} />
+            <Route path="/landing/forgot" component={Forgot} />
             <Route path="/landing/start" component={StartSingle} />
             <Route path="/landing/create/podcast" component={CreatePodcast} />
           </main>

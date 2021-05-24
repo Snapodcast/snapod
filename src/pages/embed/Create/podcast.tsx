@@ -33,7 +33,7 @@ const StepContainer = ({
     case 6:
       return (
         <div className="justify-center mt-5 text-center">
-          <p className="animate-spin w-full flex justify-center mb-2">
+          <p className="w-full flex justify-center mb-2">
             <span className="w-6 h-6">
               <Icons name="spinner" />
             </span>

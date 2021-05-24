@@ -253,7 +253,7 @@ export default function CreateEpisode() {
           >
             {audioUploading ? (
               <div className="flex justify-center items-center h-full">
-                <span className="animate-spin w-5 h-5">
+                <span className="w-5 h-5">
                   <Icons name="spinner" />
                 </span>
               </div>

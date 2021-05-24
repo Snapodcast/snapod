@@ -14,10 +14,6 @@ import { useHistory } from 'react-router';
 export default function ManagePodcast() {
   const podcastCuid = Store.get('currentPodcast.cuid');
   const history = useHistory();
-  const { loading, error, data, refetch } = useQuery(GET_PODCAST, {
-    variables: { podcastCuid },
-    fetchPolicy: 'network-only',
-  });
   const [modifyPodcast] = useMutation(MODIFY_PODCAST);
   const [podcastInfo, setInfo] = React.useState<any>({
     name: '',
@@ -37,6 +33,29 @@ export default function ManagePodcast() {
   const [savable, setSavable] = React.useState(false);
   const [saving, setSaving] = React.useState(false);
   const [uploading, setUploading] = React.useState(false);
+
+  const { loading, error, data, refetch } = useQuery(GET_PODCAST, {
+    variables: { podcastCuid },
+    fetchPolicy: 'network-only',
+    onCompleted: () => {
+      setInfo({
+        name: data.podcast.name,
+        description: data.podcast.description,
+        type: data.podcast.type,
+        clean_content: data.podcast.profile.clean_content.toString(),
+        language: data.podcast.profile.language,
+        category_name: data.podcast.profile.category_name,
+        useCr: !!data.podcast.profile.copyright,
+        copyright: data.podcast.profile.copyright,
+        useOwner: !!data.podcast.profile.ownerName,
+        ownerName: data.podcast.profile.ownerName,
+        ownerEmail: data.podcast.profile.ownerEmail,
+        complete: data.podcast.profile.complete.toString(),
+        block: data.podcast.profile.block.toString(),
+        cover_art_image_url: data.podcast.profile.cover_art_image_url,
+      });
+    },
+  });
 
   /* Save action */
   const doSave = async () => {
@@ -80,32 +99,10 @@ export default function ManagePodcast() {
     setUploading(false);
   };
 
-  /* Fill in default values */
-  const isDataFirstRun = React.useRef(true);
-  if (data && isDataFirstRun.current) {
-    setInfo({
-      name: data.podcast.name,
-      description: data.podcast.description,
-      type: data.podcast.type,
-      clean_content: data.podcast.profile.clean_content.toString(),
-      language: data.podcast.profile.language,
-      category_name: data.podcast.profile.category_name,
-      useCr: !!data.podcast.profile.copyright,
-      copyright: data.podcast.profile.copyright,
-      useOwner: !!data.podcast.profile.ownerName,
-      ownerName: data.podcast.profile.ownerName,
-      ownerEmail: data.podcast.profile.ownerEmail,
-      complete: data.podcast.profile.complete.toString(),
-      block: data.podcast.profile.block.toString(),
-      cover_art_image_url: data.podcast.profile.cover_art_image_url,
-    });
-    isDataFirstRun.current = false;
-  }
-
   if (loading) {
     return (
       <div className="flex justify-center items-center h-full">
-        <span className="animate-spin w-5 h-5">
+        <span className="w-5 h-5">
           <Icons name="spinner" />
         </span>
       </div>
