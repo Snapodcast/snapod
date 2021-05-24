@@ -40,6 +40,9 @@ export default function EpisodeList() {
           setDeletingCuid('');
           alert(`删除失败`);
         });
+    } else {
+      setDeleting(false);
+      setDeletingCuid('');
     }
   };
 

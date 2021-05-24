@@ -200,7 +200,7 @@ export default function ManageSite() {
     <div className="my-4 mx-5">
       <Head title="管理播客站点" description="修改播客站点设置与自定义域名" />
       <section className="border rounded-md py-5 text-center">
-        <h1 className="text-base font-medium tracking-wide mb-3 flex gap-x-2 justify-center items-center">
+        <h1 className="text-base font-medium mb-3 flex gap-x-2 justify-center items-center">
           <span className="w-5 h-5">
             <Icons name="globe" />
           </span>

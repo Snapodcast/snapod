@@ -133,7 +133,7 @@ export default function DistributionSettings() {
               history.push('/snapod/reset');
             }}
           >
-            重置
+            还原更改
           </button>
           <button
             className="bg-blue-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white hover:bg-blue-600"
