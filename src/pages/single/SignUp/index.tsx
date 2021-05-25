@@ -159,7 +159,7 @@ export default function SignUp() {
         >
           {signupLoading ? (
             <span className="h-5 w-5 duration-200">
-              <Icons name="clock" />
+              <Icons name="spinner" />
             </span>
           ) : (
             '注册 / Sign Up'

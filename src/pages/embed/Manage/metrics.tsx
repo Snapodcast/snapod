@@ -2,7 +2,7 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-import { Line, Bar, Pie, Column } from '@ant-design/charts';
+import { Bar, Pie, Column, Area } from '@ant-design/charts';
 import Icons from '../../../components/Icons';
 import * as Store from '../../../lib/Store';
 import Configs from '../../../configs';
@@ -125,6 +125,9 @@ export default function ManageMetrics() {
       },
       lineStyle: {
         lineWidth: 3,
+      },
+      areaStyle: function areaStyle() {
+        return { fill: 'l(270) 0:#ffffff 0.5:#7ec2f3 1:#1890ff' };
       },
       point: {
         size: 5,
@@ -380,7 +383,7 @@ export default function ManageMetrics() {
         </div>
         {playsData.length ? (
           <div className="mt-6">
-            <Line {...chartConfigs.plays} />
+            <Area {...chartConfigs.plays} />
           </div>
         ) : (
           <div className="mt-5 flex items-center justify-center bg-gray-100 rounded-md h-12">

@@ -236,7 +236,7 @@ export default function Forgot() {
         >
           {submitLoading ? (
             <span className="h-5 w-5 duration-200">
-              <Icons name="clock" />
+              <Icons name="spinner" />
             </span>
           ) : (
             '提交 / Submit'
