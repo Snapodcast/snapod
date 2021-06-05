@@ -88,7 +88,7 @@ export default function EpisodeList() {
           {data.episodes.map((episode: any) => (
             <div
               key={episode.cuid}
-              className="episode-item flex mb-3 rounded-md border shadow-sm cursor-pointer"
+              className="episode-item flex mb-3 rounded-md border dark:border-gray-500 shadow-sm cursor-pointer"
             >
               {episode.profile.cover_art_image_url && (
                 <LazyLoadImage
@@ -112,10 +112,10 @@ export default function EpisodeList() {
               >
                 <div className="flex items-center episode-item-container px-5 pt-2">
                   <div>
-                    <h2 className="text-base text-gray-600 font-medium mb-1.5">
+                    <h2 className="text-base text-gray-600 font-medium mb-1.5 dark:text-white">
                       {episode.title}
                     </h2>
-                    <p className="text-sm text-gray-500 mb-2.5">
+                    <p className="text-sm text-gray-500 mb-2.5 dark:text-gray-400">
                       {subString(htmlToText(episode.content), 100).replaceAll(
                         '<p>',
                         ''
@@ -123,7 +123,7 @@ export default function EpisodeList() {
                     </p>
                   </div>
                 </div>
-                <div className="flex episode-item-info text-gray-500 text-xs episode-item-info-container">
+                <div className="flex episode-item-info text-gray-500 text-xs episode-item-info-container dark:border-gray-500">
                   {episode.published ? (
                     <div className="flex gap-x-1">
                       <em className="w-4 h-4">
@@ -158,7 +158,7 @@ export default function EpisodeList() {
                 onClick={() => {
                   doDelete(episode.cuid);
                 }}
-                className={`text-red-400 hover:text-red-500 episode-item-delete justify-center items-center px-4 border-l hover:bg-gray-50 transition-all ${
+                className={`text-red-400 hover:text-red-500 episode-item-delete justify-center items-center px-4 border-l dark:border-gray-500 hover:bg-gray-50 transition-all ${
                   deletingCuid === episode.cuid &&
                   'hover:bg-red-300 bg-red-300 animate-pulse duration-200'
                 }`}

@@ -30,7 +30,7 @@ export default function Header() {
 
   return (
     <div
-      className={`main drag header border-headerBorder bg-headerBg dark:bg-darkHeader dark:border-darkSelect fixed z-30 flex py-1 px-4 items-center cursor-default border-b ${
+      className={`main drag header border-headerBorder bg-headerBg dark:bg-headerDark dark:border-darkSelect fixed z-30 flex py-1 px-4 items-center cursor-default border-b ${
         process.platform !== 'darwin' && 'border-t'
       } ${
         extend === 'true'
@@ -47,7 +47,7 @@ export default function Header() {
       <div className="items-center control mr-3 pr-2 border-r border-gray-200 dark:border-darkSelect">
         <button
           type="button"
-          className="focus:outline-none w-7 h-7 p-1 hover:bg-select rounded-md cursor-default"
+          className="focus:outline-none w-7 h-7 p-1 hover:bg-select dark:text-gray-200 dark:hover:bg-black rounded-md cursor-default"
           onClick={() => {
             ipcRenderer.send('hide-sidebar');
           }}
@@ -77,7 +77,7 @@ export default function Header() {
         )}
         <button
           type="button"
-          className="focus:outline-none w-7 h-7 p-1 hover:bg-select rounded-md cursor-default"
+          className="focus:outline-none w-7 h-7 p-1 hover:bg-select dark:hover:bg-black dark:text-gray-200 rounded-md cursor-default"
           onClick={() => {
             history.push('/snapod/start');
           }}

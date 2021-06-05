@@ -25,6 +25,7 @@ export default function DistributionSettings() {
   const podcastCuid = Store.get('currentPodcast.cuid');
   const [modifyPodcast] = useMutation(MODIFY_PODCAST);
   const [saving, setSaving] = React.useState(false);
+  const [savable, setSavable] = React.useState(false);
   const [distributions, setDistributions] = React.useState<any>({
     apple_podcasts_url: '',
     google_podcasts_url: '',
@@ -119,30 +120,32 @@ export default function DistributionSettings() {
   return (
     <div className="my-4 mx-5 mb-12">
       <Head title="发布渠道设置" description="查看和配置播客节目发布渠道" />
-      <div className="flex justify-center items-center w-full">
-        <div className="flex absolute bottom-5 z-10 gap-x-3">
-          <button
-            className="bg-gray-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white hover:bg-gray-600"
-            aria-label="save changes"
-            type="button"
-            onClick={() => {
-              history.push('/snapod/reset');
-            }}
-          >
-            还原更改
-          </button>
-          <button
-            className="bg-blue-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white hover:bg-blue-600"
-            aria-label="save changes"
-            type="button"
-            onClick={() => {
-              doModify();
-            }}
-          >
-            {saving ? '保存中...' : '保存更改'}
-          </button>
+      {savable && (
+        <div className="flex justify-center items-center w-full">
+          <div className="flex absolute bottom-5 z-10 gap-x-3">
+            <button
+              className="bg-gray-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white hover:bg-gray-600"
+              aria-label="save changes"
+              type="button"
+              onClick={() => {
+                history.push('/snapod/reset');
+              }}
+            >
+              还原更改
+            </button>
+            <button
+              className="bg-blue-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white hover:bg-blue-600"
+              aria-label="save changes"
+              type="button"
+              onClick={() => {
+                doModify();
+              }}
+            >
+              {saving ? '保存中...' : '保存更改'}
+            </button>
+          </div>
         </div>
-      </div>
+      )}
       <section className="mb-5 grid grid-cols-2 gap-x-3 border-b pb-5">
         <div className="border rounded-lg py-3.5 px-4">
           <div className="items-center mb-1.5 flex">
@@ -162,7 +165,11 @@ export default function DistributionSettings() {
               aria-label="copy"
               className="border rounded-md px-2 py-0.5 text-xs text-gray-500 hover:bg-gray-50"
               onClick={() => {
-                copyToClipboard(`https://rss.snapodcast.com/${podcastCuid}`);
+                copyToClipboard(
+                  `https://rss.snapodcast.com/${
+                    parseInt(data.podcast.id, 10) + 46800
+                  }`
+                );
               }}
             >
               {state.error ? '需手动复制' : state.value ? '已复制' : '复制'}
@@ -172,7 +179,7 @@ export default function DistributionSettings() {
             此地址可用于泛用性播客客户端订阅、播客平台发布等用途
           </p>
           <p className="text-gray-600 text-sm whitespace-nowrap overflow-x-auto border shadow-sm rounded-md py-1 px-2">
-            https://rss.snapodcast.com/{podcastCuid}
+            https://rss.snapodcast.com/{parseInt(data.podcast.id, 10) + 46800}
           </p>
         </div>
         <div className="border rounded-lg py-3.5 px-4">
@@ -204,6 +211,7 @@ export default function DistributionSettings() {
                     ...distributions,
                     website_url: e.target.value,
                   });
+                  setSavable(true);
                 }}
                 className="shadow-sm tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1 px-3 text-gray-700"
               />
@@ -247,6 +255,7 @@ export default function DistributionSettings() {
                 ...distributions,
                 apple_podcasts_url: e.target.value,
               });
+              setSavable(true);
             }}
             className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
@@ -276,6 +285,7 @@ export default function DistributionSettings() {
                 ...distributions,
                 google_podcasts_url: e.target.value,
               });
+              setSavable(true);
             }}
             className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
@@ -305,6 +315,7 @@ export default function DistributionSettings() {
                 ...distributions,
                 breaker_url: e.target.value,
               });
+              setSavable(true);
             }}
             className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
@@ -334,6 +345,7 @@ export default function DistributionSettings() {
                 ...distributions,
                 castbox_url: e.target.value,
               });
+              setSavable(true);
             }}
             className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
@@ -363,6 +375,7 @@ export default function DistributionSettings() {
                 ...distributions,
                 overcast_url: e.target.value,
               });
+              setSavable(true);
             }}
             className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
@@ -392,6 +405,7 @@ export default function DistributionSettings() {
                 ...distributions,
                 pocketcast_url: e.target.value,
               });
+              setSavable(true);
             }}
             className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
@@ -421,6 +435,7 @@ export default function DistributionSettings() {
                 ...distributions,
                 radiopublic_url: e.target.value,
               });
+              setSavable(true);
             }}
             className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
@@ -450,6 +465,7 @@ export default function DistributionSettings() {
                 ...distributions,
                 spotify: e.target.value,
               });
+              setSavable(true);
             }}
             className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
@@ -479,6 +495,7 @@ export default function DistributionSettings() {
                 ...distributions,
                 netease_url: e.target.value,
               });
+              setSavable(true);
             }}
             className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
@@ -508,6 +525,7 @@ export default function DistributionSettings() {
                 ...distributions,
                 qqmusic_url: e.target.value,
               });
+              setSavable(true);
             }}
             className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
@@ -537,6 +555,7 @@ export default function DistributionSettings() {
                 ...distributions,
                 ximalaya_url: e.target.value,
               });
+              setSavable(true);
             }}
             className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
@@ -566,6 +585,7 @@ export default function DistributionSettings() {
                 ...distributions,
                 xiaoyuzhou_url: e.target.value,
               });
+              setSavable(true);
             }}
             className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />

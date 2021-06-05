@@ -17,6 +17,7 @@ export const GET_PODCASTS = gql`
 export const GET_PODCAST = gql`
   query Podcast($podcastCuid: String!) {
     podcast(podcastCuid: $podcastCuid) {
+      id
       name
       description
       type
@@ -310,6 +311,14 @@ export const GET_SITE = gql`
 export const MODIFY_CUSTOM_DOMAIN = gql`
   mutation ModifyCustomDomain($podcastCuid: String!, $customDomain: String!) {
     modifyCustomDomain(podcastCuid: $podcastCuid, customDomain: $customDomain) {
+      status
+    }
+  }
+`;
+
+export const IMPORT_PODCAST = gql`
+  mutation ImportPodcast($authorCuid: String!, $podcastRssUrl: String!) {
+    importPodcast(authorCuid: $authorCuid, podcastRssUrl: $podcastRssUrl) {
       status
     }
   }

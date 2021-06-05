@@ -253,7 +253,7 @@ export default function ManagePodcast() {
             <div className="flex-1">
               <span className="flex items-center">
                 <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
-                  节目类型 / Content Type
+                  节目评级 / Rating
                 </em>
               </span>
               <select
@@ -271,8 +271,12 @@ export default function ManagePodcast() {
                 <option value="" disabled>
                   选择播客节目类型...
                 </option>
-                <option value="false">包含 (Explicit content)</option>
-                <option value="true">不包含 (No explicit content)</option>
+                <option value="false">
+                  包含潜在不当内容 (Explicit content)
+                </option>
+                <option value="true">
+                  不包含潜在不当内容 (No explicit content)
+                </option>
               </select>
             </div>
           </div>

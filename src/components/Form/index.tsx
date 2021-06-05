@@ -17,7 +17,7 @@ export const Input = (props: {
       <input
         placeholder={placeholder}
         {...rest}
-        className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+        className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
       />
     </div>
   );
@@ -42,7 +42,7 @@ export const TextArea = (props: {
         minLength={1}
         rows={3}
         {...rest}
-        className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+        className="mt-1 tracking-wide focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
       />
     </div>
   );

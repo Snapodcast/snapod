@@ -65,7 +65,7 @@ const PodcastsContainer = ({
           {data.podcasts.map((podcast: any) => (
             <div
               key={podcast.cuid}
-              className="mb-3 rounded-md border shadow-sm flex podcast-item cursor-pointer hover:bg-gray-50 transition-all"
+              className="mb-3 rounded-md border dark:border-gray-500 shadow-sm flex podcast-item cursor-pointer hover:bg-gray-50 dark:bg-darkBg dark:hover:bg-black transition-all"
               onClick={() => {
                 podcastInit(podcast);
                 history.push('/snapod');
@@ -81,10 +81,12 @@ const PodcastsContainer = ({
               />
               <div className="podcast-item-content px-3 py-2 text-left flex items-center">
                 <div>
-                  <h3 className="text-sm text-gray-600 font-medium mb-1">
+                  <h3 className="text-sm text-gray-600 dark:text-gray-200 font-medium mb-1">
                     {podcast.name}
                   </h3>
-                  <p className="text-xs text-gray-500">{podcast.description}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-200">
+                    {podcast.description}
+                  </p>
                 </div>
               </div>
             </div>
@@ -95,7 +97,7 @@ const PodcastsContainer = ({
         <button
           aria-label="create"
           type="button"
-          className="flex justify-center align-middle items-center text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md py-1.5 px-4 text-center"
+          className="flex justify-center align-middle items-center text-white text-sm hover:bg-gray-700 dark:hover:bg-gray-500 bg-gray-600 focus:outline-none rounded-md shadow-md py-1.5 px-4 text-center"
           onClick={() => {
             setAnimation(true);
             setTimeout(() => {
@@ -121,7 +123,7 @@ export default function StartSingle() {
 
   return (
     <div
-      className={`z-10 shadow-md rounded-md w-2/5 max-h-96 overflow-y-auto overflow-hidden bg-white px-8 py-7 no-drag animate-slideUp ${
+      className={`z-10 shadow-md rounded-md w-2/5 max-h-96 overflow-y-auto overflow-hidden bg-white dark:bg-darkBg px-8 py-7 no-drag animate-slideUp ${
         showAnimation && 'animate-slideDown'
       }`}
     >
@@ -131,7 +133,7 @@ export default function StartSingle() {
             🎙️
           </span>
         </h1>
-        <p className="text-gray-500 text-sm mt-1.5 transition-all">
+        <p className="text-gray-500 dark:text-white text-sm mt-1.5 transition-all">
           {loading
             ? '正在为你加载内容'
             : error

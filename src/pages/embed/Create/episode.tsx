@@ -216,7 +216,7 @@ export default function CreateEpisode() {
             <div className="flex-1">
               <span className="flex items-center">
                 <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
-                  内容类型 / Content Type
+                  节目评级 / Rating
                 </em>
               </span>
               <select
@@ -231,7 +231,7 @@ export default function CreateEpisode() {
                 className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
               >
                 <option value="" disabled>
-                  选择内容类型...
+                  选择内容评级...
                 </option>
                 <option value="false">
                   包含潜在不当内容 (Explicit content)

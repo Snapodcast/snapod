@@ -118,7 +118,17 @@ export default class MenuBuilder {
         },
       ],
     };
-    const subMenuViewProd: MenuItemConstructorOptions = {};
+    const subMenuViewProd: MenuItemConstructorOptions = {
+      label: 'View',
+      submenu: [
+        {
+          label: 'Toggle &Developer Tools',
+          accelerator: 'Alt+Ctrl+I',
+          enabled: false,
+          visible: false,
+        },
+      ],
+    };
     const subMenuWindow: DarwinMenuItemConstructorOptions = {
       label: 'Window',
       submenu: [

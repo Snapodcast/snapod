@@ -2242,6 +2242,14 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-lazy-load-image-component@^1.5.1":
+  version "1.5.1"
+  resolved "https://r.cnpmjs.org/@types/react-lazy-load-image-component/download/@types/react-lazy-load-image-component-1.5.1.tgz#8c62890c900656cc4fd2ca796086e394b508e5d4"
+  integrity sha1-jGKJDJAGVsxP0sp5YIbjlLUI5dQ=
+  dependencies:
+    "@types/react" "*"
+    csstype "^3.0.2"
+
 "@types/react-router-dom@^5.1.6":
   version "5.1.6"
   resolved "https://registry.yarnpkg.com/@types/react-router-dom/-/react-router-dom-5.1.6.tgz#07b14e7ab1893a837c8565634960dc398564b1fb"
@@ -5184,6 +5192,11 @@ dotenv-expand@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/dotenv-expand/-/dotenv-expand-5.1.0.tgz#3fbaf020bfd794884072ea26b1e9791d45a629f0"
   integrity sha512-YXQl1DSa4/PQyRfgrv6aoNjhasp/p4qs9FjJ4q4cQk+8m4r6k4ZSiEyytKG8f8W9gi8WsQtIObNmKd+tMzNTmA==
+
+dotenv@^10.0.0:
+  version "10.0.0"
+  resolved "https://r.cnpmjs.org/dotenv/download/dotenv-10.0.0.tgz#3d4227b8fb95f81096cdd2b66653fb2c7085ba81"
+  integrity sha1-PUInuPuV+BCWzdK2ZlP7LHCFuoE=
 
 dotenv@^8.2.0:
   version "8.2.0"

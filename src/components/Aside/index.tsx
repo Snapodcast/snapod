@@ -67,7 +67,7 @@ export default function Aside() {
             <button
               type="submit"
               aria-label="create episode"
-              className="flex justify-center align-middle items-center my-3 text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md w-full py-1.5 text-center"
+              className="flex justify-center align-middle items-center my-3 text-white text-sm hover:bg-gray-700 bg-gray-600 dark:bg-gray-500 dark:hover:bg-gray-400 focus:outline-none rounded-md shadow-md w-full py-1.5 text-center"
             >
               <span className="h-5 w-5 mr-1.5">
                 <Icons name="addEpisode" />

@@ -12,6 +12,7 @@ module.exports = {
       colors: {
         active: 'rgba(51,51,51,10%)',
         select: 'rgba(51,51,51,7.5%)',
+        darkBg: "rgb(30, 30, 30)",
         darkSelect: 'rgba(238,238,238,10%)',
         darkActive: 'rgba(238,238,238,15%)',
         darkMain: 'rgb(34,32,31)',
@@ -19,6 +20,7 @@ module.exports = {
         asideBorder: 'rgb(217, 217, 217)',
         headerBg: 'rgba(255, 255, 255, 0.9)',
         headerBorder: 'rgb(236, 236, 236)',
+        headerDark: "rgba(30, 30, 30, 0.5)",
         gray: {
           '333': '#333333',
         },
@@ -121,7 +123,7 @@ module.exports = {
   },
   variants: {
     extend: {
-      opacity: ['hover'],
+      opacity: ['hover', 'dark'],
       borderRadius: ['hover', 'group-hover', 'group-focus'],
       display: ['group-focus', 'group-hover'],
       borderWidth: ['group-hover', 'dark', 'hover', 'last'],

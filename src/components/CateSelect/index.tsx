@@ -14,7 +14,7 @@ export default function CateSelect(props: {
       onChange={(e) => {
         setCate(e.target.value);
       }}
-      className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
+      className="dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
     >
       {podcastCate && podcastCate.indexOf('|') > -1 ? (
         <option value={podcastCate} disabled>
