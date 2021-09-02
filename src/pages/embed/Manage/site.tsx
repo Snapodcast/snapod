@@ -124,6 +124,7 @@ export default function ManageSite() {
   if (!data.podcast.profile.snapod_site_url) {
     return (
       <div className="my-4 mx-5">
+        <Head title="开启播客站点" description="为你的播客创建一个独立站点" />
         <div className="flex justify-center items-center w-full">
           <div className="flex absolute bottom-5 z-10 gap-x-3">
             <button
