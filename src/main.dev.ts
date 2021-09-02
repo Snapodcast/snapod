@@ -48,7 +48,7 @@ const createWindow = async () => {
       show: false,
       center: true,
       minWidth: 950,
-      minHeight: 500,
+      minHeight: 600,
       width: 950,
       height: 640,
       icon: getAssetPath('icon.icns'),
@@ -67,7 +67,7 @@ const createWindow = async () => {
       show: false,
       center: true,
       minWidth: 950,
-      minHeight: 500,
+      minHeight: 600,
       width: 950,
       height: 625,
       icon: getAssetPath('icon.ico'),
@@ -102,10 +102,16 @@ const createWindow = async () => {
   });
 
   mainWindow.on('enter-full-screen', () => {
-    mainWindow.webContents.send('full-screen-change', 'change');
+    mainWindow.webContents.send(
+      'full-screen-change',
+      mainWindow.isFullScreen()
+    );
   });
   mainWindow.on('leave-full-screen', () => {
-    mainWindow.webContents.send('full-screen-change', 'change');
+    mainWindow.webContents.send(
+      'full-screen-change',
+      mainWindow.isFullScreen()
+    );
   });
 
   mainWindow.on('closed', () => {

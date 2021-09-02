@@ -110,7 +110,7 @@ const PodcastsContainer = ({
         <button
           aria-label="create"
           type="button"
-          className="flex justify-center align-middle items-center text-gray-600 text-sm hover:bg-gray-50 dark:hover:bg-gray-500 bg-white border focus:outline-none rounded-md shadow-sm py-1.5 px-4 text-center"
+          className="flex justify-center align-middle items-center text-gray-600 text-sm hover:bg-gray-50 dark:hover:bg-gray-500 bg-white border border-gray-300 focus:outline-none rounded-md shadow-sm py-1.5 px-4 text-center"
           onClick={() => {
             setAnimation(true);
             setTimeout(() => {

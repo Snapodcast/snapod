@@ -1,0 +1,62 @@
+import React from 'react';
+import Head from '../../../components/Head';
+import snapodLogo from '../../../public/snapod_logo.png';
+import * as Store from '../../../lib/Store';
+import configs from '../../../configs';
+
+export default function AboutPage() {
+  const appVersion = window.require('electron').remote.app.getVersion();
+  const [apiVersion, setApiVersion] = React.useState();
+  const getAPIVersion = async () => {
+    const response = await fetch(`${configs.backend_url}/version`).then(
+      (res: any) => {
+        return res.json();
+      }
+    );
+    setApiVersion(response.version);
+  };
+  return (
+    <div className="my-4 mx-5">
+      <Head title="关于此版本" description="查看此版本的关于信息" />
+      <div>
+        <div className="flex items-center gap-x-2 text-gray-600 text-2xl font-medium">
+          <img
+            src={snapodLogo}
+            alt="snapod logo"
+            className="w-8 h-8 rounded-full"
+          />
+          <h1>Snapod</h1>
+        </div>
+        <p className="text-gray-500 text-sm mt-0.5 pl-0.5">
+          A better independent podcast hosting platform
+        </p>
+
+        <div className="text-gray-500 mt-8 text-sm">
+          <p>Version number: {appVersion}</p>
+          <p>
+            API service version:{' '}
+            {apiVersion || (
+              <button
+                type="button"
+                className="hover:text-gray-600"
+                onClick={getAPIVersion}
+              >
+                Retrieve →
+              </button>
+            )}
+          </p>
+          <hr className="w-20 my-2.5" />
+          <p>Podcast name: {Store.get('currentPodcast.name')}</p>
+          <p>Podcast ID: {Store.get('currentPodcast.cuid')}</p>
+          <p>User name: {Store.get('currentUser.name')}</p>
+          <p>User email: {Store.get('currentUser.email')}</p>
+          <p>User ID: {Store.get('currentUser.cuid')}</p>
+        </div>
+
+        <p className="text-gray-400 text-sm mt-8">
+          &copy; 2021 Snapodcast, All rights reserved.
+        </p>
+      </div>
+    </div>
+  );
+}

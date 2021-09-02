@@ -36,11 +36,7 @@ export default function Player(props: {
   const [error, setError] = useState<boolean>(false);
 
   const playBackSpeedOptions = props.playBackSpeedOptions ?? [
-    0.5,
-    1,
-    1.2,
-    1.5,
-    2,
+    0.5, 1, 1.2, 1.5, 2,
   ];
 
   const playAudio = () => {

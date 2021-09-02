@@ -291,51 +291,53 @@ export default function ManageSite() {
             </p>
           </div>
         </div>
-        <div className="flex-1 border rounded-lg p-3">
-          <span className="flex items-center">
-            <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
-              自定义域名配置指南
-            </em>
-            <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
-              Configuration Guide
-            </em>
-          </span>
-          <div className="text-xs text-gray-500 mx-1 py-2">
-            <p>
-              提交后请前往域名注册/解析服务提供方配置 <b>CNAME</b> 解析记录,
-              预计在 24 小时内生效
-              {podcastInfo.snapod_site_custom_url ? ':' : '。'}
-            </p>
-            {podcastInfo.snapod_site_custom_url && (
-              <div className="mt-3 border-t border-b py-1">
-                {podcastInfo.snapod_site_custom_url.split('.').length >= 3 ? (
-                  <ul>
-                    <li className="flex">
-                      <span className="flex-1">
-                        {podcastInfo.snapod_site_custom_url
-                          .split('.')
-                          .slice(
-                            0,
-                            podcastInfo.snapod_site_custom_url.split('.')
-                              .length - 2
-                          )
-                          .join('.')}
-                      </span>
-                      <span>snapod-site.netlify.app.</span>
-                    </li>
-                  </ul>
-                ) : (
-                  <ul>
-                    <li className="flex">
-                      <span className="flex-1">@</span>
-                      <span>snapod-site.netlify.app.</span>
-                    </li>
-                  </ul>
-                )}
-              </div>
-            )}
+        {podcastInfo.snapod_site_custom_url && (
+          <div className="flex-1 border rounded-lg p-3">
+            <span className="flex items-center">
+              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+                自定义域名配置指南
+              </em>
+              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+                Configuration Guide
+              </em>
+            </span>
+            <div className="text-xs text-gray-500 mx-1 py-2">
+              <p>
+                提交后请前往域名注册/解析服务提供方配置 <b>CNAME</b> 解析记录,
+                预计在 24 小时内生效
+                {podcastInfo.snapod_site_custom_url ? ':' : '。'}
+              </p>
+              {podcastInfo.snapod_site_custom_url && (
+                <div className="mt-3 border-t border-b py-1">
+                  {podcastInfo.snapod_site_custom_url.split('.').length >= 3 ? (
+                    <ul>
+                      <li className="flex">
+                        <span className="flex-1">
+                          {podcastInfo.snapod_site_custom_url
+                            .split('.')
+                            .slice(
+                              0,
+                              podcastInfo.snapod_site_custom_url.split('.')
+                                .length - 2
+                            )
+                            .join('.')}
+                        </span>
+                        <span>snapod-site.netlify.app.</span>
+                      </li>
+                    </ul>
+                  ) : (
+                    <ul>
+                      <li className="flex">
+                        <span className="flex-1">@</span>
+                        <span>snapod-site.netlify.app.</span>
+                      </li>
+                    </ul>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </section>
     </div>
   );

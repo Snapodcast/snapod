@@ -1,6 +1,7 @@
 {
   "name": "snapod",
   "private": true,
+  "version": "0.0.1",
   "licence": "SEE LICENCE IN LICENCE",
   "productName": "Snapod",
   "description": "Grow your podcasts with ease",

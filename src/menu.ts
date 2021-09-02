@@ -107,7 +107,7 @@ export default class MenuBuilder {
           click: () => {
             this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
           },
-          enabled: this.mainWindow.isFocused(),
+          enabled: !this.mainWindow.isMinimized(),
         },
         {
           label: 'Toggle Developer Tools',
@@ -122,10 +122,12 @@ export default class MenuBuilder {
       label: 'View',
       submenu: [
         {
-          label: 'Toggle &Developer Tools',
-          accelerator: 'Alt+Ctrl+I',
-          enabled: false,
-          visible: false,
+          label: 'Toggle Full Screen',
+          accelerator: 'Ctrl+Command+F',
+          click: () => {
+            this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
+          },
+          enabled: !this.mainWindow.isMinimized(),
         },
       ],
     };
@@ -146,9 +148,15 @@ export default class MenuBuilder {
       label: 'Help',
       submenu: [
         {
-          label: 'Learn More',
+          label: 'Service Status',
           click() {
-            shell.openExternal('https://snapod.ouorz.com');
+            shell.openExternal('https://www.ouorz.com');
+          },
+        },
+        {
+          label: 'Website',
+          click() {
+            shell.openExternal('https://www.snapodcast.com');
           },
         },
         {

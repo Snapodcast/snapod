@@ -20,8 +20,8 @@ export default function Aside() {
   const [fullScreen, setFullScreen] = React.useState<boolean>(false);
 
   // ICP event and listeners for fullscreen
-  const fullScreenListener = () => {
-    setFullScreen(!fullScreen);
+  const fullScreenListener = (_: any, isFullScreen: boolean) => {
+    setFullScreen(isFullScreen);
   };
 
   React.useEffect(() => {
@@ -174,6 +174,29 @@ export default function Aside() {
                 <Icons name="gear" />
               </span>
               偏好设置
+            </li>
+          </NavLink>
+        </ul>
+        <div className="mt-5 mb-1.5 pl-1.5">
+          <h4 className="font-medium text-xs text-gray-400 dark:text-gray-500">
+            关于
+          </h4>
+        </div>
+        <ul className="menu-list text-sm text-gray-600 dark:text-white">
+          <NavLink exact to="/snapod/helpCenter" activeClassName="active">
+            <li className="rounded-md py-1.5 px-2 flex items-center">
+              <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
+                <Icons name="questionMark" />
+              </span>
+              帮助中心
+            </li>
+          </NavLink>
+          <NavLink exact to="/snapod/about" activeClassName="active">
+            <li className="rounded-md py-1.5 px-2 flex items-center">
+              <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
+                <Icons name="qrCode" />
+              </span>
+              版本信息
             </li>
           </NavLink>
         </ul>

@@ -24,6 +24,8 @@ import DistributionSettings from './pages/embed/Settings/distribution';
 import ManageMetrics from './pages/embed/Manage/metrics';
 import ManageSite from './pages/embed/Manage/site';
 import ImportPodcast from './pages/embed/Import';
+import HelpCenter from './pages/embed/HelpCenter';
+import AboutPage from './pages/embed/About';
 
 const heartBeatCheck = async (token: string) => {
   const result = await fetch(`${Configs.backend_url}/ping/auth`, {
@@ -144,6 +146,8 @@ export default function App() {
                   path="/snapod/settings/podcast"
                   component={PodcastSettings}
                 />
+                <Route path="/snapod/helpCenter" component={HelpCenter} />
+                <Route path="/snapod/about" component={AboutPage} />
               </section>
             </HeadContextProvider>
           </main>
