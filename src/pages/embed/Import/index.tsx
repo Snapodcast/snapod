@@ -31,7 +31,7 @@ export default function ImportPodcast() {
     })
       .then((res: any) => {
         Store.set({
-          currentPodcast: res.data.createPodcast,
+          currentPodcast: res.data.importPodcast,
         });
         alert(`导入成功`);
         history.push('/snapod');
