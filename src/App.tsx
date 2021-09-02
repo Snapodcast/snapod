@@ -23,6 +23,7 @@ import PodcastSettings from './pages/embed/Settings/podcast';
 import DistributionSettings from './pages/embed/Settings/distribution';
 import ManageMetrics from './pages/embed/Manage/metrics';
 import ManageSite from './pages/embed/Manage/site';
+import ImportPodcast from './pages/embed/Import';
 
 const heartBeatCheck = async (token: string) => {
   const result = await fetch(`${Configs.backend_url}/ping/auth`, {
@@ -90,6 +91,7 @@ export default function App() {
             <Route path="/landing/forgot" component={Forgot} />
             <Route path="/landing/start" component={StartSingle} />
             <Route path="/landing/create/podcast" component={CreatePodcast} />
+            <Route path="/landing/import/podcast" component={ImportPodcast} />
           </main>
         </div>
       </Route>

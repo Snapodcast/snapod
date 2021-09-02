@@ -150,7 +150,7 @@ export default function EpisodeList() {
                       ? '先导节目'
                       : '特别节目'}
                   </div>
-                  <div>{episode.profile.audio_duration}</div>
+                  <div>{episode.profile.audio_duration || '时长未知'}</div>
                 </div>
               </div>
               <div

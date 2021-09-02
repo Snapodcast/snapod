@@ -316,10 +316,46 @@ export const MODIFY_CUSTOM_DOMAIN = gql`
   }
 `;
 
+export const GET_PREVIEW = gql`
+  query Preview($podcastRssUrl: String!) {
+    previewPodcast(podcastRssUrl: $podcastRssUrl) {
+      podcast {
+        name
+        description
+        author
+      }
+      profile {
+        cover_art_image_url
+        category_name
+        language
+        clean_content
+        website_url
+        copyright
+        ownerName
+        ownerEmail
+      }
+      episodes {
+        episode {
+          title
+          content
+        }
+        profile {
+          audio_size
+          audio_url
+          episode_number
+          cover_art_image_url
+          clean_content
+        }
+      }
+    }
+  }
+`;
+
 export const IMPORT_PODCAST = gql`
   mutation ImportPodcast($authorCuid: String!, $podcastRssUrl: String!) {
     importPodcast(authorCuid: $authorCuid, podcastRssUrl: $podcastRssUrl) {
-      status
+      cuid
+      name
     }
   }
 `;

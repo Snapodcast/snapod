@@ -237,7 +237,7 @@ export default function ManageEpisode() {
         <div className="flex-1">
           <div>
             <Input
-              defaultValue={episodeInfo.title}
+              defaultValue={data.episode.title}
               disabled={uploading || audioUploading}
               name="节目标题 / Title"
               placeholder="节目标题"
@@ -259,7 +259,7 @@ export default function ManageEpisode() {
               </span>
               <select
                 disabled={uploading || audioUploading}
-                defaultValue={episodeInfo.episode_type}
+                defaultValue={data.episode.profile.episode_type}
                 onChange={(e) => {
                   setInfo({ ...episodeInfo, episode_type: e.target.value });
                   setSavable(true);
@@ -282,7 +282,7 @@ export default function ManageEpisode() {
               </span>
               <select
                 disabled={uploading || audioUploading}
-                defaultValue={episodeInfo.clean_content}
+                defaultValue={data.episode.profile.clean_content}
                 onChange={(e) => {
                   setInfo({
                     ...episodeInfo,
@@ -424,7 +424,7 @@ export default function ManageEpisode() {
               type="number"
               min="0"
               placeholder="1, 2..."
-              defaultValue={episodeInfo.episode_number}
+              defaultValue={data.episode.profile.episode_number}
               onChange={(e: { target: { value: any } }) => {
                 setInfo({
                   ...episodeInfo,
@@ -441,7 +441,7 @@ export default function ManageEpisode() {
               </em>
             </span>
             <select
-              defaultValue={episodeInfo.published}
+              defaultValue={data.episode.profile.published}
               disabled={uploading || audioUploading}
               onChange={(e) => {
                 setInfo({
@@ -467,9 +467,9 @@ export default function ManageEpisode() {
             节目描述 / Show Notes
           </em>
         </span>
-        <div className="rounded-lg border py-4 w-full mt-1 text-base px-8">
+        <div className="rounded-lg border py-4 w-full mt-1 text-sm px-8">
           <Editor
-            defaultValue={episodeInfo.content}
+            defaultValue={data.episode.content}
             readOnly={uploading || audioUploading}
             placeholder="节目描述..."
             onChange={(value) => {

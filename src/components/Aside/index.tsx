@@ -50,17 +50,26 @@ export default function Aside() {
         <select
           value={currentPodcastName}
           onChange={(e) => {
-            if (e.target.value === 'create') {
-              history.push('/landing/create/podcast');
-            } else if (e.target.value === 'select') {
-              history.push('/landing/start');
+            switch (e.target.value) {
+              case 'create':
+                history.push('/landing/create/podcast');
+                break;
+              case 'select':
+                history.push('/landing/start');
+                break;
+              case 'import':
+                history.push('/landing/import/podcast');
+                break;
+              default:
+                break;
             }
           }}
           className="rounded-md text-sm text-gray-500 dark:text-white p-1.5 px-2 w-full focus:outline-none bg-select dark:bg-darkSelect dark:border-gray-300 mt-1"
         >
           <option value="origin">{currentPodcastName}</option>
-          <option value="select">选择已有播客👉</option>
+          <option value="select">选择播客👉</option>
           <option value="create">新建播客🎉</option>
+          <option value="import">导入播客🗂️</option>
         </select>
         <div className="my-3">
           <Link to="/snapod/create/episode">

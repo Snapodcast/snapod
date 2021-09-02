@@ -93,7 +93,7 @@ const PodcastsContainer = ({
           ))}
         </div>
       )}
-      <div className="flex justify-center">
+      <div className="flex justify-center gap-x-3">
         <button
           aria-label="create"
           type="button"
@@ -106,6 +106,19 @@ const PodcastsContainer = ({
           }}
         >
           创建新播客 →
+        </button>
+        <button
+          aria-label="create"
+          type="button"
+          className="flex justify-center align-middle items-center text-gray-600 text-sm hover:bg-gray-50 dark:hover:bg-gray-500 bg-white border focus:outline-none rounded-md shadow-sm py-1.5 px-4 text-center"
+          onClick={() => {
+            setAnimation(true);
+            setTimeout(() => {
+              history.push('/landing/import/podcast');
+            }, 500);
+          }}
+        >
+          导入播客 ↓
         </button>
       </div>
     </div>

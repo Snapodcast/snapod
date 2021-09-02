@@ -5,7 +5,7 @@ import CateSelect from '../../../components/CateSelect';
 import LangSelect from '../../../components/LangSelect';
 import Switch from 'react-switch';
 import Icons from '../../../components/Icons';
-import { CREATE_PODCAST, IMPORT_PODCAST } from '../../../lib/GraphQL/queries';
+import { CREATE_PODCAST } from '../../../lib/GraphQL/queries';
 import { useMutation } from '@apollo/client';
 import * as Store from '../../../lib/Store';
 import selectImageAndUploadToCDN from '../../../lib/Upload/Image';
@@ -325,8 +325,6 @@ export default function CreatePodcast() {
   const history = useHistory();
   const [creatPodcast] = useMutation(CREATE_PODCAST);
 
-  const [isImporting, setImporting] = React.useState(false);
-  const [podcastRssUrl, setRssUrl] = React.useState('');
   const [stepNumber, setStepNumber] = React.useState(0);
   const [podcastImage, setImage] = React.useState<any>('');
   const [podcastImageUrl, setImageUrl] = React.useState<any>('');
@@ -392,121 +390,65 @@ export default function CreatePodcast() {
               aria-label="select existing podcast"
               type="button"
               onClick={() => {
-                if (isImporting) {
-                  setImporting(false);
-                } else {
-                  history.goBack();
-                }
+                history.goBack();
               }}
             >
               ←
             </button>
           </div>
-          {!isImporting && (
-            <div>
-              <button
-                className="flex-1 text-right rounded-full bg-white shadow-md flex justify-center items-center p-1.5 h-7 w-7 text-gray-600"
-                aria-label="select existing podcast"
-                type="button"
-                onClick={() => {
-                  setImporting(true);
-                }}
-              >
-                <Icons name="download" />
-              </button>
-            </div>
-          )}
         </div>
       )}
-      {isImporting && (
-        <div>
-          <div className="mb-2 flex gap-x-2 items-center">
-            <h2 className="font-bold text-xl tracking-wide flex-1 whitespace-nowrap overflow-hidden overflow-ellipsis">
-              <span role="img" aria-label="snapod-logo" className="mr-1">
-                🗂️
-              </span>
-              导入播客
-            </h2>
-          </div>
-          <p className="w-full mt-5">
-            <span className="flex items-center">
-              <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
-                RSS 地址 / Podcast RSS URL
-              </em>
+      <div>
+        <div className="mb-2 flex gap-x-2 items-center">
+          <h2 className="font-bold text-xl tracking-wide flex-1 whitespace-nowrap overflow-hidden overflow-ellipsis">
+            <span role="img" aria-label="snapod-logo" className="mr-1">
+              🎙️
             </span>
-            <input
-              autoFocus
-              placeholder="https://rss.example.com"
-              maxLength={255}
-              minLength={1}
-              className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
-            />
-            <span className="text-xs text-gray-400 ml-1 mt-1">
-              RSS 地址为 XML 格式且须于外网可用
-            </span>
-          </p>
-          <button
-            aria-label="next step"
-            className="mt-5 flex px-3 items-center text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md py-1 text-center"
-            type="button"
-          >
-            开始导入 →
-          </button>
+            {podcastInfo.name || '新建播客'}
+          </h2>
+          <span className="text-gray-500 text-sm">
+            步骤 {stepNumber + 1} / 7
+          </span>
         </div>
-      )}
-      {!isImporting && (
-        <div>
-          <div className="mb-2 flex gap-x-2 items-center">
-            <h2 className="font-bold text-xl tracking-wide flex-1 whitespace-nowrap overflow-hidden overflow-ellipsis">
-              <span role="img" aria-label="snapod-logo" className="mr-1">
-                🎙️
-              </span>
-              {podcastInfo.name || '新建播客'}
-            </h2>
-            <span className="text-gray-500 text-sm">
-              步骤 {stepNumber + 1} / 7
-            </span>
-          </div>
-          <StepContainer
-            stepNumber={stepNumber}
-            setStep={setStepNumber}
-            podcastInfo={podcastInfo}
-            setPodcastInfo={setPodcastInfo}
-            podcastImage={podcastImage}
-            selectImage={selectImage}
-            uploading={podcastImageUploading}
-          />
-          {stepNumber < 6 && (
-            <div className="mt-5 w-full flex gap-x-3">
-              {stepNumber > 0 && (
-                <button
-                  aria-label="previous step"
-                  className="flex px-3 items-center text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md py-1 text-center"
-                  type="button"
-                  onClick={() => {
-                    setStepNumber(stepNumber - 1);
-                  }}
-                >
-                  ← 上一步
-                </button>
-              )}
+        <StepContainer
+          stepNumber={stepNumber}
+          setStep={setStepNumber}
+          podcastInfo={podcastInfo}
+          setPodcastInfo={setPodcastInfo}
+          podcastImage={podcastImage}
+          selectImage={selectImage}
+          uploading={podcastImageUploading}
+        />
+        {stepNumber < 6 && (
+          <div className="mt-5 w-full flex gap-x-3">
+            {stepNumber > 0 && (
               <button
-                aria-label="next step"
+                aria-label="previous step"
                 className="flex px-3 items-center text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md py-1 text-center"
                 type="button"
                 onClick={() => {
-                  setStepNumber(stepNumber + 1);
-                  if (stepNumber === 5 && !podcastImageUploading) {
-                    doCreatePodcast();
-                  }
+                  setStepNumber(stepNumber - 1);
                 }}
               >
-                {stepNumber === 5 ? '创建播客 →' : '下一步 →'}
+                ← 上一步
               </button>
-            </div>
-          )}
-        </div>
-      )}
+            )}
+            <button
+              aria-label="next step"
+              className="flex px-3 items-center text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md py-1 text-center"
+              type="button"
+              onClick={() => {
+                setStepNumber(stepNumber + 1);
+                if (stepNumber === 5 && !podcastImageUploading) {
+                  doCreatePodcast();
+                }
+              }}
+            >
+              {stepNumber === 5 ? '创建播客 →' : '下一步 →'}
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
