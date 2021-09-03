@@ -68,7 +68,7 @@ export default function Header() {
         {embedPaths.indexOf(location.pathname) > -1 && (
           <button
             type="button"
-            className="focus:outline-none w-8 h-8 p-1 hover:bg-select rounded-md cursor-default flex items-center justify-center mt-0.5"
+            className="focus:outline-none w-8 h-8 p-1 hover:bg-select rounded-md cursor-default flex items-center justify-center"
             onClick={() => {
               history.goBack();
             }}
@@ -80,7 +80,7 @@ export default function Header() {
         )}
         <button
           type="button"
-          className="focus:outline-none w-8 h-8 p-1 mt-0.5 hover:bg-select dark:hover:bg-black dark:text-gray-200 rounded-md cursor-default flex items-center justify-center"
+          className="focus:outline-none w-8 h-8 p-1 hover:bg-select dark:hover:bg-black dark:text-gray-200 rounded-md cursor-default flex items-center justify-center"
           onClick={() => {
             history.push('/snapod/start');
           }}
