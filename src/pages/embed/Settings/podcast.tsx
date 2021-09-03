@@ -94,10 +94,10 @@ export default function PodcastSettings() {
         <section className="flex-1 border rounded-lg py-3.5 px-4">
           <div className="items-center mb-2">
             <span className="flex-1 items-center">
-              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                 永久删除播客
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
                 Delete podcast permanently
               </em>
             </span>
@@ -122,10 +122,10 @@ export default function PodcastSettings() {
         <section className="flex-1 border rounded-lg py-3.5 px-4">
           <div className="items-center mb-2">
             <span className="flex-1 items-center">
-              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                 播客跳转
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
                 New feed URL
               </em>
             </span>
@@ -137,7 +137,7 @@ export default function PodcastSettings() {
             onChange={(e: { target: { value: any } }) => {
               setNewFeedURL(e.target.value);
             }}
-            className="mb-2.5 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+            className="mb-2.5 tracking-wide dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
           <div className="flex gap-x-2">
             <button
@@ -167,10 +167,10 @@ export default function PodcastSettings() {
         <section className="flex-1 border rounded-lg py-3.5 px-4">
           <div className="items-center mb-2">
             <span className="flex-1 items-center">
-              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                 苹果播客验证码
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
                 Apple Podcasts Authorization Code
               </em>
             </span>
@@ -182,7 +182,7 @@ export default function PodcastSettings() {
             onChange={(e: { target: { value: any } }) => {
               setAuthCode(e.target.value);
             }}
-            className="mb-2.5 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+            className="mb-2.5 tracking-wide dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
           <div className="flex gap-x-2">
             <button

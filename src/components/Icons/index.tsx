@@ -340,7 +340,7 @@ export default function Icons({ name }: { name: string }) {
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          className="animate-spin"
+          className="animate-spin dark:text-white"
         >
           <circle
             className="opacity-25"

@@ -33,6 +33,11 @@ export default function Aside() {
   // Listen to full screen event
   ipcRenderer.on('full-screen-change', fullScreenListener);
 
+  /* Offline status detection */
+  window.addEventListener('offline', () => {
+    history.push('/landing/offline');
+  });
+
   return (
     <aside
       className={`animate-firstShow aside border-r ${
@@ -76,7 +81,7 @@ export default function Aside() {
             <button
               type="submit"
               aria-label="create episode"
-              className="flex justify-center align-middle items-center my-3 text-white text-sm hover:bg-gray-700 bg-gray-600 dark:bg-gray-500 dark:hover:bg-gray-400 focus:outline-none rounded-md shadow-md w-full py-1.5 text-center"
+              className="flex justify-center align-middle items-center my-3 text-white text-sm hover:bg-gray-700 bg-gray-600 dark:bg-blue-900 dark:hover:bg-blue-800 focus:outline-none rounded-md shadow-md w-full py-1.5 text-center"
             >
               <span className="h-5 w-5 mr-1.5">
                 <Icons name="addEpisode" />
@@ -203,10 +208,10 @@ export default function Aside() {
       </div>
       <div className="grid grid-cols-7 absolute bottom-0 w-full pb-5 px-6 items-center">
         <div className="col-start-1 col-end-7">
-          <h1 className="text-sm font-medium -mb-0.5 text-gray-700 whitespace-nowrap overflow-hidden overflow-ellipsis">
+          <h1 className="text-sm font-medium -mb-0.5 text-gray-700 dark:text-white whitespace-nowrap overflow-hidden overflow-ellipsis">
             {Store.get('currentUser.name') || 'Snapod'}
           </h1>
-          <p className="text-xs text-gray-600 whitespace-nowrap overflow-hidden overflow-ellipsis">
+          <p className="text-xs text-gray-600 dark:text-gray-300 whitespace-nowrap overflow-hidden overflow-ellipsis">
             {Store.get('currentUser.email') || 'Grow your podcast with ease'}
           </p>
         </div>

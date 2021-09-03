@@ -164,7 +164,7 @@ export default function ManagePodcast() {
           </div>
         </div>
       )}
-      <section className="border-b flex gap-x-8 mb-4 pb-8 mx-5 border-gray-200">
+      <section className="border-b flex gap-x-8 mb-4 pb-8 mx-5 border-gray-200 dark:border-gray-500">
         <div>
           <button
             aria-label="upload image"
@@ -230,7 +230,7 @@ export default function ManagePodcast() {
           <div className="mt-3 flex gap-x-3">
             <div className="flex-1">
               <span className="flex items-center">
-                <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
+                <em className="ml-1 text-xs font-medium text-gray-500 dark:text-white not-italic flex-1">
                   播客类型 / Podcast Type
                 </em>
               </span>
@@ -241,7 +241,7 @@ export default function ManagePodcast() {
                   setInfo({ ...podcastInfo, type: e.target.value });
                   setSavable(true);
                 }}
-                className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
+                className="mt-1 tracking-wide dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
               >
                 <option value="" disabled>
                   选择播客类型...
@@ -252,7 +252,7 @@ export default function ManagePodcast() {
             </div>
             <div className="flex-1">
               <span className="flex items-center">
-                <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
+                <em className="ml-1 text-xs font-medium text-gray-500 dark:text-white not-italic flex-1">
                   节目评级 / Rating
                 </em>
               </span>
@@ -266,7 +266,7 @@ export default function ManagePodcast() {
                   });
                   setSavable(true);
                 }}
-                className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
+                className="mt-1 tracking-wide dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
               >
                 <option value="" disabled>
                   选择播客节目类型...
@@ -283,20 +283,20 @@ export default function ManagePodcast() {
         </div>
       </section>
       <section className="flex gap-x-4 pt-3 mx-5">
-        <section className="flex-1 border rounded-lg p-3">
+        <section className="flex-1 border dark:border-gray-500 rounded-lg p-3">
           <div className="items-center mb-4">
             <span className="flex-1 items-center">
-              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                 播客元数据
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-white not-italic">
                 Podcast metadata
               </em>
             </span>
           </div>
           <div>
             <span className="flex items-center">
-              <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
+              <em className="ml-1 text-xs font-medium text-gray-500 dark:text-gray-300 not-italic flex-1">
                 播客语言 / Language
               </em>
             </span>
@@ -311,7 +311,7 @@ export default function ManagePodcast() {
           </div>
           <div className="mt-5">
             <span className="flex items-center">
-              <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
+              <em className="ml-1 text-xs font-medium text-gray-500 dark:text-gray-300 not-italic flex-1">
                 播客分类 / Category
               </em>
             </span>
@@ -326,7 +326,7 @@ export default function ManagePodcast() {
           </div>
           <div className="mt-5">
             <span className="flex items-center">
-              <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
+              <em className="ml-1 text-xs font-medium text-gray-500 dark:text-gray-300 not-italic flex-1">
                 版权字段 / Copyright
               </em>
               <Switch
@@ -359,18 +359,18 @@ export default function ManagePodcast() {
                 });
                 setSavable(true);
               }}
-              className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+              className="mt-1 tracking-wide dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
             />
           </div>
         </section>
         <section>
-          <section className="border rounded-lg p-3">
+          <section className="border dark:border-gray-500 rounded-lg p-3">
             <div className="flex items-center mb-4">
               <span className="flex-1 items-center">
-                <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+                <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                   播客实际所有
                 </em>
-                <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+                <em className="ml-1 text-xs font-medium text-gray-400 dark:text-white not-italic">
                   Podcast owner
                 </em>
               </span>
@@ -427,7 +427,7 @@ export default function ManagePodcast() {
           <section className="mt-4 flex gap-x-3 border rounded-lg p-3">
             <div className="flex-1">
               <span className="flex items-center">
-                <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
+                <em className="ml-1 text-xs font-medium text-gray-500 dark:text-white not-italic flex-1">
                   已完结 / Completion
                 </em>
               </span>
@@ -441,7 +441,7 @@ export default function ManagePodcast() {
                   });
                   setSavable(true);
                 }}
-                className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
+                className="mt-1 tracking-wide focus:outline-none dark:bg-transparent dark:text-white dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
               >
                 <option value="" disabled>
                   播客是否完结...
@@ -452,7 +452,7 @@ export default function ManagePodcast() {
             </div>
             <div className="flex-1">
               <span className="flex items-center">
-                <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
+                <em className="ml-1 text-xs font-medium text-gray-500 dark:text-gray-300 not-italic flex-1">
                   屏蔽收录 / Block
                 </em>
               </span>
@@ -466,7 +466,7 @@ export default function ManagePodcast() {
                   });
                   setSavable(true);
                 }}
-                className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
+                className="mt-1 tracking-wide focus:outline-none dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
               >
                 <option value="" disabled>
                   是否屏蔽收录...

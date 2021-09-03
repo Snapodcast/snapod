@@ -19,26 +19,26 @@ export default function AboutPage() {
     <div className="my-4 mx-5">
       <Head title="关于此版本" description="查看此版本的关于信息" />
       <div>
-        <div className="flex items-center gap-x-2 text-gray-600 text-2xl font-medium">
+        <div className="flex items-center gap-x-2 text-gray-600 dark:text-white text-2xl font-medium">
           <img
             src={snapodLogo}
             alt="snapod logo"
-            className="w-8 h-8 rounded-full"
+            className="w-8 h-8 rounded-full dark:opacity-80"
           />
           <h1>Snapod</h1>
         </div>
-        <p className="text-gray-500 text-sm mt-0.5 pl-0.5">
+        <p className="text-gray-500 dark:text-gray-100 text-sm mt-0.5 pl-0.5">
           A better independent podcast hosting platform
         </p>
 
-        <div className="text-gray-500 mt-8 text-sm">
+        <div className="text-gray-500 dark:text-gray-300 mt-8 text-sm">
           <p>Version number: {appVersion}</p>
           <p>
             API service version:{' '}
             {apiVersion || (
               <button
                 type="button"
-                className="hover:text-gray-600"
+                className="hover:text-gray-600 dark:hover:text-white"
                 onClick={getAPIVersion}
               >
                 Retrieve →
@@ -53,7 +53,7 @@ export default function AboutPage() {
           <p>User ID: {Store.get('currentUser.cuid')}</p>
         </div>
 
-        <p className="text-gray-400 text-sm mt-8">
+        <p className="text-gray-400 dark:text-gray-400 text-sm mt-8">
           &copy; 2021 Snapodcast, All rights reserved.
         </p>
       </div>

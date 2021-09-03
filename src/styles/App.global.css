@@ -313,3 +313,7 @@ div::-webkit-scrollbar {
   left: calc((100% - 500px) / 2);
   width: 500px;
 }
+
+.spinner-start svg {
+  color: #333 !important;
+}

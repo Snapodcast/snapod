@@ -164,10 +164,10 @@ export default function ManageSite() {
           <section className="flex justify-center items-center mt-4">
             <div>
               <div className="mb-8 text-center">
-                <h1 className="text-2xl text-gray-700 font-medium mb-0.5 tracking-wide">
+                <h1 className="text-2xl text-gray-700 dark:text-white font-medium mb-0.5 tracking-wide">
                   Snapod 播客站点
                 </h1>
-                <p className="text-sm tracking-wide text-gray-500">
+                <p className="text-sm tracking-wide text-gray-500 dark:text-gray-300">
                   Snapod Site
                 </p>
               </div>
@@ -201,7 +201,7 @@ export default function ManageSite() {
     <div className="my-4 mx-5">
       <Head title="管理播客站点" description="修改播客站点设置与自定义域名" />
       <section className="border rounded-md py-5 text-center">
-        <h1 className="text-base font-medium mb-3 flex gap-x-2 justify-center items-center">
+        <h1 className="text-base font-medium mb-3 flex gap-x-2 justify-center items-center dark:text-white">
           <span className="w-5 h-5">
             <Icons name="globe" />
           </span>
@@ -213,13 +213,15 @@ export default function ManageSite() {
               <span className="rounded-full bg-green-500 text-white text-xs h-5 px-2 flex items-center">
                 Default
               </span>
-              <span>{data.podcast.profile.snapod_site_url}</span>
+              <span className="dark:text-gray-300">
+                {data.podcast.profile.snapod_site_url}
+              </span>
             </p>
             <p className="py-2 px-3.5 flex gap-2 items-center">
               <span className="rounded-full bg-yellow-500 text-white text-xs h-5 px-2 flex items-center">
                 Custom
               </span>
-              <span>
+              <span className="dark:text-gray-300">
                 https://
                 {data.podcast.profile.snapod_site_custom_url}
               </span>
@@ -239,10 +241,10 @@ export default function ManageSite() {
       <section className="flex gap-x-4 border-t pt-5 mt-5">
         <div className="flex-1 border rounded-lg p-3">
           <span className="flex items-center">
-            <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+            <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
               自定义域名
             </em>
-            <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+            <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
               Custom Domain
             </em>
           </span>
@@ -263,7 +265,7 @@ export default function ManageSite() {
                   snapod_site_custom_url: e.target.value,
                 });
               }}
-              className="mb-2.5 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+              className="mb-2.5 tracking-wide dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
             />
             <p className="flex gap-x-2">
               <button
@@ -294,10 +296,10 @@ export default function ManageSite() {
         {podcastInfo.snapod_site_custom_url && (
           <div className="flex-1 border rounded-lg p-3">
             <span className="flex items-center">
-              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                 自定义域名配置指南
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
                 Configuration Guide
               </em>
             </span>

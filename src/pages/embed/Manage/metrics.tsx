@@ -323,15 +323,17 @@ export default function ManageMetrics() {
       <section>
         <div className="flex items-center">
           <div className="flex-1">
-            <h1 className="text-base font-medium -mb-0.5">播客播放量统计</h1>
-            <p className="text-xs text-gray-600">Plays</p>
+            <h1 className="text-base font-medium -mb-0.5 dark:text-white">
+              播客播放量统计
+            </h1>
+            <p className="text-xs text-gray-600 dark:text-gray-300">Plays</p>
           </div>
           <div className="flex gap-x-3 items-center">
             <div className="flex">
               <button
                 type="button"
                 aria-label="select date range"
-                className="border flex gap-x-1 justify-center align-middle items-center text-gray-500 text-sm hover:bg-gray-300 bg-gray-200 focus:outline-none rounded-md py-1 px-3 text-center"
+                className="border flex gap-x-1 justify-center align-middle items-center dark:bg-transparent dark:text-gray-300 dark:border-gray-500 text-gray-500 text-sm hover:bg-gray-300 dark:hover:text-white dark:hover:bg-transparent bg-gray-200 focus:outline-none rounded-md py-1 px-3 text-center"
                 onClick={() => setShowPicker(!showPicker)}
               >
                 <span className="w-4 h-4">
@@ -354,7 +356,7 @@ export default function ManageMetrics() {
             </div>
             <div>
               <select
-                className="interval-select justify-center align-middle items-center text-gray-500 text-sm hover:bg-gray-50 border focus:outline-none rounded-md py-1 px-3 text-center"
+                className="interval-select dark:bg-transparent dark:text-gray-300 dark:border-gray-500 justify-center align-middle items-center text-gray-500 text-sm hover:bg-gray-50 dark:hover:text-white dark:hover:bg-transparent border focus:outline-none rounded-md py-1 px-3 text-center"
                 defaultValue={dateInterval}
                 onChange={(e) => {
                   setDateInterval(e.target.value);
@@ -394,8 +396,12 @@ export default function ManageMetrics() {
       <section className="mt-7 pt-7 border-t">
         <div className="flex items-center">
           <div className="flex-1">
-            <h1 className="text-base font-medium -mb-0.5">节目播放量统计</h1>
-            <p className="text-xs text-gray-600">Plays by episode</p>
+            <h1 className="text-base font-medium -mb-0.5 dark:text-white">
+              节目播放量统计
+            </h1>
+            <p className="text-xs text-gray-600 dark:text-gray-300">
+              Plays by episode
+            </p>
           </div>
         </div>
         {episodesPlaysData.length ? (
@@ -411,8 +417,12 @@ export default function ManageMetrics() {
       <section className="mt-7 pt-7 border-t">
         <div className="flex items-center">
           <div className="flex-1">
-            <h1 className="text-base font-medium -mb-0.5">听众地理信息</h1>
-            <p className="text-xs text-gray-600">Geographic location</p>
+            <h1 className="text-base font-medium -mb-0.5 dark:text-white">
+              听众地理信息
+            </h1>
+            <p className="text-xs text-gray-600 dark:text-gray-300">
+              Geographic location
+            </p>
           </div>
         </div>
         {countriesData.length ? (
@@ -428,10 +438,10 @@ export default function ManageMetrics() {
       <section className="mt-7 pt-7 border-t">
         <div className="flex items-center">
           <div className="flex-1">
-            <h1 className="text-base font-medium -mb-0.5">
+            <h1 className="text-base font-medium -mb-0.5 dark:text-white">
               听众设备及平台信息
             </h1>
-            <p className="text-xs text-gray-600">
+            <p className="text-xs text-gray-600 dark:text-gray-300">
               Listening devices and platforms
             </p>
           </div>

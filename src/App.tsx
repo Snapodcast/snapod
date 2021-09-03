@@ -26,6 +26,7 @@ import ManageSite from './pages/embed/Manage/site';
 import ImportPodcast from './pages/embed/Import';
 import HelpCenter from './pages/embed/HelpCenter';
 import AboutPage from './pages/embed/About';
+import OfflinePage from './pages/single/Offline';
 
 const heartBeatCheck = async (token: string) => {
   const result = await fetch(`${Configs.backend_url}/ping/auth`, {
@@ -94,6 +95,7 @@ export default function App() {
             <Route path="/landing/start" component={StartSingle} />
             <Route path="/landing/create/podcast" component={CreatePodcast} />
             <Route path="/landing/import/podcast" component={ImportPodcast} />
+            <Route path="/landing/offline" component={OfflinePage} />
           </main>
         </div>
       </Route>

@@ -193,7 +193,7 @@ export default function CreateEpisode() {
           <div className="mt-4 flex gap-x-3">
             <div className="flex-1">
               <span className="flex items-center">
-                <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
+                <em className="ml-1 text-xs font-medium text-gray-500 dark:text-gray-300 not-italic flex-1">
                   节目类型 / Episode Type
                 </em>
               </span>
@@ -203,7 +203,7 @@ export default function CreateEpisode() {
                 onChange={(e) => {
                   setInfo({ ...episodeInfo, episode_type: e.target.value });
                 }}
-                className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
+                className="mt-1 tracking-wide dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
               >
                 <option value="" disabled>
                   选择节目类型...
@@ -215,7 +215,7 @@ export default function CreateEpisode() {
             </div>
             <div className="flex-1">
               <span className="flex items-center">
-                <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
+                <em className="ml-1 text-xs font-medium text-gray-500 dark:text-gray-300 not-italic flex-1">
                   节目评级 / Rating
                 </em>
               </span>
@@ -228,7 +228,7 @@ export default function CreateEpisode() {
                     clean_content: e.target.value,
                   });
                 }}
-                className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
+                className="mt-1 tracking-wide focus:outline-none dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
               >
                 <option value="" disabled>
                   选择内容评级...
@@ -267,10 +267,10 @@ export default function CreateEpisode() {
                 <p className="text-xs whitespace-nowrap flex text-gray-500 items-center">
                   选择一个{' '}
                   <span className="flex gap-x-1 mx-2">
-                    <em className="not-italic rounded-md px-1 bg-gray-50 border border-gray-300">
+                    <em className="not-italic rounded-md px-1 bg-gray-50 dark:bg-gray-400 border border-gray-300 dark:border-0 dark:text-gray-700">
                       .mp3
                     </em>
-                    <em className="not-italic rounded-md px-1 bg-gray-50 border border-gray-300">
+                    <em className="not-italic rounded-md px-1 bg-gray-50 dark:bg-gray-400 border border-gray-300 dark:border-0 dark:text-gray-700">
                       .m4a
                     </em>
                   </span>{' '}
@@ -313,7 +313,7 @@ export default function CreateEpisode() {
         <div className="flex gap-x-3">
           <div className="flex-1">
             <span className="flex items-center">
-              <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
+              <em className="ml-1 text-xs font-medium text-gray-500 dark:text-gray-300 not-italic flex-1">
                 节目季数 / Season Number
               </em>
               <Switch
@@ -345,7 +345,7 @@ export default function CreateEpisode() {
                   season_number: e.target.value,
                 });
               }}
-              className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+              className="mt-1 tracking-wide dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
             />
           </div>
           <div className="flex-1">
@@ -371,7 +371,16 @@ export default function CreateEpisode() {
             节目描述 / Show Notes
           </em>
         </span>
-        <div className="rounded-lg border py-4 w-full mt-1 text-base px-8">
+        <div
+          className="rounded-lg border py-4 w-full mt-1 text-base px-8"
+          style={{
+            background:
+              window.matchMedia &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'rgb(25,27,28)'
+                : '',
+          }}
+        >
           <Editor
             readOnly={uploading || audioUploading}
             placeholder="节目描述..."
@@ -385,6 +394,10 @@ export default function CreateEpisode() {
               const result = await uploadFile(file);
               return result;
             }}
+            dark={
+              window.matchMedia &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches
+            }
           />
         </div>
       </section>

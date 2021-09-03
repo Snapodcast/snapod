@@ -150,20 +150,20 @@ export default function DistributionSettings() {
         <div className="border rounded-lg py-3.5 px-4">
           <div className="items-center mb-1.5 flex">
             <span className="items-center flex ml-1 flex-1">
-              <span className="w-4 h-4 text-gray-500">
+              <span className="w-4 h-4 text-gray-500 dark:text-white">
                 <Icons name="rss" />
               </span>
-              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                 RSS 地址
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
                 Feed URL
               </em>
             </span>
             <button
               type="button"
               aria-label="copy"
-              className="border rounded-md px-2 py-0.5 text-xs text-gray-500 hover:bg-gray-50"
+              className="border rounded-md px-2 py-0.5 text-xs text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:text-white dark:hover:bg-transparent"
               onClick={() => {
                 copyToClipboard(
                   `https://rss.snapodcast.com/${
@@ -178,20 +178,20 @@ export default function DistributionSettings() {
           <p className="text-xs text-gray-500 mb-2 mx-1">
             此地址可用于泛用性播客客户端订阅、播客平台发布等用途
           </p>
-          <p className="text-gray-600 text-sm whitespace-nowrap overflow-x-auto border shadow-sm rounded-md py-1 px-2">
+          <p className="text-gray-600 dark:bg-transparent dark:text-gray-300 dark:border-gray-500 text-sm whitespace-nowrap overflow-x-auto border shadow-sm rounded-md py-1 px-2">
             https://rss.snapodcast.com/{parseInt(data.podcast.id, 10) + 46800}
           </p>
         </div>
         <div className="border rounded-lg py-3.5 px-4">
           <div className="items-center mb-2">
             <span className="items-center flex ml-1">
-              <span className="w-4 h-4 text-gray-500">
+              <span className="w-4 h-4 text-gray-500 dark:text-white">
                 <Icons name="globe" />
               </span>
-              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                 播客网站
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
                 Podcast Website
               </em>
             </span>
@@ -213,12 +213,12 @@ export default function DistributionSettings() {
                   });
                   setSavable(true);
                 }}
-                className="shadow-sm tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1 px-3 text-gray-700"
+                className="shadow-sm tracking-wide focus:outline-none focus:border-gray-400 dark:bg-transparent dark:text-gray-300 dark:border-gray-500 border rounded-md w-full text-sm py-1 px-3 text-gray-700"
               />
               <button
                 type="button"
                 aria-label="snapod site"
-                className="text-xs rounded-md shadow-sm bg-blue-500 py-1 px-3 whitespace-nowrap text-white hover:bg-blue-600"
+                className="text-xs rounded-md shadow-sm bg-blue-500 dark:bg-blue-900 py-1 px-3 whitespace-nowrap text-white hover:bg-blue-600 dark:hover:bg-blue-800"
                 onClick={() => {
                   history.push('/snapod/manage/site');
                 }}
@@ -238,10 +238,10 @@ export default function DistributionSettings() {
                 alt="apple podcasts"
                 className="w-5 h-5 rounded-full"
               />
-              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                 苹果播客
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
                 Apple Podcasts
               </em>
             </span>
@@ -257,7 +257,7 @@ export default function DistributionSettings() {
               });
               setSavable(true);
             }}
-            className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+            className="tracking-wide focus:outline-none dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
         </div>
         <div className="border rounded-lg py-3.5 px-4">
@@ -268,10 +268,10 @@ export default function DistributionSettings() {
                 alt="google podcasts"
                 className="w-5 h-5 rounded-full"
               />
-              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                 谷歌播客
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
                 Google Podcasts
               </em>
             </span>
@@ -287,7 +287,7 @@ export default function DistributionSettings() {
               });
               setSavable(true);
             }}
-            className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+            className="tracking-wide focus:outline-none dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
         </div>
         <div className="border rounded-lg py-3.5 px-4">
@@ -298,10 +298,10 @@ export default function DistributionSettings() {
                 alt="breaker"
                 className="w-4 h-4 rounded-full mr-0.5"
               />
-              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                 Breaker 播客
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
                 Breaker
               </em>
             </span>
@@ -317,7 +317,7 @@ export default function DistributionSettings() {
               });
               setSavable(true);
             }}
-            className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+            className="tracking-wide focus:outline-none dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
         </div>
         <div className="border rounded-lg py-3.5 px-4">
@@ -328,10 +328,10 @@ export default function DistributionSettings() {
                 alt="castbox"
                 className="w-4 h-4 rounded-full mr-0.5"
               />
-              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                 CastBox 播客
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
                 CastBox
               </em>
             </span>
@@ -347,7 +347,7 @@ export default function DistributionSettings() {
               });
               setSavable(true);
             }}
-            className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+            className="tracking-wide focus:outline-none dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
         </div>
         <div className="border rounded-lg py-3.5 px-4">
@@ -358,10 +358,10 @@ export default function DistributionSettings() {
                 alt="overcast"
                 className="w-4 h-4 rounded-full mr-0.5"
               />
-              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                 Overcast 播客
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
                 Overcast
               </em>
             </span>
@@ -377,7 +377,7 @@ export default function DistributionSettings() {
               });
               setSavable(true);
             }}
-            className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+            className="tracking-wide focus:outline-none dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
         </div>
         <div className="border rounded-lg py-3.5 px-4">
@@ -388,10 +388,10 @@ export default function DistributionSettings() {
                 alt="overcast"
                 className="w-4 h-4 rounded-full mr-0.5"
               />
-              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                 PocketCast 播客
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
                 PocketCast
               </em>
             </span>
@@ -407,7 +407,7 @@ export default function DistributionSettings() {
               });
               setSavable(true);
             }}
-            className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+            className="tracking-wide focus:outline-none dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
         </div>
         <div className="border rounded-lg py-3.5 px-4">
@@ -418,10 +418,10 @@ export default function DistributionSettings() {
                 alt="radiopublic"
                 className="w-4 h-4 rounded-full mr-0.5"
               />
-              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                 RadioPublic 播客
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
                 RadioPublic
               </em>
             </span>
@@ -437,7 +437,7 @@ export default function DistributionSettings() {
               });
               setSavable(true);
             }}
-            className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+            className="tracking-wide focus:outline-none dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
         </div>
         <div className="border rounded-lg py-3.5 px-4">
@@ -448,10 +448,10 @@ export default function DistributionSettings() {
                 alt="spotify"
                 className="w-4 h-4 rounded-full mr-0.5"
               />
-              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                 Spotify 播客
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
                 Spotify Podcasts
               </em>
             </span>
@@ -467,7 +467,7 @@ export default function DistributionSettings() {
               });
               setSavable(true);
             }}
-            className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+            className="tracking-wide focus:outline-none dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
         </div>
         <div className="border rounded-lg py-3.5 px-4">
@@ -478,10 +478,10 @@ export default function DistributionSettings() {
                 alt="netease music"
                 className="w-4 h-4 rounded-full mr-0.5"
               />
-              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                 网易云音乐
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
                 Netease Music
               </em>
             </span>
@@ -497,7 +497,7 @@ export default function DistributionSettings() {
               });
               setSavable(true);
             }}
-            className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+            className="tracking-wide focus:outline-none dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
         </div>
         <div className="border rounded-lg py-3.5 px-4">
@@ -508,10 +508,10 @@ export default function DistributionSettings() {
                 alt="qqmusic music"
                 className="w-4 h-4 rounded-full mr-0.5"
               />
-              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                 QQ 音乐
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
                 QQ Music
               </em>
             </span>
@@ -527,7 +527,7 @@ export default function DistributionSettings() {
               });
               setSavable(true);
             }}
-            className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+            className="tracking-wide focus:outline-none dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
         </div>
         <div className="border rounded-lg py-3.5 px-4">
@@ -538,10 +538,10 @@ export default function DistributionSettings() {
                 alt="ximalaya"
                 className="w-4 h-4 rounded-full mr-0.5"
               />
-              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                 喜马拉雅
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
                 Ximalaya
               </em>
             </span>
@@ -557,7 +557,7 @@ export default function DistributionSettings() {
               });
               setSavable(true);
             }}
-            className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+            className="tracking-wide focus:outline-none dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
         </div>
         <div className="border rounded-lg py-3.5 px-4">
@@ -568,10 +568,10 @@ export default function DistributionSettings() {
                 alt="xiaoyuzhou"
                 className="w-4 h-4 rounded-full mr-0.5"
               />
-              <em className="ml-1 text-sm font-medium text-gray-500 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
                 小宇宙
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 not-italic">
+              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
                 Xiaoyuzhou
               </em>
             </span>
@@ -587,7 +587,7 @@ export default function DistributionSettings() {
               });
               setSavable(true);
             }}
-            className="tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+            className="tracking-wide focus:outline-none dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
         </div>
       </section>
