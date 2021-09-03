@@ -184,7 +184,17 @@ export default function ManagePodcast() {
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
             }}
-          />
+          >
+            {!podcastInfo.image && !podcastInfo.cover_art_image_url && (
+              <span className="text-gray-500">
+                <span className="episode-image-placeholder flex justify-center">
+                  <Icons name="microphone" />
+                </span>
+                <br />
+                <span>封面图 Cover Art</span>
+              </span>
+            )}
+          </button>
           {uploading && (
             <div className="flex justify-center">
               <span className="bg-blue-500 py-1 px-3 text-xs text-white rounded-xl absolute -mt-9 shadow-lg">
