@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
 import HeadContext from '../../lib/Context/head';
+import sidebarIcon from '../../public/sidebar_icon.png';
 
 import Icons from '../Icons';
 
@@ -47,12 +48,12 @@ export default function Header() {
       <div className="items-center control mr-3 pr-2 border-r border-gray-200 dark:border-darkSelect">
         <button
           type="button"
-          className="focus:outline-none w-7 h-7 p-1 hover:bg-select dark:text-gray-200 dark:hover:bg-black rounded-md cursor-default"
+          className="focus:outline-none w-8 h-8 hover:bg-select dark:text-gray-200 dark:hover:bg-black rounded-md cursor-default flex justify-center items-center"
           onClick={() => {
             ipcRenderer.send('hide-sidebar');
           }}
         >
-          <Icons name="switch" />
+          <img alt="hide/show sidebar" src={sidebarIcon} className="w-5 h-5" />
         </button>
       </div>
       <div className="w-full -mt-1">
@@ -67,22 +68,26 @@ export default function Header() {
         {embedPaths.indexOf(location.pathname) > -1 && (
           <button
             type="button"
-            className="focus:outline-none w-7 h-7 p-1 hover:bg-select rounded-md cursor-default"
+            className="focus:outline-none w-8 h-8 p-1 hover:bg-select rounded-md cursor-default flex items-center justify-center mt-0.5"
             onClick={() => {
               history.goBack();
             }}
           >
-            <Icons name="back" />
+            <span className="w-5 h-5 block">
+              <Icons name="back" />
+            </span>
           </button>
         )}
         <button
           type="button"
-          className="focus:outline-none w-7 h-7 p-1 hover:bg-select dark:hover:bg-black dark:text-gray-200 rounded-md cursor-default"
+          className="focus:outline-none w-8 h-8 p-1 mt-0.5 hover:bg-select dark:hover:bg-black dark:text-gray-200 rounded-md cursor-default flex items-center justify-center"
           onClick={() => {
             history.push('/snapod/start');
           }}
         >
-          <Icons name="home" />
+          <span className="w-5 h-5 block">
+            <Icons name="home" />
+          </span>
         </button>
       </div>
     </div>
