@@ -30,6 +30,7 @@ declare interface MainData {
 declare module 'react-wavy-audio';
 declare module 'mp3-duration';
 declare module '@wojtekmaj/react-daterange-picker';
+declare module 'rc-animate';
 
 declare interface StatsIntervalResult {
   name: number;

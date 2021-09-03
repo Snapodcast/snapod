@@ -8,6 +8,7 @@ import subString from '../../../utilities/substring';
 import { useHistory } from 'react-router-dom';
 import Head from '../../../components/Head';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import QueueAnim from 'rc-queue-anim';
 
 export default function EpisodeList() {
   const podcastCuid = Store.get('currentPodcast.cuid');
@@ -85,92 +86,94 @@ export default function EpisodeList() {
       <Head title="管理节目列表" description="查看和修改全部播客节目" />
       {data && data.episodes.length > 0 ? (
         <div className="mb-5">
-          {data.episodes.map((episode: any) => (
-            <div
-              key={episode.cuid}
-              className="episode-item flex mb-3 rounded-md border dark:hover:border-gray-300 dark:border-gray-400 transition-colors shadow-sm cursor-pointer"
-            >
-              {episode.profile.cover_art_image_url && (
-                <LazyLoadImage
-                  src={episode.profile.cover_art_image_url}
-                  className="episode-item-image h-full border-r rounded-tl-md rounded-bl-md bg-gray-100"
-                />
-              )}
+          <QueueAnim delay={50}>
+            {data.episodes.map((episode: any) => (
               <div
-                className={`text-left episode-item-content hover:bg-gray-50 dark:hover:bg-transparent transition-all ${
-                  !episode.profile.cover_art_image_url &&
-                  'rounded-tl-md rounded-bl-md'
-                }`}
-                onClick={() => {
-                  if (!deleting) {
-                    Store.set('currentEpisode.cuid', episode.cuid);
-                    Store.set('currentEpisode.title', episode.title);
-                    history.push('/snapod/manage/episode');
-                  }
-                }}
-                aria-hidden="true"
+                key={episode.cuid}
+                className="episode-item flex mb-3 rounded-md border dark:hover:border-gray-300 dark:border-gray-400 transition-colors shadow-sm cursor-pointer"
               >
-                <div className="flex items-center episode-item-container px-5 pt-2">
-                  <div>
-                    <h2 className="text-base text-gray-600 font-medium mb-1.5 dark:text-white">
-                      {episode.title}
-                    </h2>
-                    <p className="text-sm text-gray-500 mb-2.5 dark:text-gray-200">
-                      {subString(htmlToText(episode.content), 100).replaceAll(
-                        '<p>',
-                        ''
-                      )}
-                    </p>
+                {episode.profile.cover_art_image_url && (
+                  <LazyLoadImage
+                    src={episode.profile.cover_art_image_url}
+                    className="episode-item-image h-full border-r rounded-tl-md rounded-bl-md bg-gray-100"
+                  />
+                )}
+                <div
+                  className={`text-left episode-item-content hover:bg-gray-50 dark:hover:bg-transparent transition-all ${
+                    !episode.profile.cover_art_image_url &&
+                    'rounded-tl-md rounded-bl-md'
+                  }`}
+                  onClick={() => {
+                    if (!deleting) {
+                      Store.set('currentEpisode.cuid', episode.cuid);
+                      Store.set('currentEpisode.title', episode.title);
+                      history.push('/snapod/manage/episode');
+                    }
+                  }}
+                  aria-hidden="true"
+                >
+                  <div className="flex items-center episode-item-container px-5 pt-2">
+                    <div>
+                      <h2 className="text-base text-gray-600 font-medium mb-1.5 dark:text-white">
+                        {episode.title}
+                      </h2>
+                      <p className="text-sm text-gray-500 mb-2.5 dark:text-gray-200">
+                        {subString(htmlToText(episode.content), 100).replaceAll(
+                          '<p>',
+                          ''
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex episode-item-info text-gray-500 text-xs episode-item-info-container dark:border-gray-400 dark:text-gray-300">
+                    {episode.published ? (
+                      <div className="flex gap-x-1">
+                        <em className="w-4 h-4">
+                          <Icons name="online" />
+                        </em>
+                        已发布
+                      </div>
+                    ) : (
+                      <div className="flex gap-x-1">
+                        <em className="w-4 h-4">
+                          <Icons name="offline" />
+                        </em>
+                        草稿
+                      </div>
+                    )}
+                    {episode.profile.season_number && (
+                      <div>{episode.profile.season_number}</div>
+                    )}
+                    <div>第 {episode.profile.episode_number} 期</div>
+                    <div className="capitalize">
+                      {episode.profile.episode_type === 'full'
+                        ? '完整节目'
+                        : episode.profile.episode_type === 'trailer'
+                        ? '先导节目'
+                        : '特别节目'}
+                    </div>
+                    <div>{episode.profile.audio_duration || '时长未知'}</div>
                   </div>
                 </div>
-                <div className="flex episode-item-info text-gray-500 text-xs episode-item-info-container dark:border-gray-400 dark:text-gray-300">
-                  {episode.published ? (
-                    <div className="flex gap-x-1">
-                      <em className="w-4 h-4">
-                        <Icons name="online" />
-                      </em>
-                      已发布
-                    </div>
-                  ) : (
-                    <div className="flex gap-x-1">
-                      <em className="w-4 h-4">
-                        <Icons name="offline" />
-                      </em>
-                      草稿
-                    </div>
-                  )}
-                  {episode.profile.season_number && (
-                    <div>{episode.profile.season_number}</div>
-                  )}
-                  <div>第 {episode.profile.episode_number} 期</div>
-                  <div className="capitalize">
-                    {episode.profile.episode_type === 'full'
-                      ? '完整节目'
-                      : episode.profile.episode_type === 'trailer'
-                      ? '先导节目'
-                      : '特别节目'}
-                  </div>
-                  <div>{episode.profile.audio_duration || '时长未知'}</div>
+                <div
+                  aria-hidden="true"
+                  onClick={() => {
+                    doDelete(episode.cuid);
+                  }}
+                  className={`text-red-400 hover:text-red-500 episode-item-delete justify-center items-center px-4 border-l dark:border-gray-400 dark:hover:bg-transparent hover:bg-gray-50 transition-all ${
+                    deletingCuid === episode.cuid &&
+                    'hover:bg-red-300 bg-red-300 animate-pulse duration-200'
+                  }`}
+                >
+                  <p className="flex justify-center">
+                    <span className="w-6 h-6">
+                      <Icons name="trashBin" />
+                    </span>
+                  </p>
                 </div>
               </div>
-              <div
-                aria-hidden="true"
-                onClick={() => {
-                  doDelete(episode.cuid);
-                }}
-                className={`text-red-400 hover:text-red-500 episode-item-delete justify-center items-center px-4 border-l dark:border-gray-400 dark:hover:bg-transparent hover:bg-gray-50 transition-all ${
-                  deletingCuid === episode.cuid &&
-                  'hover:bg-red-300 bg-red-300 animate-pulse duration-200'
-                }`}
-              >
-                <p className="flex justify-center">
-                  <span className="w-6 h-6">
-                    <Icons name="trashBin" />
-                  </span>
-                </p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </QueueAnim>
         </div>
       ) : (
         <div className="flex justify-center error-container items-center">

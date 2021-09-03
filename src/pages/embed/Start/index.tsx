@@ -9,7 +9,7 @@ export default function Start() {
       <Head title="Snapod" description="Grow your podcast with ease" />
       <div className="h-full w-full grid grid-cols-2 gap-x-3">
         <Link to="/landing/create/podcast">
-          <div className="col-auto bg-green-100 dark:bg-green-900 h-full rounded-md text-center items-center justify-center flex">
+          <div className="transition-colors col-auto bg-green-100 dark:bg-green-800 hover:bg-green-200 dark:hover:bg-green-900 h-full rounded-md text-center items-center justify-center flex">
             <div>
               <div className="w-20 h-20 mx-auto text-green-500">
                 <Icons name="add" />
@@ -19,7 +19,7 @@ export default function Start() {
           </div>
         </Link>
         <Link to="/snapod/create/episode">
-          <div className="col-auto bg-yellow-100 dark:bg-yellow-900 h-full rounded-md text-center items-center justify-center flex">
+          <div className="transition-colors col-auto bg-yellow-100 dark:bg-yellow-800 hover:bg-yellow-200 dark:hover:bg-yellow-900 h-full rounded-md text-center items-center justify-center flex">
             <div>
               <div className="w-20 h-20 mx-auto text-yellow-500">
                 <Icons name="addEpisode" />

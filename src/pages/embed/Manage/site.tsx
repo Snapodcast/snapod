@@ -201,7 +201,7 @@ export default function ManageSite() {
     <div className="my-4 mx-5">
       <Head title="管理播客站点" description="修改播客站点设置与自定义域名" />
       <section className="border rounded-md py-5 text-center">
-        <h1 className="text-base font-medium mb-3 flex gap-x-2 justify-center items-center dark:text-white">
+        <h1 className="text-lg font-medium mb-3 flex gap-x-2 justify-center items-center dark:text-white">
           <span className="w-5 h-5">
             <Icons name="globe" />
           </span>
@@ -239,12 +239,12 @@ export default function ManageSite() {
         )}
       </section>
       <section className="flex gap-x-4 border-t pt-5 mt-5">
-        <div className="flex-1 border rounded-lg p-3">
+        <div className="flex-1 border rounded-lg px-3 py-3.5">
           <span className="flex items-center">
-            <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
+            <em className="ml-1 text-base font-medium text-gray-500 dark:text-white not-italic">
               自定义域名
             </em>
-            <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
+            <em className="ml-1 text-sm font-medium text-gray-400 dark:text-gray-300 not-italic">
               Custom Domain
             </em>
           </span>
@@ -294,12 +294,12 @@ export default function ManageSite() {
           </div>
         </div>
         {podcastInfo.snapod_site_custom_url && (
-          <div className="flex-1 border rounded-lg p-3">
+          <div className="flex-1 border rounded-lg px-3 py-3.5">
             <span className="flex items-center">
-              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
+              <em className="ml-1 text-base font-medium text-gray-500 dark:text-white not-italic">
                 自定义域名配置指南
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-400 dark:text-gray-300 not-italic">
                 Configuration Guide
               </em>
             </span>

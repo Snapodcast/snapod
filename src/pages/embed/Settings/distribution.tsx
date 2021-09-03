@@ -153,10 +153,10 @@ export default function DistributionSettings() {
               <span className="w-4 h-4 text-gray-500 dark:text-white">
                 <Icons name="rss" />
               </span>
-              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
+              <em className="ml-1 text-base font-medium text-gray-500 dark:text-white not-italic">
                 RSS 地址
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-400 dark:text-gray-300 not-italic">
                 Feed URL
               </em>
             </span>
@@ -188,10 +188,10 @@ export default function DistributionSettings() {
               <span className="w-4 h-4 text-gray-500 dark:text-white">
                 <Icons name="globe" />
               </span>
-              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
+              <em className="ml-1 text-base font-medium text-gray-500 dark:text-white not-italic">
                 播客网站
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-400 dark:text-gray-300 not-italic">
                 Podcast Website
               </em>
             </span>

@@ -7,11 +7,13 @@ module.exports = {
       spacing: {
         main: 'calc(100% - 220px)',
         input: '34px',
-        "17": "4.1rem"
+        "17": "4.1rem",
+        select: '187px'
       },
       colors: {
         active: 'rgba(51,51,51,10%)',
         select: 'rgba(51,51,51,7.5%)',
+        hover: 'rgba(51,51,51,5%)',
         darkBg: "rgb(30, 30, 30)",
         darkSelect: 'rgba(238,238,238,10%)',
         darkActive: 'rgba(238,238,238,15%)',

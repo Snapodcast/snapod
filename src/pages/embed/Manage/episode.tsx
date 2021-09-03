@@ -44,14 +44,14 @@ export default function ManageEpisode() {
       setInfo({
         title: data.episode.title,
         content: data.episode.content,
-        published: data.episode.published.toString(),
+        published: data.episode.published ? 'true' : 'false',
         audio_url: data.episode.profile.audio_url,
         audio_path: data.episode.profile.audio_url,
         audio_duration: data.episode.profile.audio_duration,
         audio_size: data.episode.profile.audio_size,
         cover_art_image_url: data.episode.profile.cover_art_image_url,
         episode_type: data.episode.profile.episode_type,
-        clean_content: data.episode.profile.clean_content.toString(),
+        clean_content: data.episode.profile.clean_content ? 'true' : 'false',
         season_number: data.episode.profile.season_number,
         episode_number: data.episode.profile.episode_number,
         useSeason: !!data.episode.profile.season_number,
@@ -394,19 +394,18 @@ export default function ManageEpisode() {
                   setSavable(true);
                 }}
                 checked={!!episodeInfo.useSeason}
-                handleDiameter={14}
+                handleDiameter={10}
                 uncheckedIcon={false}
                 checkedIcon={false}
-                boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                height={16}
-                width={34}
+                height={14}
+                width={26}
                 className="react-switch"
               />
             </span>
             <input
               disabled={!episodeInfo.useSeason || uploading || audioUploading}
               defaultValue={data.episode.profile.season_number}
-              placeholder="季集类型播客可用"
+              placeholder="仅季集类型播客可用"
               type="number"
               min="0"
               onChange={(e: { target: { value: any } }) => {
@@ -443,7 +442,7 @@ export default function ManageEpisode() {
               </em>
             </span>
             <select
-              defaultValue={data.episode.profile.published}
+              defaultValue={data.episode.published ? 'true' : 'false'}
               disabled={uploading || audioUploading}
               onChange={(e) => {
                 setInfo({
@@ -452,7 +451,11 @@ export default function ManageEpisode() {
                 });
                 setSavable(true);
               }}
-              className="mt-1 tracking-wide dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
+              className={`${
+                episodeInfo.published === 'true'
+                  ? 'border-green-500'
+                  : 'border-yellow-500'
+              } border-l-4 mt-1 tracking-wide dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:outline-none border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700`}
             >
               <option value="" disabled>
                 选择节目状态...

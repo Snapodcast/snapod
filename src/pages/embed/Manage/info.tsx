@@ -295,13 +295,13 @@ export default function ManagePodcast() {
         </div>
       </section>
       <section className="flex gap-x-4 pt-3 mx-5">
-        <section className="flex-1 border dark:border-gray-500 rounded-lg p-3">
+        <section className="flex-1 border dark:border-gray-500 rounded-lg px-3 py-3.5">
           <div className="items-center mb-4">
             <span className="flex-1 items-center">
-              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
+              <em className="ml-1 text-base font-medium text-gray-500 dark:text-white not-italic">
                 播客元数据
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-white not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-400 dark:text-white not-italic">
                 Podcast metadata
               </em>
             </span>
@@ -351,12 +351,11 @@ export default function ManagePodcast() {
                   setSavable(true);
                 }}
                 checked={podcastInfo.useCr}
-                handleDiameter={14}
+                handleDiameter={10}
                 uncheckedIcon={false}
                 checkedIcon={false}
-                boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                height={16}
-                width={34}
+                height={14}
+                width={26}
                 className="react-switch"
               />
             </span>
@@ -376,13 +375,13 @@ export default function ManagePodcast() {
           </div>
         </section>
         <section>
-          <section className="border dark:border-gray-500 rounded-lg p-3">
+          <section className="border dark:border-gray-500 rounded-lg px-3 py-3.5">
             <div className="flex items-center mb-4">
               <span className="flex-1 items-center">
-                <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
+                <em className="ml-1 text-base font-medium text-gray-500 dark:text-white not-italic">
                   播客实际所有
                 </em>
-                <em className="ml-1 text-xs font-medium text-gray-400 dark:text-white not-italic">
+                <em className="ml-1 text-sm font-medium text-gray-400 dark:text-white not-italic">
                   Podcast owner
                 </em>
               </span>
@@ -399,8 +398,7 @@ export default function ManagePodcast() {
                 handleDiameter={14}
                 uncheckedIcon={false}
                 checkedIcon={false}
-                boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                height={16}
+                height={18}
                 width={34}
                 className="react-switch"
               />
@@ -436,7 +434,7 @@ export default function ManagePodcast() {
               />
             </div>
           </section>
-          <section className="mt-4 flex gap-x-3 border rounded-lg p-3">
+          <section className="mt-4 flex gap-x-3 border rounded-lg px-3 py-3.5">
             <div className="flex-1">
               <span className="flex items-center">
                 <em className="ml-1 text-xs font-medium text-gray-500 dark:text-white not-italic flex-1">

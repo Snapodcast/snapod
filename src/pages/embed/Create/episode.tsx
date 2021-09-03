@@ -325,18 +325,17 @@ export default function CreateEpisode() {
                   });
                 }}
                 checked={!!episodeInfo.useSeason}
-                handleDiameter={14}
+                handleDiameter={10}
                 uncheckedIcon={false}
                 checkedIcon={false}
-                boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                height={16}
-                width={34}
+                height={14}
+                width={26}
                 className="react-switch"
               />
             </span>
             <input
               disabled={!episodeInfo.useSeason || uploading || audioUploading}
-              placeholder="季集类型播客可用"
+              placeholder="仅季集类型播客可用"
               type="number"
               min="0"
               onChange={(e: { target: { value: any } }) => {

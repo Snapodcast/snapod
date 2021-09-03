@@ -94,7 +94,7 @@ export default function PodcastSettings() {
         <section className="flex-1 border rounded-lg py-3.5 px-4">
           <div className="items-center mb-2">
             <span className="flex-1 items-center">
-              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
+              <em className="ml-1 text-base font-medium text-gray-500 dark:text-white not-italic">
                 永久删除播客
               </em>
               <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
@@ -122,10 +122,10 @@ export default function PodcastSettings() {
         <section className="flex-1 border rounded-lg py-3.5 px-4">
           <div className="items-center mb-2">
             <span className="flex-1 items-center">
-              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
+              <em className="ml-1 text-base font-medium text-gray-500 dark:text-white not-italic">
                 播客跳转
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-400 dark:text-gray-300 not-italic">
                 New feed URL
               </em>
             </span>
@@ -167,10 +167,10 @@ export default function PodcastSettings() {
         <section className="flex-1 border rounded-lg py-3.5 px-4">
           <div className="items-center mb-2">
             <span className="flex-1 items-center">
-              <em className="ml-1 text-sm font-medium text-gray-500 dark:text-white not-italic">
+              <em className="ml-1 text-base font-medium text-gray-500 dark:text-white not-italic">
                 苹果播客验证码
               </em>
-              <em className="ml-1 text-xs font-medium text-gray-400 dark:text-gray-300 not-italic">
+              <em className="ml-1 text-sm font-medium text-gray-400 dark:text-gray-300 not-italic">
                 Apple Podcasts Authorization Code
               </em>
             </span>
