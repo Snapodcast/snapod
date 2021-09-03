@@ -42,7 +42,7 @@ export default function ManagePodcast() {
         name: data.podcast.name,
         description: data.podcast.description,
         type: data.podcast.type,
-        clean_content: data.podcast.profile.clean_content.toString(),
+        clean_content: data.podcast.profile.clean_content ? 'true' : 'false',
         language: data.podcast.profile.language,
         category_name: data.podcast.profile.category_name,
         useCr: !!data.podcast.profile.copyright,
@@ -199,7 +199,7 @@ export default function ManagePodcast() {
               disabled={uploading}
               name="播客名称 / Name"
               placeholder={data.podcast.name}
-              defaultValue={podcastInfo.name}
+              defaultValue={data.podcast.name}
               onChange={(e: { target: { value: any } }) => {
                 setInfo({
                   ...podcastInfo,
@@ -214,7 +214,7 @@ export default function ManagePodcast() {
               disabled={uploading}
               name="播客简介 / Description"
               placeholder={data.podcast.description}
-              defaultValue={podcastInfo.description}
+              defaultValue={data.podcast.description}
               onChange={(e: { target: { value: any } }) => {
                 setInfo({
                   ...podcastInfo,
@@ -236,7 +236,7 @@ export default function ManagePodcast() {
               </span>
               <select
                 disabled={uploading}
-                defaultValue={podcastInfo.type}
+                defaultValue={data.podcast.type}
                 onChange={(e) => {
                   setInfo({ ...podcastInfo, type: e.target.value });
                   setSavable(true);
@@ -258,7 +258,9 @@ export default function ManagePodcast() {
               </span>
               <select
                 disabled={uploading}
-                defaultValue={podcastInfo.clean_content}
+                defaultValue={
+                  data.podcast.profile.clean_content ? 'true' : 'false'
+                }
                 onChange={(e) => {
                   setInfo({
                     ...podcastInfo,
@@ -351,7 +353,7 @@ export default function ManagePodcast() {
             <input
               disabled={!podcastInfo.useCr || uploading}
               placeholder={data.podcast.profile.copyright}
-              defaultValue={podcastInfo.copyright}
+              defaultValue={data.podcast.profile.copyright}
               onChange={(e: { target: { value: any } }) => {
                 setInfo({
                   ...podcastInfo,
@@ -398,7 +400,7 @@ export default function ManagePodcast() {
                 disabled={!podcastInfo.useOwner || uploading}
                 name="所有者名称 / Owner Name"
                 placeholder={data.podcast.profile.ownerName}
-                defaultValue={podcastInfo.ownerName}
+                defaultValue={data.podcast.profile.ownerName}
                 onChange={(e: { target: { value: any } }) => {
                   setInfo({
                     ...podcastInfo,
@@ -413,7 +415,7 @@ export default function ManagePodcast() {
                 disabled={!podcastInfo.useOwner || uploading}
                 name="所有者邮箱 / Owner Email"
                 placeholder={data.podcast.profile.ownerEmail}
-                defaultValue={podcastInfo.ownerEmail}
+                defaultValue={data.podcast.profile.ownerEmail}
                 onChange={(e: { target: { value: any } }) => {
                   setInfo({
                     ...podcastInfo,
@@ -433,7 +435,7 @@ export default function ManagePodcast() {
               </span>
               <select
                 disabled={uploading}
-                defaultValue={podcastInfo.complete}
+                defaultValue={data.podcast.profile.complete}
                 onChange={(e) => {
                   setInfo({
                     ...podcastInfo,
@@ -458,7 +460,7 @@ export default function ManagePodcast() {
               </span>
               <select
                 disabled={uploading}
-                defaultValue={podcastInfo.block}
+                defaultValue={data.podcast.profile.block}
                 onChange={(e) => {
                   setInfo({
                     ...podcastInfo,

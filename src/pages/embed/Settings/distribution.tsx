@@ -204,7 +204,7 @@ export default function DistributionSettings() {
             <div className="flex gap-x-2">
               <input
                 disabled={saving}
-                defaultValue={distributions.website_url}
+                defaultValue={data.podcast.profile.website_url}
                 placeholder={distributions.website_url || 'https://example.com'}
                 onChange={(e: { target: { value: any } }) => {
                   setDistributions({
@@ -248,7 +248,7 @@ export default function DistributionSettings() {
           </div>
           <input
             disabled={saving}
-            defaultValue={distributions.apple_podcasts_url}
+            defaultValue={data.podcast.profile.apple_podcasts_url}
             placeholder="Apple Podcasts 播客页地址"
             onChange={(e: { target: { value: any } }) => {
               setDistributions({
@@ -278,7 +278,7 @@ export default function DistributionSettings() {
           </div>
           <input
             disabled={saving}
-            defaultValue={distributions.google_podcasts_url}
+            defaultValue={data.podcast.profile.google_podcasts_url}
             placeholder="Google Podcasts 播客页地址"
             onChange={(e: { target: { value: any } }) => {
               setDistributions({
@@ -308,7 +308,7 @@ export default function DistributionSettings() {
           </div>
           <input
             disabled={saving}
-            defaultValue={distributions.breaker_url}
+            defaultValue={data.podcast.profile.breaker_url}
             placeholder="Breaker 播客页地址"
             onChange={(e: { target: { value: any } }) => {
               setDistributions({
@@ -338,7 +338,7 @@ export default function DistributionSettings() {
           </div>
           <input
             disabled={saving}
-            defaultValue={distributions.castbox_url}
+            defaultValue={data.podcast.profile.castbox_url}
             placeholder="Breaker 播客页地址"
             onChange={(e: { target: { value: any } }) => {
               setDistributions({
@@ -368,7 +368,7 @@ export default function DistributionSettings() {
           </div>
           <input
             disabled={saving}
-            defaultValue={distributions.overcast_url}
+            defaultValue={data.podcast.profile.overcast_url}
             placeholder="Overcast 播客页地址"
             onChange={(e: { target: { value: any } }) => {
               setDistributions({
@@ -398,7 +398,7 @@ export default function DistributionSettings() {
           </div>
           <input
             disabled={saving}
-            defaultValue={distributions.pocketcast_url}
+            defaultValue={data.podcast.profile.pocketcast_url}
             placeholder="PocketCast 播客页地址"
             onChange={(e: { target: { value: any } }) => {
               setDistributions({
@@ -428,7 +428,7 @@ export default function DistributionSettings() {
           </div>
           <input
             disabled={saving}
-            defaultValue={distributions.radiopublic_url}
+            defaultValue={data.podcast.profile.radiopublic_url}
             placeholder="RadioPublic 播客页地址"
             onChange={(e: { target: { value: any } }) => {
               setDistributions({
@@ -458,7 +458,7 @@ export default function DistributionSettings() {
           </div>
           <input
             disabled={saving}
-            defaultValue={distributions.spotify}
+            defaultValue={data.podcast.profile.spotify}
             placeholder="Spotify 播客页地址"
             onChange={(e: { target: { value: any } }) => {
               setDistributions({
@@ -488,7 +488,7 @@ export default function DistributionSettings() {
           </div>
           <input
             disabled={saving}
-            defaultValue={distributions.netease_url}
+            defaultValue={data.podcast.profile.netease_url}
             placeholder="网易云音乐播客页地址"
             onChange={(e: { target: { value: any } }) => {
               setDistributions({
@@ -518,7 +518,7 @@ export default function DistributionSettings() {
           </div>
           <input
             disabled={saving}
-            defaultValue={distributions.qqmusic_url}
+            defaultValue={data.podcast.profile.qqmusic_url}
             placeholder="QQ 音乐播客页地址"
             onChange={(e: { target: { value: any } }) => {
               setDistributions({
@@ -548,7 +548,7 @@ export default function DistributionSettings() {
           </div>
           <input
             disabled={saving}
-            defaultValue={distributions.ximalaya_url}
+            defaultValue={data.podcast.profile.ximalaya_url}
             placeholder="喜马拉雅播客页地址"
             onChange={(e: { target: { value: any } }) => {
               setDistributions({
@@ -578,7 +578,7 @@ export default function DistributionSettings() {
           </div>
           <input
             disabled={saving}
-            defaultValue={distributions.xiaoyuzhou_url}
+            defaultValue={data.podcast.profile.xiaoyuzhou_url}
             placeholder="小宇宙播客页地址"
             onChange={(e: { target: { value: any } }) => {
               setDistributions({

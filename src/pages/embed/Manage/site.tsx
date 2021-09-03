@@ -258,7 +258,7 @@ export default function ManageSite() {
               placeholder={
                 data.podcast.profile.snapod_site_custom_url || 'example.com'
               }
-              defaultValue={podcastInfo.snapod_site_custom_url}
+              defaultValue={data.podcast.profile.snapod_site_custom_url}
               onChange={(e: { target: { value: any } }) => {
                 setInfo({
                   ...podcastInfo,

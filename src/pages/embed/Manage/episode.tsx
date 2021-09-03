@@ -282,7 +282,9 @@ export default function ManageEpisode() {
               </span>
               <select
                 disabled={uploading || audioUploading}
-                defaultValue={data.episode.profile.clean_content}
+                defaultValue={
+                  data.episode.profile.clean_content ? 'true' : 'false'
+                }
                 onChange={(e) => {
                   setInfo({
                     ...episodeInfo,
@@ -403,7 +405,7 @@ export default function ManageEpisode() {
             </span>
             <input
               disabled={!episodeInfo.useSeason || uploading || audioUploading}
-              defaultValue={episodeInfo.season_number}
+              defaultValue={data.episode.profile.season_number}
               placeholder="季集类型播客可用"
               type="number"
               min="0"
