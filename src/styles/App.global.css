@@ -10,7 +10,7 @@ html {
 
 .header {
   height: 53px;
-  backdrop-filter: blur(100px);
+  backdrop-filter: saturate(180%) blur(20px);
   box-shadow: none;
 }
 
