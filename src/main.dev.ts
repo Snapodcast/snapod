@@ -245,5 +245,10 @@ ipcMain.on(
 
 // Hide sidebar
 ipcMain.on('hide-sidebar', async () => {
-  mainWindow.webContents.send('hide-sidebar', 'hide');
+  let status = true;
+  if (store.has('sidebar-hidden')) {
+    status = !store.get('sidebar-hidden');
+  }
+  store.set('sidebar-hidden', status);
+  mainWindow.webContents.send('hide-sidebar', status);
 });

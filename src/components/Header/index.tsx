@@ -14,8 +14,8 @@ export default function Header() {
   const history = useHistory();
   const location = useLocation();
 
-  const hideSideBarListener = () => {
-    setExtend(extend === 'true' ? 'false' : 'true');
+  const hideSideBarListener = (_: any, extend: boolean) => {
+    setExtend(extend ? 'true' : 'false');
   };
 
   React.useEffect(() => {
