@@ -74,7 +74,7 @@ export default function Aside() {
             <Menu.Items className="absolute left-4 w-select mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="p-1.5 py-2">
                 <Menu.Item>
-                  <Link to="/landing/create/podcast">
+                  <Link to="/landing/start">
                     <button
                       type="button"
                       className="text-gray-600 group flex rounded-md items-center w-full px-2.5 py-1.5 text-sm hover:bg-select focus:bg-active"
@@ -87,7 +87,7 @@ export default function Aside() {
                   </Link>
                 </Menu.Item>
                 <Menu.Item>
-                  <Link to="/landing/start">
+                  <Link to="/landing/create/podcast">
                     <button
                       type="button"
                       className="text-gray-600 group flex rounded-md items-center w-full px-2.5 py-1.5 text-sm hover:bg-select focus:bg-active"
