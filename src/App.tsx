@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffectOnce } from 'react-use';
 import { MemoryRouter, Route, Redirect } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
 import * as Store from './lib/Store';
@@ -27,28 +28,43 @@ import ImportPodcast from './pages/embed/Import';
 import HelpCenter from './pages/embed/HelpCenter';
 import AboutPage from './pages/embed/About';
 import OfflinePage from './pages/single/Offline';
-
-const heartBeatCheck = async (token: string) => {
-  const result = await fetch(`${Configs.backend_url}/ping/auth`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((res) => {
-      return res.json();
-    })
-    .catch(() => {
-      return null;
-    });
-  return result;
-};
+import UpdatePage from './pages/single/Update';
 
 export default function App() {
+  const userToken = Store.get('currentUser.token');
+
+  const [heartBeat, setHeartBeat] = React.useState('');
+  const [latestVersion, setLatestVersion] = React.useState('');
+
+  /* Check for update & check for JWT token expiry */
+  useEffectOnce(() => {
+    fetch(`${Configs.backend_url}/latestAppVersion`)
+      .then(async (res) => {
+        const result = await res.json();
+        setLatestVersion(result.version || 'error');
+      })
+      .catch(() => {
+        setLatestVersion('error');
+      });
+    fetch(`${Configs.backend_url}/ping/auth`, {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    })
+      .then(async (res) => {
+        const result = await res.json();
+        setHeartBeat(result.message || 'error');
+      })
+      .catch(() => {
+        setHeartBeat('error');
+      });
+  });
+
   /* Header Info */
   // header info state
   const [head, setHead] = React.useState({
     title: 'Snapod',
-    description: 'Podcasts Self-hosting Solution',
+    description: 'Grow your podcasts with ease',
   });
   const headValue = React.useMemo(() => ({ head, setHead }), [head]);
 
@@ -70,13 +86,14 @@ export default function App() {
     };
   });
 
-  const userToken = Store.get('currentUser.token');
-
   return (
     <MemoryRouter>
       {/* Entry */}
       <Route exact path="">
-        {!userToken || !heartBeatCheck(userToken) ? (
+        {process.env.NODE_ENV === 'production' &&
+        latestVersion !== window.require('electron').remote.app.getVersion() ? (
+          <Redirect to="/landing/update" />
+        ) : !userToken || heartBeat !== 'pong' ? (
           <Redirect to="/landing/login" />
         ) : (
           <Redirect to="/landing/start" />
@@ -96,6 +113,7 @@ export default function App() {
             <Route path="/landing/create/podcast" component={CreatePodcast} />
             <Route path="/landing/import/podcast" component={ImportPodcast} />
             <Route path="/landing/offline" component={OfflinePage} />
+            <Route path="/landing/update" component={UpdatePage} />
           </main>
         </div>
       </Route>

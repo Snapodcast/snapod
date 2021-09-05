@@ -198,8 +198,8 @@ export default function DistributionSettings() {
           </div>
           <div className="mt-1">
             <p className="text-xs text-gray-500 mb-2 mx-1">
-              开启 Snapod 站点后播客网站仍可自行设置,
-              但单期节目对应网址链接将失效
+              开启 Snapod 站点后播客网站若仍设置为其他站点地址，则将导致 RSS
+              中节目对应网址链接失效
             </p>
             <div className="flex gap-x-2">
               <input
@@ -229,6 +229,12 @@ export default function DistributionSettings() {
           </div>
         </div>
       </section>
+      <div className="border rounded-lg py-2.5 text-center w-full mb-5">
+        <p className="text-gray-500 text-sm">
+          - 以下链接地址需在自行前往各个平台通过 RSS
+          等方式将播客进行上架后进行填写 -
+        </p>
+      </div>
       <section className="grid grid-cols-2 gap-3">
         <div className="border rounded-lg py-3.5 px-4">
           <div className="items-center mb-2">

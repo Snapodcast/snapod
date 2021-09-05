@@ -305,8 +305,13 @@ export default function ManageSite() {
             </span>
             <div className="text-xs text-gray-500 mx-1 py-2">
               <p>
-                提交后请前往域名注册/解析服务提供方配置 <b>CNAME</b> 解析记录,
-                预计在 24 小时内生效
+                提交后请前往域名注册/解析服务提供方配置{' '}
+                <b>
+                  {podcastInfo.snapod_site_custom_url.split('.').length >= 3
+                    ? 'CNAME'
+                    : 'A'}
+                </b>{' '}
+                解析记录, 预计在 24 小时内生效
                 {podcastInfo.snapod_site_custom_url ? ':' : '。'}
               </p>
               {podcastInfo.snapod_site_custom_url && (
@@ -331,7 +336,7 @@ export default function ManageSite() {
                     <ul>
                       <li className="flex">
                         <span className="flex-1">@</span>
-                        <span>snapod-site.netlify.app.</span>
+                        <span>75.2.60.5</span>
                       </li>
                     </ul>
                   )}
