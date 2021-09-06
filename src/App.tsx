@@ -29,10 +29,12 @@ import HelpCenter from './pages/embed/HelpCenter';
 import AboutPage from './pages/embed/About';
 import OfflinePage from './pages/single/Offline';
 import UpdatePage from './pages/single/Update';
+import LoadingPage from './pages/single/Loading';
 
 export default function App() {
   const userToken = Store.get('currentUser.token');
 
+  const [start, setStart] = React.useState(false);
   const [heartBeat, setHeartBeat] = React.useState('');
   const [latestVersion, setLatestVersion] = React.useState('');
 
@@ -58,6 +60,7 @@ export default function App() {
       .catch(() => {
         setHeartBeat('error');
       });
+    setStart(true);
   });
 
   /* Header Info */
@@ -90,6 +93,7 @@ export default function App() {
     <MemoryRouter>
       {/* Entry */}
       <Route exact path="">
+        {!start ? <Redirect to="/landing/loading" /> : <></>}
         {process.env.NODE_ENV === 'production' &&
         latestVersion !== window.require('electron').remote.app.getVersion() ? (
           <Redirect to="/landing/update" />
@@ -114,6 +118,7 @@ export default function App() {
             <Route path="/landing/import/podcast" component={ImportPodcast} />
             <Route path="/landing/offline" component={OfflinePage} />
             <Route path="/landing/update" component={UpdatePage} />
+            <Route path="/landing/loading" component={LoadingPage} />
           </main>
         </div>
       </Route>
