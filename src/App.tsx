@@ -35,8 +35,8 @@ export default function App() {
   const userToken = Store.get('currentUser.token');
 
   const [start, setStart] = React.useState(false);
-  const [heartBeat, setHeartBeat] = React.useState('');
-  const [latestVersion, setLatestVersion] = React.useState('');
+  const [heartBeat, setHeartBeat] = React.useState('pong');
+  const [latestVersion, setLatestVersion] = React.useState('0.0.2');
 
   /* Check for update & check for JWT token expiry */
   useEffectOnce(() => {
@@ -93,9 +93,11 @@ export default function App() {
     <MemoryRouter>
       {/* Entry */}
       <Route exact path="">
-        {!start ? <Redirect to="/landing/loading" /> : <></>}
-        {process.env.NODE_ENV === 'production' &&
-        latestVersion !== window.require('electron').remote.app.getVersion() ? (
+        {!start ? (
+          <Redirect to="/landing/loading" />
+        ) : process.env.NODE_ENV === 'production' &&
+          latestVersion !==
+            window.require('electron').remote.app.getVersion() ? (
           <Redirect to="/landing/update" />
         ) : !userToken || heartBeat !== 'pong' ? (
           <Redirect to="/landing/login" />
