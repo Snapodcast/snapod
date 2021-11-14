@@ -1,4 +1,4 @@
-import * as Store from '../Store';
+import Store from '../Store';
 
 export default function podcastInit(podcast: {
   name: string;

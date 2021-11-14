@@ -2,24 +2,20 @@ import React from 'react';
 import { useEffectOnce } from 'react-use';
 import { MemoryRouter, Route, Redirect } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
-import * as Store from './lib/Store';
-
+import Store from './lib/Store';
+// Utilities
+import { HeadContextProvider } from './lib/Context/head';
+// Components
 import Header from './components/Header';
 import Aside from './components/Aside';
+import Reset from './components/Refresh';
+// Pages (inner)
 import Start from './pages/embed/Start';
-import Login from './pages/single/Login';
-import SignUp from './pages/single/SignUp';
-import Forgot from './pages/single/Forgot';
-
-import { HeadContextProvider } from './lib/Context/head';
-import StartSingle from './pages/single/Start';
-import Configs from './configs';
 import CreatePodcast from './pages/embed/Create/podcast';
 import ManagePodcast from './pages/embed/Manage/info';
 import CreateEpisode from './pages/embed/Create/episode';
 import EpisodeList from './pages/embed/Manage/episodeList';
 import ManageEpisode from './pages/embed/Manage/episode';
-import Reset from './components/Refresh';
 import PodcastSettings from './pages/embed/Settings/podcast';
 import DistributionSettings from './pages/embed/Settings/distribution';
 import ManageMetrics from './pages/embed/Manage/metrics';
@@ -27,19 +23,28 @@ import ManageSite from './pages/embed/Manage/site';
 import ImportPodcast from './pages/embed/Import';
 import HelpCenter from './pages/embed/HelpCenter';
 import AboutPage from './pages/embed/About';
+// Pages (fullscreen)
+import Login from './pages/single/Login';
+import SignUp from './pages/single/SignUp';
+import Forgot from './pages/single/Forgot';
+import StartSingle from './pages/single/Start';
 import OfflinePage from './pages/single/Offline';
 import UpdatePage from './pages/single/Update';
 import LoadingPage from './pages/single/Loading';
+// Data
+import Configs from './configs';
 
 export default function App() {
   const userToken = Store.get('currentUser.token');
+  const localAppVersion = window.require('electron').remote.app.getVersion();
 
   const [start, setStart] = React.useState(false);
   const [heartBeat, setHeartBeat] = React.useState('pong');
   const [latestVersion, setLatestVersion] = React.useState('0.0.2');
 
-  /* Check for update & check for JWT token expiry */
+  /* Check for version update & validate JWT token */
   useEffectOnce(() => {
+    // fetch latest version from remote
     fetch(`${Configs.backend_url}/latestAppVersion`)
       .then(async (res) => {
         const result = await res.json();
@@ -48,6 +53,7 @@ export default function App() {
       .catch(() => {
         setLatestVersion('error');
       });
+    // validate JWT token by sending ping to backend
     fetch(`${Configs.backend_url}/ping/auth`, {
       headers: {
         Authorization: `Bearer ${userToken}`,
@@ -60,6 +66,7 @@ export default function App() {
       .catch(() => {
         setHeartBeat('error');
       });
+    // finish fetching data from remote, proceed with local logic
     setStart(true);
   });
 
@@ -71,16 +78,16 @@ export default function App() {
   });
   const headValue = React.useMemo(() => ({ head, setHead }), [head]);
 
-  /* Sidebar Hiding */
-  // sidebar status state
+  /* Sidebar Extension */
+  // sidebar extension status
   const [extend, setExtend] = React.useState<'true' | 'false' | 'unset'>(
     'unset'
   );
-  // sidebar extend action listener
+  // sidebar extend action handler
   const hideSideBarListener = () => {
     setExtend(extend === 'true' ? 'false' : 'true');
   };
-  // set sidebar extending listener
+  // sidebar extend action listener
   ipcRenderer.on('hide-sidebar', hideSideBarListener);
   // clean up listener when components are unmounted
   React.useEffect(() => {
@@ -96,8 +103,7 @@ export default function App() {
         {!start ? (
           <Redirect to="/landing/loading" />
         ) : process.env.NODE_ENV === 'production' &&
-          latestVersion !==
-            window.require('electron').remote.app.getVersion() ? (
+          latestVersion !== localAppVersion ? (
           <Redirect to="/landing/update" />
         ) : !userToken || heartBeat !== 'pong' ? (
           <Redirect to="/landing/login" />

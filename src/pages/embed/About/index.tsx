@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from '../../../components/Head';
 import snapodLogo from '../../../public/snapod_logo.png';
-import * as Store from '../../../lib/Store';
+import Store from '../../../lib/Store';
 import configs from '../../../configs';
 
 export default function AboutPage() {

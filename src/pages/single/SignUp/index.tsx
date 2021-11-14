@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Icons from '../../../components/Icons';
-import * as Store from '../../../lib/Store';
+import Store from '../../../lib/Store';
 import signup from '../../../services/signup';
 
 export default function SignUp() {

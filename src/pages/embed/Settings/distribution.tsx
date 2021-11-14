@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client';
 import React from 'react';
-import * as Store from '../../../lib/Store';
+import Store from '../../../lib/Store';
 import { GET_PODCAST, MODIFY_PODCAST } from '../../../lib/GraphQL/queries';
 import Head from '../../../components/Head';
 import Icons from '../../../components/Icons';

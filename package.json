@@ -17,6 +17,7 @@
     "package-win": "yarn build && electron-builder build --win --publish never",
     "postinstall": "node -r @babel/register .erb/scripts/CheckNativeDep.js && electron-builder install-app-deps && yarn cross-env NODE_ENV=development webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.babel.js && yarn-deduplicate yarn.lock",
     "start": "node -r @babel/register ./.erb/scripts/CheckPortInUse.js && cross-env yarn start:renderer",
+    "start:prod": "cross-env USE_CONFIG=production yarn start",
     "start:main": "cross-env NODE_ENV=development electron -r ./.erb/scripts/BabelRegister ./src/main.dev.ts",
     "start:renderer": "cross-env NODE_ENV=development webpack serve --config ./.erb/configs/webpack.config.renderer.dev.babel.js",
     "test": "jest"
@@ -242,7 +243,7 @@
     "rimraf": "^3.0.0",
     "sass-loader": "^10.1.0",
     "style-loader": "^2.0.0",
-    "swr": "^0.4.2",
+    "swr": "^1.0.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "terser-webpack-plugin": "^5.0.3",
     "typescript": "^4.0.5",

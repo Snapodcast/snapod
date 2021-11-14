@@ -1,5 +1,8 @@
 const getConfigs = () => {
-  if (process.env.NODE_ENV === 'production') {
+  if (
+    process.env.NODE_ENV === 'production' ||
+    process.env.USE_CONFIG === 'production'
+  ) {
     return {
       backend_url: 'https://api.snapodcast.com/v0/api',
       qiniu_ak: '4mGogia1PY-PXaYvct65vITq9PeZtZXa1qxE5Ce8',

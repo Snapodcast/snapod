@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import { Bar, Pie, Column, Area } from '@ant-design/charts';
 import Icons from '../../../components/Icons';
-import * as Store from '../../../lib/Store';
+import Store from '../../../lib/Store';
 import Configs from '../../../configs';
 import { toDateString } from '../../../utilities/format/date';
 import formatPlaysData from '../../../utilities/format/playsData';

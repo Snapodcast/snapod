@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES2018",
-    "module": "CommonJS",
+    "target": "es6",
+    "module": "esnext",
     "lib": ["dom", "esnext"],
     "declaration": true,
     "declarationMap": true,
@@ -31,7 +31,8 @@
     "src/main.prod.js",
     "src/renderer.prod.js",
     "src/main.dev.ts",
-    "src/dist",
-    ".erb/dll"
+    ".erb/dll",
+    "**/dist/**",
+    "**/node_modules/**"
   ]
 }

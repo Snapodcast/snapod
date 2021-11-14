@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import Config from '../../configs';
-import * as Store from '../Store';
+import Store from '../Store';
 
 const httpLink = createHttpLink({
   uri: `${Config.backend_url}/graphql`,

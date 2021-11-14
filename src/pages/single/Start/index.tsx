@@ -3,7 +3,7 @@
 import React from 'react';
 import { useQuery, ApolloError } from '@apollo/client';
 import { GET_PODCASTS } from '../../../lib/GraphQL/queries';
-import * as Store from '../../../lib/Store';
+import Store from '../../../lib/Store';
 import Icons from '../../../components/Icons';
 import { useHistory, Link } from 'react-router-dom';
 import podcastInit from '../../../lib/Init';

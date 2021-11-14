@@ -1,4 +1,4 @@
-import * as Store from '../lib/Store';
+import Store from '../lib/Store';
 
 const logout = () => {
   Store.remove('currentUser');

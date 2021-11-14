@@ -2,7 +2,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import React from 'react';
 import Icons from '../../../components/Icons';
 import { DELETE_EPISODE, GET_EPISODES } from '../../../lib/GraphQL/queries';
-import * as Store from '../../../lib/Store';
+import Store from '../../../lib/Store';
 import { htmlToText } from 'html-to-text';
 import subString from '../../../utilities/substring';
 import { useHistory } from 'react-router-dom';

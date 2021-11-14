@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import * as Store from '../../../lib/Store';
+import Store from '../../../lib/Store';
 import Icons from '../../../components/Icons';
 import { GET_PREVIEW, IMPORT_PODCAST } from '../../../lib/GraphQL/queries';
 import { useLazyQuery, useMutation } from '@apollo/client';

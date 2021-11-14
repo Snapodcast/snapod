@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 module.exports = {
+  mode: 'jit',
   purge: ['./src/**/*.tsx'],
-  darkMode: 'media', // or 'media' or 'class'
+  darkMode: 'media',
   theme: {
     extend: {
       spacing: {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Icons from '../../../components/Icons';
 import login from '../../../services/login';
-import * as Store from '../../../lib/Store';
+import Store from '../../../lib/Store';
 
 export default function Login() {
   // route navigation hook

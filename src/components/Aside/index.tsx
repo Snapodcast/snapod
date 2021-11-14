@@ -4,7 +4,7 @@ import React, { Fragment } from 'react';
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
 import Icons from '../Icons/index';
-import * as Store from '../../lib/Store';
+import Store from '../../lib/Store';
 import logout from '../../services/logout';
 import ApolloClient from '../../lib/GraphQL';
 import { Menu, Transition } from '@headlessui/react';

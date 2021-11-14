@@ -1,5 +1,5 @@
 import React from 'react';
-import * as Store from '../../../lib/Store';
+import Store from '../../../lib/Store';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_EPISODE, MODIFY_EPISODE } from '../../../lib/GraphQL/queries';
 import { Input } from '../../../components/Form';

@@ -2,7 +2,7 @@
 import { useMutation } from '@apollo/client';
 import React from 'react';
 import { useHistory } from 'react-router';
-import * as Store from '../../../lib/Store';
+import Store from '../../../lib/Store';
 import { DELETE_PODCAST, MODIFY_PODCAST } from '../../../lib/GraphQL/queries';
 import Head from '../../../components/Head';
 

@@ -7,7 +7,7 @@ import Switch from 'react-switch';
 import Icons from '../../../components/Icons';
 import { CREATE_PODCAST } from '../../../lib/GraphQL/queries';
 import { useMutation } from '@apollo/client';
-import * as Store from '../../../lib/Store';
+import Store from '../../../lib/Store';
 import selectImageAndUploadToCDN from '../../../lib/Upload/Image';
 
 interface ContainerInterface {
