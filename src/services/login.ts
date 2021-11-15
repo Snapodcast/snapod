@@ -1,16 +1,17 @@
 import Config from '../configs';
-import qs from 'qs';
 
 const login = (email: string, password: string): Promise<any> => {
-  return fetch(
-    `${Config.backend_url}/login?${qs.stringify({
+  return fetch(`${Config.backend_url}/login`, {
+    credentials: 'include',
+    body: JSON.stringify({
       email,
       password,
-    })}`,
-    {
-      credentials: 'include',
-    }
-  );
+    }),
+    headers: {
+      'content-type': 'application/json',
+    },
+    method: 'POST',
+  });
 };
 
 export default login;
