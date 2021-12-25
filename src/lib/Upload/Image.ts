@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron';
-import uploadFileToCDN from '../Qiniu';
+import uploadFilepath from '../Qiniu';
 import fs from 'fs';
 import path from 'path';
 
@@ -15,7 +15,7 @@ const selectImageAndUploadToCDN = async () => {
   const imagePaths: string[] = await ipcRenderer.invoke('select-image');
   if (imagePaths.length) {
     [localPath] = imagePaths;
-    remotePath = await uploadFileToCDN(imagePaths[0]);
+    remotePath = await uploadFilepath(imagePaths[0]);
   }
   return {
     localPath,

@@ -38,7 +38,7 @@
   },
   "build": {
     "productName": "Snapod",
-    "appId": "com.snapodcast.snapod",
+    "appId": "com.snapodcast.app",
     "files": [
       "dist/",
       "node_modules/",
@@ -108,13 +108,13 @@
     "url": "https://www.ouorz.com"
   },
   "license": "GPL-3.0-only",
-  "bugs": {
-    "url": "https://github.com/HelipengTony/snapod/issues"
-  },
   "keywords": [
-    "podcasts"
+    "podcast",
+    "desktop",
+    "snapod",
+    "snapodcast"
   ],
-  "homepage": "https://github.com/HelipengTony/snapod#readme",
+  "homepage": "https://www.snapodcast.com",
   "jest": {
     "testURL": "http://localhost/",
     "moduleNameMapper": {
