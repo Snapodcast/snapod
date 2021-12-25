@@ -159,7 +159,7 @@ export default function Forgot() {
                 ) : sending ? (
                   <Icons name="spinner" />
                 ) : (
-                  <Icons name="tick" />
+                  <Icons name="plane" />
                 )}
               </span>
             </button>

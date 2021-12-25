@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 module.exports = {
-  mode: 'jit',
-  purge: ['./src/**/*.tsx'],
+  content: ['./src/**/*.tsx'],
   darkMode: 'media',
   theme: {
     extend: {
@@ -122,17 +121,6 @@ module.exports = {
         slideUp: 'slideUpKey 1s ease-in-out',
         slideDown: 'slideDownKey .5s ease-in-out'
       },
-    },
-  },
-  variants: {
-    extend: {
-      opacity: ['hover', 'dark'],
-      borderRadius: ['hover', 'group-hover', 'group-focus'],
-      display: ['group-focus', 'group-hover'],
-      borderWidth: ['group-hover', 'dark', 'hover', 'last'],
-      borderColor: ['dark', 'hover'],
-      backgroundOpacity: ['hover'],
-      boxShadow: ['focus-within', 'focus']
     },
   },
   plugins: [],
