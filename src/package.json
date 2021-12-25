@@ -1,7 +1,7 @@
 {
   "name": "snapod-main",
   "productName": "Snapod",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Grow your podcasts with ease",
   "license": "SEE LICENSE IN ../LICENSE",
   "main": "./main.prod.js",
