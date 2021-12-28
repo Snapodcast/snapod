@@ -40,7 +40,7 @@ export default function App() {
 
   const [start, setStart] = React.useState(false);
   const [heartBeat, setHeartBeat] = React.useState('pong');
-  const [latestVersion, setLatestVersion] = React.useState('0.0.2');
+  const [latestVersion, setLatestVersion] = React.useState('0.0.3');
 
   /* Check for version update & validate JWT token */
   useEffectOnce(() => {
