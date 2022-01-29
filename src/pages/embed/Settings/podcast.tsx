@@ -89,7 +89,7 @@ export default function PodcastSettings() {
 
   return (
     <div className="my-4 mx-5">
-      <Head title="偏好设置" description="播客及应用程序偏好设置" />
+      <Head title="播客设置" description="播客偏好设置" />
       <div className="flex gap-x-3">
         <section className="flex-1 border rounded-lg py-3.5 px-4">
           <div className="items-center mb-2">

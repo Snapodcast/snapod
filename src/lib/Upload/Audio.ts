@@ -20,6 +20,7 @@ export default async function selectAudioFileAndUploadToCDN() {
     length = await mp3Duration(localPath);
     size = fs.statSync(localPath).size;
   }
+
   return {
     localPath,
     remotePath,

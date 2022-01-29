@@ -12,11 +12,14 @@ const toBase64 = (imagePath: string) => {
 const selectImageAndUploadToCDN = async () => {
   let localPath = null;
   let remotePath = null;
+
   const imagePaths: string[] = await ipcRenderer.invoke('select-image');
+
   if (imagePaths.length) {
     [localPath] = imagePaths;
     remotePath = await uploadFilepath(imagePaths[0]);
   }
+
   return {
     localPath,
     remotePath,

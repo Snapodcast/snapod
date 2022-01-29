@@ -54,11 +54,11 @@ export default function Aside() {
       />
       <div className="menu no-drag overflow-hidden overflow-y-auto px-4">
         <Menu as="div">
-          <Menu.Button className="grid grid-cols-8 whitespace-nowrap rounded-md text-sm text-gray-500 dark:text-white py-1.5 px-2.5 w-full focus:outline-none bg-select hover:bg-active dark:bg-darkSelect dark:border-gray-300 mt-1">
+          <Menu.Button className="grid grid-cols-8 whitespace-nowrap rounded-md text-sm text-gray-500 dark:text-white py-1.5 px-2.5 w-full focus:outline-none bg-select hover:bg-active dark:bg-darkSelect dark:hover:bg-darkSelect mt-1">
             <span className="col-start-1 col-end-8 overflow-hidden overflow-ellipsis">
               {currentPodcastName}
             </span>
-            <span className="col-start-8 col-end-9 text-right w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100">
+            <span className="col-start-8 col-end-9 text-right w-5 h-5 ml-2 -mr-1 dark:text-violet-200 dark:hover:text-violet-100 text-gray-500 hover:text-gray-600">
               <Icons name="chevron-down-solid" />
             </span>
           </Menu.Button>
@@ -71,13 +71,13 @@ export default function Aside() {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute left-4 w-select mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Menu.Items className="absolute left-4 w-select mt-2 origin-top-right text-gray-600 bg-white dark:bg-darkSelectBg dark:text-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="p-1.5 py-2">
                 <Menu.Item>
                   <Link to="/landing/start">
                     <button
                       type="button"
-                      className="text-gray-600 group flex rounded-md items-center w-full px-2.5 py-1.5 text-sm hover:bg-select focus:bg-active"
+                      className="group flex rounded-md items-center w-full px-2.5 py-1.5 text-sm hover:bg-select dark:hover:bg-darkSelect focus:bg-active"
                     >
                       <span className="flex-1 text-left tracking-wide">
                         选择播客
@@ -90,7 +90,7 @@ export default function Aside() {
                   <Link to="/landing/create/podcast">
                     <button
                       type="button"
-                      className="text-gray-600 group flex rounded-md items-center w-full px-2.5 py-1.5 text-sm hover:bg-select focus:bg-active"
+                      className="group flex rounded-md items-center w-full px-2.5 py-1.5 text-sm hover:bg-select dark:hover:bg-darkSelect focus:bg-active"
                     >
                       <span className="flex-1 text-left tracking-wide">
                         新建播客
@@ -103,7 +103,7 @@ export default function Aside() {
                   <Link to="/landing/import/podcast">
                     <button
                       type="button"
-                      className="text-gray-600 group flex rounded-md items-center w-full px-2.5 py-1.5 text-sm hover:bg-select focus:bg-active"
+                      className="group flex rounded-md items-center w-full px-2.5 py-1.5 text-sm hover:bg-select dark:hover:bg-darkSelect focus:bg-active"
                     >
                       <span className="flex-1 text-left tracking-wide">
                         导入播客
@@ -137,49 +137,33 @@ export default function Aside() {
         </div>
         <ul className="menu-list text-sm text-gray-600 dark:text-white">
           <NavLink exact to="/snapod/manage/podcast" activeClassName="active">
-            <li className="rounded-md py-1.5 px-2 flex items-center mt-1 hover:bg-hover transition-colors">
+            <li className="rounded-md py-1.5 px-2 flex items-center mt-1 hover:bg-hover dark:hover:bg-darkActive active:bg-click active:text-gray-800 dark:active:text-white/80 dark:active:bg-darkClick transition-colors cursor-pointer">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="info" />
               </span>
               播客信息
             </li>
           </NavLink>
-
-          {location.pathname === '/snapod/manage/episode' ? (
-            <div>
-              <NavLink exact to="/snapod/manage/episodes" className="active">
-                <li className="rounded-md rounded-br-none py-1.5 px-2 flex items-center active hover:bg-hover transition-colors">
-                  <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
-                    <Icons name="episodes" />
-                  </span>
-                  节目列表
-                </li>
-              </NavLink>
-              <a href="#" className="active">
-                <li className="rounded-bl-md rounded-br-md py-1.5 px-2 flex items-center ml-4 mt-1 hover:bg-hover transition-colors">
-                  <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
-                    <Icons name="episode" />
-                  </span>
-                  节目详情
-                </li>
-              </a>
-            </div>
-          ) : (
-            <NavLink
-              exact
-              to="/snapod/manage/episodes"
-              activeClassName="active"
-            >
-              <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover transition-colors">
-                <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
-                  <Icons name="episodes" />
-                </span>
-                节目列表
-              </li>
-            </NavLink>
-          )}
+          <NavLink
+            exact
+            to="/snapod/manage/episodes"
+            className={
+              ['/snapod/manage/episodes', '/snapod/manage/episode'].includes(
+                location.pathname
+              )
+                ? 'active'
+                : ''
+            }
+          >
+            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover dark:hover:bg-darkActive active:bg-click active:text-gray-800 dark:active:text-white/80 dark:active:bg-darkClick transition-colors cursor-pointer">
+              <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
+                <Icons name="episodes" />
+              </span>
+              节目列表
+            </li>
+          </NavLink>
           <NavLink exact to="/snapod/manage/metrics" activeClassName="active">
-            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover transition-colors">
+            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover dark:hover:bg-darkActive active:bg-click active:text-gray-800 dark:active:text-white/80 dark:active:bg-darkClick transition-colors cursor-pointer">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="presentation-chart" />
               </span>
@@ -187,7 +171,7 @@ export default function Aside() {
             </li>
           </NavLink>
           <NavLink exact to="/snapod/manage/site" activeClassName="active">
-            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover transition-colors">
+            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover dark:hover:bg-darkActive active:bg-click active:text-gray-800 dark:active:text-white/80 dark:active:bg-darkClick transition-colors cursor-pointer">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="globe" />
               </span>
@@ -206,7 +190,7 @@ export default function Aside() {
             to="/snapod/settings/distributions"
             activeClassName="active"
           >
-            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover transition-colors">
+            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover dark:hover:bg-darkActive active:bg-click active:text-gray-800 dark:active:text-white/80 dark:active:bg-darkClick transition-colors cursor-pointer">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="publish" />
               </span>
@@ -214,7 +198,15 @@ export default function Aside() {
             </li>
           </NavLink>
           <NavLink exact to="/snapod/settings/podcast" activeClassName="active">
-            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover transition-colors">
+            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover dark:hover:bg-darkActive active:bg-click active:text-gray-800 dark:active:text-white/80 dark:active:bg-darkClick transition-colors cursor-pointer">
+              <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
+                <Icons name="adjust" />
+              </span>
+              播客设置
+            </li>
+          </NavLink>
+          <NavLink exact to="/snapod/settings/app" activeClassName="active">
+            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover dark:hover:bg-darkActive active:bg-click active:text-gray-800 dark:active:text-white/80 dark:active:bg-darkClick transition-colors cursor-pointer">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="gear" />
               </span>
@@ -229,7 +221,7 @@ export default function Aside() {
         </div>
         <ul className="menu-list text-sm text-gray-600 dark:text-white">
           <NavLink exact to="/snapod/helpCenter" activeClassName="active">
-            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover transition-colors">
+            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover dark:hover:bg-darkActive active:bg-click active:text-gray-800 dark:active:text-white/80 dark:active:bg-darkClick transition-colors cursor-pointer">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="questionMark" />
               </span>
@@ -237,7 +229,7 @@ export default function Aside() {
             </li>
           </NavLink>
           <NavLink exact to="/snapod/about" activeClassName="active">
-            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover transition-colors">
+            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover dark:hover:bg-darkActive active:bg-click active:text-gray-800 dark:active:text-white/80 dark:active:bg-darkClick transition-colors cursor-pointer">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="qrCode" />
               </span>

@@ -8,7 +8,7 @@ import { HeadContextProvider } from './lib/Context/head';
 // Components
 import Header from './components/Header';
 import Aside from './components/Aside';
-import Reset from './components/Refresh';
+import Reset from './components/Refresher';
 // Pages (inner)
 import Start from './pages/embed/Start';
 import CreatePodcast from './pages/embed/Create/podcast';
@@ -23,6 +23,7 @@ import ManageSite from './pages/embed/Manage/site';
 import ImportPodcast from './pages/embed/Import';
 import HelpCenter from './pages/embed/HelpCenter';
 import AboutPage from './pages/embed/About';
+import AppSettings from './pages/embed/Settings/app';
 // Pages (fullscreen)
 import Login from './pages/single/Login';
 import SignUp from './pages/single/SignUp';
@@ -179,6 +180,7 @@ export default function App() {
                   path="/snapod/settings/podcast"
                   component={PodcastSettings}
                 />
+                <Route path="/snapod/settings/app" component={AppSettings} />
                 <Route path="/snapod/helpCenter" component={HelpCenter} />
                 <Route path="/snapod/about" component={AboutPage} />
               </section>

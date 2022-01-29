@@ -11,7 +11,14 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  shell,
+  ipcMain,
+  dialog,
+  nativeTheme,
+} from 'electron';
 import MenuBuilder from './menu';
 
 const Store = require('electron-store');
@@ -33,6 +40,16 @@ if (
 }
 
 const createWindow = async () => {
+  // Prep
+  const storedTheme = store.get('theme');
+
+  // set app theme
+  if (storedTheme) {
+    nativeTheme.themeSource = storedTheme;
+  } else {
+    nativeTheme.themeSource = 'system';
+  }
+
   const RESOURCES_PATH = app.isPackaged
     ? path.join(process.resourcesPath, 'resources')
     : path.join(__dirname, '../resources');
@@ -134,7 +151,7 @@ const createWindow = async () => {
 };
 
 /**
- * Add event listeners...
+ * App event listeners
  */
 
 app.on('window-all-closed', () => {
@@ -150,19 +167,21 @@ app.whenReady().then(createWindow).catch(console.log);
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) createWindow();
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
+  }
 });
 
 /**
- * ICP event listeners...
+ * Event listeners
  */
 
 // Select directory
-ipcMain.on('select-dir', async (event) => {
+ipcMain.handle('select-dir', async () => {
   const result = await dialog.showOpenDialog(mainWindow, {
     properties: ['openDirectory'],
   });
-  event.returnValue = result.filePaths;
+  return result.filePaths;
 });
 
 // Select image
@@ -195,6 +214,36 @@ ipcMain.handle('select-audio-file', async () => {
   return result.filePaths;
 });
 
+// Hide sidebar
+ipcMain.handle('hide-sidebar', async () => {
+  let status = true;
+  if (store.has('sidebar-hidden')) {
+    status = !store.get('sidebar-hidden');
+  }
+  store.set('sidebar-hidden', status);
+  mainWindow.webContents.send('hide-sidebar', status);
+});
+
+/* Appearance setting event handlers */
+// Set theme
+ipcMain.handle(
+  'set-theme',
+  async (_, targetTheme: 'light' | 'dark' | 'system') => {
+    // update current app theme
+    nativeTheme.themeSource = targetTheme;
+    // store theme setting in store
+    store.set('theme', targetTheme);
+  }
+);
+
+// Get theme
+ipcMain.on('get-theme', async (event) => {
+  event.returnValue = nativeTheme.themeSource;
+});
+
+/*
+ * Electron store event handlers
+ */
 // Get from store
 ipcMain.on(
   'store-get',
@@ -211,10 +260,10 @@ ipcMain.on(
 );
 
 // Set in store
-ipcMain.on(
+ipcMain.handle(
   'store-set',
   (
-    event,
+    _,
     arg: {
       key: any;
       value?: string;
@@ -225,30 +274,20 @@ ipcMain.on(
     } else {
       store.set(arg.key);
     }
-    event.returnValue = true;
+    return true;
   }
 );
 
 // Delete in store
-ipcMain.on(
+ipcMain.handle(
   'store-delete',
   (
-    event,
+    _,
     arg: {
       key: string;
     }
   ) => {
     store.delete(arg.key);
-    event.returnValue = true;
+    return true;
   }
 );
-
-// Hide sidebar
-ipcMain.on('hide-sidebar', async () => {
-  let status = true;
-  if (store.has('sidebar-hidden')) {
-    status = !store.get('sidebar-hidden');
-  }
-  store.set('sidebar-hidden', status);
-  mainWindow.webContents.send('hide-sidebar', status);
-});

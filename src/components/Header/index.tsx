@@ -2,7 +2,6 @@ import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
 import HeadContext from '../../lib/Context/head';
-import sidebarIcon from '../../public/sidebar_icon.png';
 
 import Icons from '../Icons';
 
@@ -31,7 +30,7 @@ export default function Header() {
 
   return (
     <div
-      className={`main drag header border-headerBorder bg-headerBg dark:bg-headerDark dark:border-darkSelect fixed z-30 flex py-1 px-4 items-center cursor-default border-b ${
+      className={`main drag header border-headerBorder bg-headerBg dark:bg-headerDark dark:border-darkSelect fixed z-30 flex py-1 px-4 items-center border-b ${
         process.platform !== 'darwin' && 'border-t'
       } ${
         extend === 'true'
@@ -48,12 +47,14 @@ export default function Header() {
       <div className="items-center control mr-3 pr-2 border-r border-gray-200 dark:border-darkSelect">
         <button
           type="button"
-          className="focus:outline-none w-8 h-8 hover:bg-select dark:text-gray-200 dark:hover:bg-black rounded-md cursor-default flex justify-center items-center"
+          className="focus:outline-none w-8 h-8 cursor-default hover:bg-select active:bg-click active:text-neutral-600 dark:text-gray-200 dark:hover:bg-black rounded-md flex justify-center items-center"
           onClick={() => {
-            ipcRenderer.send('hide-sidebar');
+            ipcRenderer.invoke('hide-sidebar');
           }}
         >
-          <img alt="hide/show sidebar" src={sidebarIcon} className="w-5 h-5" />
+          <span className="w-5 h-5 block">
+            <Icons name="sidebar" />
+          </span>
         </button>
       </div>
       <div className="w-full -mt-1">
@@ -80,7 +81,7 @@ export default function Header() {
         )}
         <button
           type="button"
-          className="focus:outline-none w-8 h-8 p-1 hover:bg-select dark:hover:bg-black dark:text-gray-200 rounded-md cursor-default flex items-center justify-center"
+          className="focus:outline-none w-8 h-8 p-1 cursor-default hover:bg-select active:bg-click active:text-neutral-600 dark:hover:bg-black dark:text-gray-200 rounded-md flex items-center justify-center"
           onClick={() => {
             history.push('/snapod/start');
           }}

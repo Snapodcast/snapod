@@ -28,8 +28,8 @@ const get = (key: string): any => {
  * @param {string} [value]
  * @return {*}  {*}
  */
-const set = (key: any, value?: string): any => {
-  return ipcRenderer.sendSync('store-set', {
+const set = async (key: any, value?: string): Promise<void> => {
+  await ipcRenderer.invoke('store-set', {
     key,
     value,
   });
@@ -41,8 +41,8 @@ const set = (key: any, value?: string): any => {
  * @param {string} key
  * @return {*}  {*}
  */
-const remove = (key: string): any => {
-  return ipcRenderer.sendSync('store-delete', {
+const remove = async (key: string): Promise<void> => {
+  await ipcRenderer.invoke('store-delete', {
     key,
   });
 };

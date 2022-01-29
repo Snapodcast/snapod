@@ -7,24 +7,27 @@ module.exports = {
       spacing: {
         main: 'calc(100% - 220px)',
         input: '34px',
-        "17": "4.1rem",
-        select: '187px'
+        17: '4.1rem',
+        select: '187px',
       },
       colors: {
         active: 'rgba(51,51,51,10%)',
         select: 'rgba(51,51,51,7.5%)',
-        hover: 'rgba(51,51,51,5%)',
-        darkBg: "rgb(30, 30, 30)",
+        hover: 'rgba(51,51,51,10%)',
+        click: 'rgba(51,51,51,12.5%)',
+        darkBg: 'rgb(30, 30, 30)',
+        darkSelectBg: 'rgb(64,65,66)',
         darkSelect: 'rgba(238,238,238,10%)',
         darkActive: 'rgba(238,238,238,15%)',
+        darkClick: 'rgba(238,238,238,12.5%)',
         darkMain: 'rgb(34,32,31)',
         darkHeader: 'rgba(34,32,31,50%)',
         asideBorder: 'rgb(217, 217, 217)',
         headerBg: 'rgba(255, 255, 255, 0.9)',
         headerBorder: 'rgb(236, 236, 236)',
-        headerDark: "rgba(30, 30, 30, 0.5)",
+        headerDark: 'rgba(30, 30, 30, 0.5)',
         gray: {
-          '333': '#333333',
+          333: '#333333',
         },
       },
       keyframes: {
@@ -93,21 +96,21 @@ module.exports = {
         slideUpKey: {
           '0%': {
             opacity: 0,
-            marginBottom: '-50px'
+            marginBottom: '-50px',
           },
           '100%': {
             opacity: 1,
-            marginBottom: '0px'
+            marginBottom: '0px',
           },
         },
         slideDownKey: {
           '0%': {
             opacity: 1,
-            marginBottom: '0px'
+            marginBottom: '0px',
           },
           '100%': {
             opacity: 0,
-            marginBottom: '-50px'
+            marginBottom: '-50px',
           },
         },
       },
@@ -119,7 +122,7 @@ module.exports = {
         restoreMainHeaderWin: 'restoreMainHeaderKeyWin .5s ease-in-out',
         firstShow: 'firstShowKey .25s ease-in-out',
         slideUp: 'slideUpKey 1s ease-in-out',
-        slideDown: 'slideDownKey .5s ease-in-out'
+        slideDown: 'slideDownKey .5s ease-in-out',
       },
     },
   },

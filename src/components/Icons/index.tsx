@@ -661,6 +661,42 @@ export default function Icons({ name }: { name: string }) {
           />
         </svg>
       );
+    case 'adjust':
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+          />
+        </svg>
+      );
+    case 'sidebar':
+      return (
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            clipRule="evenodd"
+            d="M2.5 2H7v12H2.5A1.5 1.5 0 0 1 1 12.5v-9A1.5 1.5 0 0 1 2.5 2ZM3 4.5A.25.25 0 0 0 3 5h2a.25.25 0 0 0 0-.5H3Zm0 2A.25.25 0 0 0 3 7h2a.25.25 0 0 0 0-.5H3Zm0 2A.25.25 0 0 0 3 9h2a.25.25 0 0 0 0-.5H3Z"
+            fill="none"
+          />
+          <path
+            d="M3 4.75h2m-2 2h2m-2 2h2"
+            stroke="currentColor"
+            strokeWidth="0.5"
+            strokeLinecap="round"
+          />
+          <path
+            d="M2.5 2.5h11a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1ZM6.5 2v12"
+            stroke="currentColor"
+          />
+        </svg>
+      );
     default:
       return <em>Not Cool</em>;
   }
