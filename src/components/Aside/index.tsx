@@ -8,6 +8,7 @@ import Store from '../../lib/Store';
 import logout from '../../services/logout';
 import ApolloClient from '../../lib/GraphQL';
 import { Menu, Transition } from '@headlessui/react';
+import Tooltip from '../Tooltip';
 
 export default function Aside() {
   // current podcast
@@ -247,20 +248,22 @@ export default function Aside() {
             {Store.get('currentUser.email') || 'Grow your podcast with ease'}
           </p>
         </div>
-        <button
-          onClick={() => {
-            ApolloClient.resetStore();
-            logout();
-            history.push('/landing/login');
-          }}
-          aria-label="logout"
-          type="button"
-          className="col-start-7 col-end-8 hover:bg-gray-200 w-6 h-6 p-1 rounded-md bg-gray-100 justify-center flex items-center text-gray-600 hover:text-gray-700"
-        >
-          <span className="w-3.5 h-3.5">
-            <Icons name="out" />
-          </span>
-        </button>
+        <Tooltip content="Logout" placement="top">
+          <button
+            onClick={() => {
+              ApolloClient.resetStore();
+              logout();
+              history.push('/landing/login');
+            }}
+            aria-label="logout"
+            type="button"
+            className="col-start-7 col-end-8 hover:bg-gray-50 w-6 h-6 p-1 rounded-md bg-gray-100 justify-center flex items-center text-gray-600 hover:text-gray-700 transition-none"
+          >
+            <span className="w-3.5 h-3.5">
+              <Icons name="out" />
+            </span>
+          </button>
+        </Tooltip>
       </div>
     </aside>
   );

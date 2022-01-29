@@ -9,6 +9,9 @@ module.exports = {
     'import/order': 'off',
     'promise/always-return': 'off',
     'no-nested-ternary': 'off',
+    'import/prefer-default-export': 'off',
+    'react/destructuring-assignment': 'off',
+    'react/jsx-key': 'warn',
   },
   parserOptions: {
     ecmaVersion: 2020,

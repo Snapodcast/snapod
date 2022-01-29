@@ -8,7 +8,8 @@ import subString from '../../../utilities/substring';
 import { useHistory } from 'react-router-dom';
 import Head from '../../../components/Head';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import QueueAnim from 'rc-queue-anim';
+import { motion } from 'framer-motion';
+import { Motion } from '../../../constants';
 
 export default function EpisodeList() {
   const podcastCuid = Store.get('currentPodcast.cuid');
@@ -86,10 +87,21 @@ export default function EpisodeList() {
       <Head title="管理节目列表" description="查看和修改全部播客节目" />
       {data && data.episodes.length > 0 ? (
         <div className="mb-5">
-          <QueueAnim delay={50}>
-            {data.episodes.map((episode: any) => (
-              <div
+          <motion.ul
+            initial="hidden"
+            animate="visible"
+            variants={Motion.LIST.list}
+          >
+            {data.episodes.map((episode: any, index: number) => (
+              <motion.li
                 key={episode.cuid}
+                variants={Motion.LIST.item}
+                transition={{
+                  delay: 0.2 * index,
+                  type: 'spring',
+                  stiffness: 700,
+                  damping: 100,
+                }}
                 className="episode-item flex mb-3 rounded-md border dark:hover:border-gray-300 dark:border-gray-400 transition-colors shadow-sm cursor-pointer"
               >
                 {episode.profile.cover_art_image_url && (
@@ -171,9 +183,9 @@ export default function EpisodeList() {
                     </span>
                   </p>
                 </div>
-              </div>
+              </motion.li>
             ))}
-          </QueueAnim>
+          </motion.ul>
         </div>
       ) : (
         <div className="flex justify-center error-container items-center">

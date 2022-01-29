@@ -4,6 +4,7 @@ import { ipcRenderer } from 'electron';
 import HeadContext from '../../lib/Context/head';
 
 import Icons from '../Icons';
+import Tooltip from '../Tooltip';
 
 export default function Header() {
   const { head } = React.useContext(HeadContext);
@@ -45,17 +46,25 @@ export default function Header() {
       }`}
     >
       <div className="items-center control mr-3 pr-2 border-r border-gray-200 dark:border-darkSelect">
-        <button
-          type="button"
-          className="focus:outline-none w-8 h-8 cursor-default hover:bg-select active:bg-click active:text-neutral-600 dark:text-gray-200 dark:hover:bg-black rounded-md flex justify-center items-center"
-          onClick={() => {
-            ipcRenderer.invoke('hide-sidebar');
-          }}
+        <Tooltip
+          content={
+            extend === 'unset' || extend === 'false'
+              ? 'Hide Sidebar'
+              : 'Show Sidebar'
+          }
         >
-          <span className="w-5 h-5 block">
-            <Icons name="sidebar" />
-          </span>
-        </button>
+          <button
+            type="button"
+            className="focus:outline-none w-8 h-8 cursor-default hover:bg-select active:bg-click active:text-neutral-600 dark:text-gray-200 dark:hover:bg-black rounded-md flex justify-center items-center"
+            onClick={() => {
+              ipcRenderer.invoke('hide-sidebar');
+            }}
+          >
+            <span className="w-5 h-5 block">
+              <Icons name="sidebar" />
+            </span>
+          </button>
+        </Tooltip>
       </div>
       <div className="w-full -mt-1">
         <h1 className="text-lg header-title font-medium tracking-normal text-gray-900 dark:text-white whitespace-nowrap overflow-hidden overflow-ellipsis">
@@ -79,17 +88,19 @@ export default function Header() {
             </span>
           </button>
         )}
-        <button
-          type="button"
-          className="focus:outline-none w-8 h-8 p-1 cursor-default hover:bg-select active:bg-click active:text-neutral-600 dark:hover:bg-black dark:text-gray-200 rounded-md flex items-center justify-center"
-          onClick={() => {
-            history.push('/snapod/start');
-          }}
-        >
-          <span className="w-5 h-5 block">
-            <Icons name="home" />
-          </span>
-        </button>
+        <Tooltip content="Home">
+          <button
+            type="button"
+            className="focus:outline-none w-8 h-8 p-1 cursor-default hover:bg-select active:bg-click active:text-neutral-600 dark:hover:bg-black dark:text-gray-200 rounded-md flex items-center justify-center"
+            onClick={() => {
+              history.push('/snapod/start');
+            }}
+          >
+            <span className="w-5 h-5 block">
+              <Icons name="home" />
+            </span>
+          </button>
+        </Tooltip>
       </div>
     </div>
   );
