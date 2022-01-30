@@ -102,7 +102,7 @@ export default function EpisodeList() {
                   stiffness: 700,
                   damping: 100,
                 }}
-                className="episode-item flex mb-3 rounded-md border dark:hover:border-gray-300 dark:border-gray-400 transition-colors shadow-sm cursor-pointer"
+                className="overflow-hidden episode-item flex mb-3 rounded-md border dark:hover:border-gray-300 dark:border-gray-400 transition-colors shadow-sm cursor-pointer"
               >
                 {episode.profile.cover_art_image_url && (
                   <LazyLoadImage
@@ -111,7 +111,7 @@ export default function EpisodeList() {
                   />
                 )}
                 <div
-                  className={`text-left episode-item-content hover:bg-gray-50 dark:hover:bg-transparent transition-all ${
+                  className={`overflow-hidden text-left episode-item-content hover:bg-gray-50 dark:hover:bg-transparent transition-all ${
                     !episode.profile.cover_art_image_url &&
                     'rounded-tl-md rounded-bl-md'
                   }`}
@@ -124,9 +124,9 @@ export default function EpisodeList() {
                   }}
                   aria-hidden="true"
                 >
-                  <div className="flex items-center episode-item-container px-5 pt-2">
-                    <div>
-                      <h2 className="text-base text-gray-600 font-medium mb-1.5 dark:text-white">
+                  <div className="overflow-hidden flex items-center episode-item-container px-5 pt-2">
+                    <div className="overflow-hidden">
+                      <h2 className="text-lg text-gray-600 font-medium mb-0.5 dark:text-white text-ellipsis overflow-hidden whitespace-nowrap">
                         {episode.title}
                       </h2>
                       <p className="text-sm text-gray-500 mb-2.5 dark:text-gray-200">

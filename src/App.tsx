@@ -133,7 +133,7 @@ export default function App() {
       </Route>
       {/* Podcast */}
       <Route path="/snapod">
-        <div className="flex w-full h-full transition-all">
+        <div className="flex w-full h-full transition-all snapod animate-firstShow">
           <Aside />
           <div className="absolute bg-white z-10 main h-full main left-220" />
           <main
@@ -142,7 +142,7 @@ export default function App() {
               extend === 'true'
                 ? 'animate-extendMainBody'
                 : extend === 'unset'
-                ? 'left-220 snapod animate-firstShow'
+                ? 'left-220'
                 : 'animate-restoreMainBody'
             }`}
           >

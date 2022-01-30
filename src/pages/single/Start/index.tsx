@@ -65,7 +65,7 @@ const PodcastsContainer = ({
           {data.podcasts.map((podcast: any) => (
             <div
               key={podcast.cuid}
-              className="mb-3 rounded-md border shadow-sm flex podcast-item cursor-pointer hover:bg-gray-50 transition-all"
+              className="mb-3 rounded-md border shadow-sm flex podcast-item cursor-pointer hover:bg-gray-50 dark:active:bg-neutral-700 dark:hover:bg-transparent dark:border-gray-400 transition-all"
               onClick={() => {
                 podcastInit(podcast);
                 history.push('/snapod');
@@ -77,14 +77,16 @@ const PodcastsContainer = ({
                   backgroundRepeat: 'no-repeat',
                   backgroundSize: 'cover',
                 }}
-                className="podcast-item-image border-r rounded-tl-md rounded-bl-md"
+                className="podcast-item-image border-r rounded-tl-md rounded-bl-md dark:opacity-80"
               />
               <div className="podcast-item-content px-3 py-2 text-left flex items-center">
                 <div>
-                  <h3 className="text-sm text-gray-600 font-medium mb-1">
+                  <h3 className="text-sm text-gray-600 dark:text-gray-400 font-medium mb-1">
                     {podcast.name}
                   </h3>
-                  <p className="text-xs text-gray-500">{podcast.description}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {podcast.description}
+                  </p>
                 </div>
               </div>
             </div>
@@ -95,7 +97,7 @@ const PodcastsContainer = ({
         <button
           aria-label="create"
           type="button"
-          className="flex justify-center align-middle items-center text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md py-1.5 px-4 text-center"
+          className="flex justify-center align-middle items-center text-white text-sm hover:bg-gray-700 bg-gray-600 dark:bg-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:text-gray-400 focus:outline-none rounded-md shadow-md py-1.5 px-4 text-center"
           onClick={() => {
             setAnimation(true);
             setTimeout(() => {
@@ -108,7 +110,7 @@ const PodcastsContainer = ({
         <button
           aria-label="create"
           type="button"
-          className="flex justify-center align-middle items-center text-gray-600 text-sm hover:bg-gray-50 bg-white border border-gray-300 focus:outline-none rounded-md shadow-sm py-1.5 px-4 text-center"
+          className="flex justify-center align-middle items-center text-gray-600 text-sm hover:bg-gray-50 bg-white dark:bg-gray-300 dark:text-gray-500 dark:hover:text-gray-600 dark:hover:bg-gray-300 dark:border-0 border border-gray-300 focus:outline-none rounded-md shadow-sm py-1.5 px-4 text-center"
           onClick={() => {
             setAnimation(true);
             setTimeout(() => {
@@ -134,7 +136,7 @@ export default function StartSingle() {
 
   return (
     <div
-      className={`z-10 shadow-md rounded-md w-2/5 max-h-100 overflow-y-auto overflow-hidden bg-white px-8 py-7 no-drag animate-slideUp ${
+      className={`z-10 shadow-md rounded-md w-2/5 max-h-100 overflow-y-auto overflow-hidden bg-white dark:bg-neutral-800 px-8 py-7 no-drag animate-slideUp ${
         showAnimation && 'animate-slideDown'
       }`}
     >
@@ -144,7 +146,7 @@ export default function StartSingle() {
             🎙️
           </span>
         </h1>
-        <p className="text-gray-500 text-sm mt-1.5 transition-all">
+        <p className="text-gray-500 dark:text-gray-400 text-sm mt-1.5 transition-all">
           {loading
             ? '正在为你加载内容'
             : error
