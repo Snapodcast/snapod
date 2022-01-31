@@ -78,7 +78,7 @@ export default function Header() {
         {embedPaths.indexOf(location.pathname) > -1 && (
           <button
             type="button"
-            className="focus:outline-none w-8 h-8 p-1 hover:bg-select rounded-md cursor-default flex items-center justify-center"
+            className="focus:outline-none w-8 h-8 p-1 hover:bg-select active:bg-click active:text-neutral-600 dark:hover:bg-black dark:text-gray-200 rounded-md cursor-default flex items-center justify-center"
             onClick={() => {
               history.goBack();
             }}
