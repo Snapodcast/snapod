@@ -4,7 +4,7 @@ import Config from '../../configs';
 import Store from '../Store';
 
 const httpLink = createHttpLink({
-  uri: `${Config.backend_url}/graphql`,
+  uri: Config.graphql_url,
 });
 
 const authLink = setContext(

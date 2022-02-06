@@ -7,6 +7,7 @@ import configs from '../../../configs';
 export default function AboutPage() {
   const appVersion = window.require('electron').remote.app.getVersion();
   const [apiVersion, setApiVersion] = React.useState();
+
   const getAPIVersion = async () => {
     const response = await fetch(`${configs.backend_url}/version`).then(
       (res: any) => {
@@ -15,6 +16,7 @@ export default function AboutPage() {
     );
     setApiVersion(response.version);
   };
+
   return (
     <div className="my-4 mx-5">
       <Head title="关于此版本" description="查看此版本的关于信息" />

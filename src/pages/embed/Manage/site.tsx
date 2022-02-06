@@ -174,14 +174,14 @@ export default function ManageSite() {
               <div className="text-sm text-gray-600">
                 <p className="mb-1.5">
                   Snapod Site 是 Snapod
-                  提供的播客站点生成、托管服务，借助领先的云服务提供商 Netlify
-                  提供的站点部署、CDN 及其他有关服务的支持面向在 Snapod
+                  提供的播客站点生成、托管服务，借助领先的云服务平台 Netlify
+                  提供的站点部署、CDN 及其他有关服务，面向在 Snapod
                   平台上新建或导入的播客开放。
                 </p>
                 <p className="mb-1.5">
                   在你的使用过程中，Snapod 将无法对播客、节目信息及相关数据
-                  (不含密码等隐私内容) 的安全、完整性负责。第三方平台 (Netlify)
-                  可能会对以上信息进行储存、展示和传播，Snapod
+                  (不含密码等隐私内容) 的安全、完整性负责。第三方平台 (Netlify
+                  及其合作伙伴) 可能会对以上信息进行储存、展示和传播，Snapod
                   将无法做出任何限制。
                 </p>
                 <p>

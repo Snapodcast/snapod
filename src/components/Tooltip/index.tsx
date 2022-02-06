@@ -56,7 +56,7 @@ const Tooltip = (props: Props) => {
       <div ref={triggerRef}>{props.children}</div>
       <div
         ref={toolTipRef}
-        className="group-hover:z-10 group-hover:opacity-100 absolute opacity-0 bg-black/80 rounded-[4px] text-xs py-[3px] px-2 text-gray-100 shadow-md transition-all delay-500"
+        className="group-hover:z-10 group-hover:opacity-100 absolute opacity-0 bg-black/80 rounded-[4px] text-xs py-[3px] px-2 text-gray-100 shadow-md transition-all delay-1000"
         style={{
           marginTop: toolTipShift[0],
           marginRight: toolTipShift[1],

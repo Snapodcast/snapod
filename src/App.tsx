@@ -5,6 +5,7 @@ import { ipcRenderer } from 'electron';
 import Store from './lib/Store';
 // Utilities
 import { HeadContextProvider } from './lib/Context/head';
+import { getCurrentAppVersion } from './utilities/version';
 // Components
 import Header from './components/Header';
 import Aside from './components/Aside';
@@ -41,7 +42,9 @@ export default function App() {
 
   const [start, setStart] = React.useState(false);
   const [heartBeat, setHeartBeat] = React.useState('pong');
-  const [latestVersion, setLatestVersion] = React.useState('0.0.3');
+  const [latestVersion, setLatestVersion] = React.useState(
+    getCurrentAppVersion()
+  );
 
   /* Check for version update & validate JWT token */
   useEffectOnce(() => {
