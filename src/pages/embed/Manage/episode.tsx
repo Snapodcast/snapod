@@ -13,8 +13,10 @@ import selectAudioFileAndUploadToCDN from '../../../lib/Upload/Audio';
 import { uploadFile } from '../../../lib/Qiniu';
 import { useHistory } from 'react-router';
 import { motion } from 'framer-motion';
+import { useI18n } from '../../../hooks';
 
 export default function ManageEpisode() {
+  const { t } = useI18n();
   const history = useHistory();
   const episodeCuid = Store.get('currentEpisode.cuid');
   const episodeTitle = Store.get('currentEpisode.title');
@@ -106,10 +108,10 @@ export default function ManageEpisode() {
       })
         .then(() => {
           setSavable(false);
-          alert('修改成功');
+          alert(t('successfullyModified'));
         })
         .catch(() => {
-          alert(`修改失败`);
+          alert(t('errorModifying'));
         });
       setSaving(false);
     }
@@ -143,7 +145,7 @@ export default function ManageEpisode() {
                 refetch();
               }}
             >
-              重新加载
+              {t('reload')}
             </button>
           </div>
         </div>
@@ -158,7 +160,7 @@ export default function ManageEpisode() {
       transition={{ type: 'spring', stiffness: 700, damping: 100 }}
     >
       <div className="mt-4 mb-14">
-        <Head title="修改节目信息" description={episodeTitle} />
+        <Head title={t('modifyEpisodeInfo')} description={episodeTitle} />
         {savable && (
           <div className="flex justify-center items-center w-full">
             <div className="flex absolute bottom-5 z-10 gap-x-3">
@@ -170,7 +172,7 @@ export default function ManageEpisode() {
                   history.push('/snapod/reset');
                 }}
               >
-                重置
+                {t('reset')}
               </button>
               <button
                 className="bg-blue-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white hover:bg-blue-600"
@@ -181,10 +183,10 @@ export default function ManageEpisode() {
                 }}
               >
                 {uploading || audioUploading
-                  ? '上传中...'
+                  ? `${t('uploading')}...`
                   : saving
-                  ? '保存中...'
-                  : '保存更改'}
+                  ? `${t('saving')}...`
+                  : t('saveChanges')}
               </button>
             </div>
           </div>
@@ -226,16 +228,16 @@ export default function ManageEpisode() {
                     <Icons name="microphone" />
                   </span>
                   <br />
-                  <span>封面图 Cover Art</span>
+                  <span>{t('coverArt')}</span>
                   <br />
-                  <span className="text-xs">(可选)</span>
+                  <span className="text-xs">({t('optional')})</span>
                 </span>
               )}
             </button>
             {uploading && (
               <div className="flex justify-center">
                 <span className="bg-blue-500 py-1 px-3 text-xs text-white rounded-xl absolute -mt-9 shadow-lg">
-                  上传中...
+                  {t('uploading')}
                 </span>
               </div>
             )}
@@ -245,8 +247,8 @@ export default function ManageEpisode() {
               <Input
                 defaultValue={data.episode.title}
                 disabled={uploading || audioUploading}
-                name="节目标题 / Title"
-                placeholder="节目标题"
+                name={t('episodeTitle')}
+                placeholder={t('episodeTitle')}
                 onChange={(e: { target: { value: any } }) => {
                   setInfo({
                     ...episodeInfo,
@@ -260,7 +262,7 @@ export default function ManageEpisode() {
               <div className="flex-1">
                 <span className="flex items-center">
                   <em className="ml-1 text-xs font-medium text-gray-500 dark:text-gray-300 not-italic flex-1">
-                    节目类型 / Episode Type
+                    {t('episodeType')}
                   </em>
                 </span>
                 <select
@@ -273,17 +275,17 @@ export default function ManageEpisode() {
                   className="mt-1 tracking-wide focus:outline-none dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
                 >
                   <option value="" disabled>
-                    选择节目类型...
+                    {t('chooseEpisodeType')}
                   </option>
-                  <option value="full">完整 (Full)</option>
-                  <option value="trailer">先导 (Trailer)</option>
-                  <option value="bonus">特别 (Bonus)</option>
+                  <option value="full">{t('full')}</option>
+                  <option value="trailer">{t('trailer')}</option>
+                  <option value="bonus">{t('bonus')}</option>
                 </select>
               </div>
               <div className="flex-1">
                 <span className="flex items-center">
                   <em className="ml-1 text-xs font-medium text-gray-500 dark:text-gray-300 not-italic flex-1">
-                    节目评级 / Rating
+                    {t('episodeRating')}
                   </em>
                 </span>
                 <select
@@ -301,14 +303,10 @@ export default function ManageEpisode() {
                   className="mt-1 tracking-wide focus:outline-none dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
                 >
                   <option value="" disabled>
-                    选择内容评级...
+                    {t('chooseEpisodeRating')}
                   </option>
-                  <option value="false">
-                    包含潜在不当内容 (Explicit content)
-                  </option>
-                  <option value="true">
-                    不包含潜在不当内容 (No explicit content)
-                  </option>
+                  <option value="false">{t('explicit')}</option>
+                  <option value="true">{t('noExplicit')}</option>
                 </select>
               </div>
             </div>
@@ -336,7 +334,7 @@ export default function ManageEpisode() {
                     </span>
                   </p>
                   <p className="text-xs whitespace-nowrap flex text-gray-500 items-center">
-                    选择一个{' '}
+                    {t('chooseA')}{' '}
                     <span className="flex gap-x-1 mx-2">
                       <em className="not-italic rounded-md px-1 bg-gray-50 border border-gray-300">
                         .mp3
@@ -345,7 +343,7 @@ export default function ManageEpisode() {
                         .m4a
                       </em>
                     </span>{' '}
-                    音频文件以上传
+                    {t('audioFileToUpload')}
                   </p>
                 </div>
               ) : (
@@ -376,7 +374,7 @@ export default function ManageEpisode() {
                     aria-label="select audio file"
                     className="reupload-btn border-t w-full dark:bg-transparent dark:text-gray-300 py-1 rounded-bl-lg rounded-br-lg text-center text-xs mt-1 pt-1 text-gray-500 bg-gray-100 hover:bg-gray-200 dark:hover:bg-transparent dark:hover:text-white"
                   >
-                    重新选择 / Reselect
+                    {t('chooseAnother')}
                   </button>
                 </div>
               )}
@@ -388,7 +386,7 @@ export default function ManageEpisode() {
             <div className="flex-1">
               <span className="flex items-center">
                 <em className="ml-1 text-xs font-medium text-gray-500 dark:text-gray-300 not-italic flex-1">
-                  节目季数 / Season Number
+                  {t('seasonNumber')}
                 </em>
                 <Switch
                   disabled={uploading || audioUploading}
@@ -411,7 +409,7 @@ export default function ManageEpisode() {
               <input
                 disabled={!episodeInfo.useSeason || uploading || audioUploading}
                 defaultValue={data.episode.profile.season_number}
-                placeholder="仅季集类型播客可用"
+                placeholder={t('serialPodcastOnly')}
                 type="number"
                 min="0"
                 onChange={(e: { target: { value: any } }) => {
@@ -427,7 +425,7 @@ export default function ManageEpisode() {
             <div className="flex-1">
               <Input
                 disabled={uploading || audioUploading}
-                name="节目期数 / Episode Number"
+                name={t('episodeNumber')}
                 type="number"
                 min="0"
                 placeholder="1, 2..."
@@ -444,7 +442,7 @@ export default function ManageEpisode() {
             <div className="flex-1">
               <span className="flex items-center">
                 <em className="ml-1 text-xs font-medium text-gray-500 dark:text-gray-300 not-italic flex-1">
-                  节目状态 / Episode Status
+                  {t('episodeStatus')}
                 </em>
               </span>
               <select
@@ -464,10 +462,10 @@ export default function ManageEpisode() {
                 } border-l-4 mt-1 tracking-wide dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:outline-none border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700`}
               >
                 <option value="" disabled>
-                  选择节目状态...
+                  {t('chooseEpisodeStatus')}
                 </option>
-                <option value="false">草稿 (Draft)</option>
-                <option value="true">已发布 (Published)</option>
+                <option value="false">{t('draft')}</option>
+                <option value="true">{t('published')}</option>
               </select>
             </div>
           </div>
@@ -475,7 +473,7 @@ export default function ManageEpisode() {
         <section className="m-5">
           <span className="flex items-center">
             <em className="ml-1 text-xs font-medium text-gray-500 dark:text-gray-300 not-italic flex-1">
-              节目描述 / Show Notes
+              {t('showNotes')}
             </em>
           </span>
           <div
@@ -491,7 +489,7 @@ export default function ManageEpisode() {
             <Editor
               defaultValue={data.episode.content}
               readOnly={uploading || audioUploading}
-              placeholder="节目描述..."
+              placeholder={t('episodeNotes')}
               onChange={(value) => {
                 setInfo({
                   ...episodeInfo,

@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import Icons from '../../../components/Icons';
 import login from '../../../services/login';
 import Store from '../../../lib/Store';
+import { useI18n } from '../../../hooks';
+import Icons from '../../../components/Icons';
+import { LanguagesDropdown } from '../../../components/Dropdown';
 
 export default function Login() {
+  const { t } = useI18n();
   // route navigation hook
   const history = useHistory();
 
@@ -33,6 +36,11 @@ export default function Login() {
 
   // login event handler
   const doLogin = async () => {
+    // validate email and password again
+    checkValidity(true);
+    checkValidity(false);
+
+    // continue if both email and password are valid
     if (validEmail && validPwd) {
       setLoading(true);
       await login(email, password)
@@ -51,116 +59,121 @@ export default function Login() {
               history.push('/landing/start');
             }, 500);
           } else {
-            alert(`登录失败\nError logging you in\n${res.message}`);
+            alert(`${t('errorLoggingIn')}\n${res.message}`);
             setLoading(false);
           }
         })
         .catch(() => {
-          alert(`Snapod 服务暂时不可用\nService is currently unavailable`);
+          alert(t('serviceUnavailable'));
           setLoading(false);
         });
     }
   };
 
   return (
-    <div
-      className={`z-10 shadow-md rounded-md w-2/5 bg-white px-8 py-10 pb-11 no-drag ${
-        showAnimation && 'animate-slideDown'
-      }`}
-    >
-      <div className="mb-5">
-        <h1 className="font-bold text-3xl tracking-wide">
-          <span role="img" aria-label="snapod-logo" className="mr-0.5">
-            🎙️
-          </span>
-          Snapod
-        </h1>
-        <p className="text-gray-400 text-sm ml-1 mt-1">
-          登入你的账户以开始使用
-        </p>
-      </div>
-      <div className="w-full">
-        <p className="w-full">
-          <em className="ml-1 text-xs font-medium text-gray-500 not-italic">
-            邮箱 / Email
-          </em>
-          <input
-            type="email"
-            placeholder="your@email.com"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            onKeyUp={() => checkValidity(true)}
-            className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
-          />
-          {!validEmail && (
-            <span className="text-xs text-gray-400 ml-1 mt-1">
-              请检查电子邮箱格式
+    <>
+      <div
+        className={`z-10 shadow-md rounded-md w-2/5 bg-white px-8 py-10 pb-11 no-drag ${
+          showAnimation && 'animate-slideDown'
+        }`}
+      >
+        <div className="mb-5">
+          <h1 className="font-bold text-3xl tracking-wide">
+            <span role="img" aria-label="snapod-logo" className="mr-0.5">
+              🎙️
             </span>
-          )}
-        </p>
-        <p className="w-full mt-5">
-          <span className="flex items-center">
-            <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
-              密码 / Password
+            Snapod
+          </h1>
+          <p className="text-gray-400 text-sm ml-1 mt-1">
+            {t('loginToContinue')}
+          </p>
+        </div>
+        <div className="w-full">
+          <p className="w-full">
+            <em className="ml-1 text-xs font-medium text-gray-500 not-italic">
+              {t('email')}
             </em>
-            <em className="text-xs font-medium text-gray-500 not-italic flex-1 text-right hover:text-gray-600 mr-1">
-              <Link to="/landing/forgot/request">忘记密码 / Forgot</Link>
-            </em>
-          </span>
-          <span className="grid grid-cols-7 gap-x-1.5 mt-1">
             <input
-              type={showPwd ? 'text' : 'password'}
-              placeholder="••••••••••••"
-              maxLength={20}
-              minLength={6}
+              type="email"
+              placeholder="your@email.com"
               onChange={(e) => {
-                setPassword(e.target.value);
+                setEmail(e.target.value);
               }}
-              onKeyUp={(e) => {
-                checkValidity(false);
-                if (e.key === 'Enter') {
-                  doLogin();
-                }
-              }}
-              className="col-start-1 col-end-7 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+              onKeyUp={() => checkValidity(true)}
+              className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
             />
-            <button
-              className="hover:border-gray-400 border rounded-md col-start-7 col-end-8 flex justify-center items-center align-middle"
-              onClick={() => setShowPwd(!showPwd)}
-              type="button"
-            >
-              <span className="w-5 h-5 text-gray-500">
-                {showPwd ? <Icons name="eye-off" /> : <Icons name="eye" />}
+            {!validEmail && (
+              <span className="text-xs text-gray-400 ml-1 mt-1">
+                {t('invalidEmail')}
               </span>
-            </button>
-          </span>
-          {!validPwd && (
-            <span className="text-xs text-gray-400 ml-1 mt-1">
-              密码长度应在 6 至 20 个字符之间
+            )}
+          </p>
+          <p className="w-full mt-5">
+            <span className="flex items-center">
+              <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
+                {t('password')}
+              </em>
+              <em className="text-xs font-medium text-gray-500 not-italic flex-1 text-right hover:text-gray-600 mr-1">
+                <Link to="/landing/forgot/request">{t('forgotPassword')}</Link>
+              </em>
             </span>
-          )}
-        </p>
-      </div>
-      <div className="w-full mt-8 text-center">
-        <button
-          onClick={() => doLogin()}
-          type="submit"
-          aria-label="login"
-          className="flex justify-center align-middle items-center mb-3 text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md w-full py-2 text-center"
-        >
-          {loginLoading ? (
-            <span className="h-5 w-5 duration-200">
-              <Icons name="spinner" />
+            <span className="grid grid-cols-7 gap-x-1.5 mt-1">
+              <input
+                type={showPwd ? 'text' : 'password'}
+                placeholder="••••••••••••"
+                maxLength={20}
+                minLength={6}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                onKeyUp={(e) => {
+                  checkValidity(false);
+                  if (e.key === 'Enter') {
+                    doLogin();
+                  }
+                }}
+                className="col-start-1 col-end-7 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
+              />
+              <button
+                className="hover:border-gray-400 border rounded-md col-start-7 col-end-8 flex justify-center items-center align-middle"
+                onClick={() => setShowPwd(!showPwd)}
+                type="button"
+              >
+                <span className="w-5 h-5 text-gray-500">
+                  {showPwd ? <Icons name="eye-off" /> : <Icons name="eye" />}
+                </span>
+              </button>
             </span>
-          ) : (
-            '登入 / Login'
-          )}
-        </button>
-        <Link to="/landing/signup" className="text-sm text-gray-400">
-          立即注册 / Sign Up
-        </Link>
+            {!validPwd && (
+              <span className="text-xs text-gray-400 ml-1 mt-1">
+                {t('invalidPassword')}
+              </span>
+            )}
+          </p>
+        </div>
+        <div className="w-full mt-8 text-center">
+          <button
+            onClick={() => doLogin()}
+            type="submit"
+            aria-label="login"
+            className="flex justify-center align-middle items-center mb-3 text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md w-full py-2 text-center"
+          >
+            {loginLoading ? (
+              <span className="h-5 w-5 duration-200">
+                <Icons name="spinner" />
+              </span>
+            ) : (
+              `${t('login')} →`
+            )}
+          </button>
+          <Link to="/landing/signup" className="text-sm text-gray-400">
+            {t('noAccountSignUp')}
+          </Link>
+        </div>
       </div>
-    </div>
+      <div className="absolute bottom-10 flex justify-center w-full animate-firstShow">
+        <LanguagesDropdown />
+      </div>
+    </>
   );
 }

@@ -3,8 +3,10 @@ import { Link, useHistory } from 'react-router-dom';
 import Icons from '../../../components/Icons';
 import { forgotRequest, forgotRecover } from '../../../services/forgot';
 import { useInterval } from 'react-use';
+import { useI18n } from '../../../hooks';
 
 export default function Forgot() {
+  const { t } = useI18n();
   // route navigation hook
   const history = useHistory();
 
@@ -50,16 +52,16 @@ export default function Forgot() {
         .then(async (response) => {
           const res = await response.json();
           if (res.status) {
-            alert('密码重设成功\nPassword has been updated');
+            alert(t('passwordUpdated'));
             // navigate to start page
             history.push('/landing/login');
           } else {
-            alert(`Error submitting your request\n${res.message}`);
+            alert(`${t('errorSubmitting')}\n${res.message}`);
             setSubmitting(false);
           }
         })
         .catch(() => {
-          alert('Snapod 服务暂时不可用\nService is currently unavailable');
+          alert(t('serviceUnavailable'));
           setSubmitting(false);
         });
     }
@@ -86,20 +88,18 @@ export default function Forgot() {
         .then(async (response) => {
           const res = await response.json();
           if (res.status) {
-            alert(
-              '秘钥已发送至你的邮箱\nRecovery code has been sent to your email'
-            );
+            alert(t('recoveryEmailSent'));
             setSending(false);
             setSent(true);
             setCountDown(60);
             setCooling(true);
           } else {
-            alert(`提交失败\nError submitting your request\n${res.message}`);
+            alert(`${t('errorSubmitting')}\n${res.message}`);
             setSending(false);
           }
         })
         .catch(() => {
-          alert(`Snapod 服务暂时不可用\nService is currently unavailable`);
+          alert(t('serviceUnavailable'));
           setSending(false);
         });
     }
@@ -112,16 +112,16 @@ export default function Forgot() {
           <span role="img" aria-label="snapod-logo" className="mr-0.5">
             🔑
           </span>
-          Snapod
+          Recover
         </h1>
         <p className="text-gray-400 text-sm ml-1 mt-1">
-          通过电子邮件找回账户密码
+          {t('recoverPasswordThroughEmail')}
         </p>
       </div>
       <div className="w-full">
         <p className="w-full">
           <em className="ml-1 text-xs font-medium text-gray-500 not-italic">
-            邮箱 / Email
+            {t('email')}
           </em>
           <span className="grid grid-cols-7 gap-x-1.5 mt-1">
             <input
@@ -166,13 +166,13 @@ export default function Forgot() {
           </span>
           {!validEmail && (
             <span className="text-xs text-gray-400 ml-1 mt-1">
-              请检查电子邮箱格式
+              {t('invalidEmail')}
             </span>
           )}
         </p>
         <p className="w-full mt-3">
           <em className="ml-1 text-xs font-medium text-gray-500 not-italic">
-            秘钥 / Recovery Code
+            {t('recoveryCode')}
           </em>
           <input
             type="text"
@@ -185,13 +185,13 @@ export default function Forgot() {
           />
           {!validCode && (
             <span className="text-xs text-gray-400 ml-1 mt-1">
-              秘钥长度不匹配
+              {t('invalidRecoveryCode')}
             </span>
           )}
         </p>
         <p className="w-full mt-3">
           <em className="ml-1 text-xs font-medium text-gray-500 not-italic">
-            新密码 / Password
+            {t('newPassword')}
           </em>
           <span className="grid grid-cols-7 gap-x-1.5 mt-1">
             <input
@@ -222,7 +222,7 @@ export default function Forgot() {
           </span>
           {!validPwd && (
             <span className="text-xs text-gray-400 ml-1 mt-1">
-              密码长度应在 6 至 20 个字符之间
+              {t('invalidPassword')}
             </span>
           )}
         </p>
@@ -239,15 +239,15 @@ export default function Forgot() {
               <Icons name="spinner" />
             </span>
           ) : (
-            '提交 / Submit'
+            t('submitRecoveryRequest')
           )}
         </button>
         <span className="flex justify-center">
           <Link
             to="/landing/login"
-            className="text-sm text-gray-400 text-right mr-1"
+            className="text-sm text-gray-400 text-right"
           >
-            账户登录 / Login
+            {t('recoverLogin')}
           </Link>
         </span>
       </div>

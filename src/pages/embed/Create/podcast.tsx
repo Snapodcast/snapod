@@ -9,6 +9,7 @@ import { CREATE_PODCAST } from '../../../lib/GraphQL/queries';
 import { useMutation } from '@apollo/client';
 import Store from '../../../lib/Store';
 import selectImageAndUploadToCDN from '../../../lib/Upload/Image';
+import { useI18n } from '../../../hooks';
 
 interface ContainerInterface {
   stepNumber: number;
@@ -29,6 +30,7 @@ const StepContainer = ({
   selectImage,
   uploading,
 }: ContainerInterface) => {
+  const { t } = useI18n();
   switch (stepNumber) {
     case 6:
       return (
@@ -39,7 +41,7 @@ const StepContainer = ({
             </span>
           </p>
           <p className="ml-1 text-xs font-medium text-gray-500">
-            创建中 / Creating your podcast
+            {t('saving')}
           </p>
         </div>
       );
@@ -71,13 +73,10 @@ const StepContainer = ({
           <div className="flex-1 flex items-center">
             <div>
               <p className="ml-1 text-xs font-medium text-gray-500 not-italic">
-                播客封面图像 / Cover Art
+                {t('coverArt')}
               </p>
               <p className="text-xs text-gray-400 ml-1 mt-1">
-                {!uploading
-                  ? `封面图像建议最小 1400 x 1400px, 最大 3000 x 3000px, 使用
-                JPEG(.jpg) 或者 PNG(.png) 格式文件, 72 dpi`
-                  : '上传中'}
+                {!uploading ? t('coverArtRequirements') : t('uploading')}
               </p>
             </div>
           </div>
@@ -89,7 +88,7 @@ const StepContainer = ({
           <p className="w-full mt-5">
             <span className="flex items-center">
               <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
-                播客语言 / Language
+                {t('podcastLanguage')}
               </em>
             </span>
             <LangSelect
@@ -99,13 +98,13 @@ const StepContainer = ({
               }}
             />
             <span className="text-xs text-gray-400 ml-1 mt-1">
-              你的播客主要用语
+              {t('podcastLanguageDescription')}
             </span>
           </p>
           <p className="w-full mt-5">
             <span className="flex items-center">
               <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
-                播客评级 / Rating
+                {t('podcastRating')}
               </em>
             </span>
             <select
@@ -118,21 +117,19 @@ const StepContainer = ({
               className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
             >
               <option value="" disabled>
-                选择播客节目类型...
+                {t('podcastRatingDescription')}
               </option>
-              <option value="yes">包含潜在不当内容 (Explicit content)</option>
-              <option value="no">
-                不包含潜在不当内容 (No explicit content)
-              </option>
+              <option value="yes">{t('explicit')}</option>
+              <option value="no">{t('noExplicit')}</option>
             </select>
             <span className="text-xs text-gray-400 ml-1 mt-1">
-              你的播客是否包含潜在不当内容
+              {t('podcastRatingDescription')}
             </span>
           </p>
           <div className="w-full mt-5">
             <span className="flex items-center">
               <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
-                版权字段 / Copyright
+                {t('podcastCopyright')}
               </em>
               <Switch
                 onChange={() => {
@@ -153,7 +150,7 @@ const StepContainer = ({
             </span>
             <input
               disabled={!podcastInfo.useCr}
-              placeholder="©️2021 你的播客"
+              placeholder={t('podcastCopyrightPlaceholder')}
               onChange={(e) => {
                 setPodcastInfo({
                   ...podcastInfo,
@@ -163,13 +160,13 @@ const StepContainer = ({
               className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
             />
             <span className="text-xs text-gray-400 ml-1 mt-1">
-              (可选) 你的播客版权信息
+              {t('podcastCopyrightDescription')}
             </span>
           </div>
           <div className="w-full mt-5">
             <span className="flex items-center">
               <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
-                播客所有 Owner Info
+                {t('podcastOwnerInformation')}
               </em>
               <Switch
                 onChange={() => {
@@ -190,7 +187,7 @@ const StepContainer = ({
             </span>
             <input
               disabled={!podcastInfo.useOwner}
-              placeholder="所有人名称"
+              placeholder={t('podcastOwnerName')}
               onChange={(e) => {
                 setPodcastInfo({
                   ...podcastInfo,
@@ -201,7 +198,7 @@ const StepContainer = ({
             />
             <input
               disabled={!podcastInfo.useOwner}
-              placeholder="所有人邮箱"
+              placeholder={t('podcastOwnerEmail')}
               onChange={(e) => {
                 setPodcastInfo({
                   ...podcastInfo,
@@ -211,7 +208,7 @@ const StepContainer = ({
               className="mt-2 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
             />
             <span className="text-xs text-gray-400 ml-1 mt-1">
-              (可选) 你的播客实际所有人信息
+              {t('podcastOwnerDescription')}
             </span>
           </div>
         </div>
@@ -221,7 +218,7 @@ const StepContainer = ({
         <p className="w-full mt-5">
           <span className="flex items-center">
             <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
-              播客类型 / Type
+              {t('podcastType')}
             </em>
           </span>
           <select
@@ -231,13 +228,13 @@ const StepContainer = ({
             className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
           >
             <option value="" disabled>
-              选择播客类型...
+              {t('choosePodcastType')}
             </option>
-            <option value="episodic">单集 (Episodic)</option>
-            <option value="serial">季集 (Serial)</option>
+            <option value="episodic">{t('episodic')}</option>
+            <option value="serial">{t('serial')}</option>
           </select>
           <span className="text-xs text-gray-400 ml-1 mt-1">
-            你的播客节目可按集或按季呈现
+            {t('podcastTypeDescription')}
           </span>
         </p>
       );
@@ -246,7 +243,7 @@ const StepContainer = ({
         <p className="w-full mt-5">
           <span className="flex items-center">
             <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
-              播客分类 / Category
+              {t('podcastCategory')}
             </em>
           </span>
           <CateSelect
@@ -256,7 +253,7 @@ const StepContainer = ({
             }}
           />
           <span className="text-xs text-gray-400 ml-1 mt-1">
-            你的播客内容所属分类 (Apple Podcasts 标准)
+            {t('podcastCategoryDescription')}
           </span>
         </p>
       );
@@ -265,12 +262,12 @@ const StepContainer = ({
         <p className="w-full mt-5">
           <span className="flex items-center">
             <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
-              播客简介 / Description
+              {t('podcastDescription')}
             </em>
           </span>
           <textarea
             autoFocus
-            placeholder="播客描述"
+            placeholder={t('podcastDescriptionPlaceholder')}
             maxLength={255}
             minLength={1}
             rows={3}
@@ -285,7 +282,7 @@ const StepContainer = ({
             className="mt-1 resize-none tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
           />
           <span className="text-xs text-gray-400 ml-1 -mt-0.5">
-            简单地介绍你的播客
+            {t('podcastDescriptionDescription')}
           </span>
         </p>
       );
@@ -294,12 +291,12 @@ const StepContainer = ({
         <p className="w-full mt-5">
           <span className="flex items-center">
             <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
-              播客名称 / Name
+              {t('podcastName')}
             </em>
           </span>
           <input
             autoFocus
-            placeholder="播客名"
+            placeholder={t('podcastNamePlaceholder')}
             maxLength={255}
             minLength={1}
             onChange={(e) => {
@@ -314,7 +311,7 @@ const StepContainer = ({
           />
           <span className="text-xs text-gray-400 ml-1 mt-1">
             ({podcastInfo.name ? podcastInfo.name.length : 0} / 255)
-            为你的播客起个响亮的名字
+            {t('podcastNameDescription')}
           </span>
         </p>
       );
@@ -322,6 +319,7 @@ const StepContainer = ({
 };
 
 export default function CreatePodcast() {
+  const { t } = useI18n();
   const history = useHistory();
   const [creatPodcast] = useMutation(CREATE_PODCAST);
 
@@ -371,11 +369,11 @@ export default function CreatePodcast() {
         Store.set({
           currentPodcast: res.data.createPodcast,
         });
-        alert(`创建成功`);
+        alert(t('successfullyCreatedAPodcast'));
         history.push('/snapod');
       })
       .catch(() => {
-        alert(`创建失败\n请检查信息已填写完整`);
+        alert(t('failedToSave'));
         setStepNumber(5);
       });
   };
@@ -404,10 +402,10 @@ export default function CreatePodcast() {
             <span role="img" aria-label="snapod-logo" className="mr-1">
               🎙️
             </span>
-            {podcastInfo.name || '新建播客'}
+            {podcastInfo.name || t('newPodcast')}
           </h2>
           <span className="text-gray-500 text-sm">
-            步骤 {stepNumber + 1} / 7
+            {t('step')} {stepNumber + 1} / 7
           </span>
         </div>
         <StepContainer
@@ -430,7 +428,7 @@ export default function CreatePodcast() {
                   setStepNumber(stepNumber - 1);
                 }}
               >
-                ← 上一步
+                ← {t('previousStep')}
               </button>
             )}
             <button
@@ -444,7 +442,9 @@ export default function CreatePodcast() {
                 }
               }}
             >
-              {stepNumber === 5 ? '创建播客 →' : '下一步 →'}
+              {stepNumber === 5
+                ? `${t('createANewPodcast')} →`
+                : `${t('nextStep')} →`}
             </button>
           </div>
         )}

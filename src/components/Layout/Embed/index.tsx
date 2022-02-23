@@ -3,6 +3,7 @@ import Icons from '../../Icons';
 import Head from '../../Head';
 import { ApolloError } from '@apollo/client';
 import { Layout } from '../../../constants';
+import { useI18n } from '../../../hooks';
 
 type Props = {
   type?: typeof Layout.LAYOUT_TYPES[keyof typeof Layout.LAYOUT_TYPES];
@@ -21,6 +22,7 @@ type Props = {
 };
 
 export default function EmbedLayout(props: Props) {
+  const { t } = useI18n();
   if (props.type === Layout.LAYOUT_TYPES.LIST) {
     if (props.states.loading) {
       return (
@@ -48,7 +50,7 @@ export default function EmbedLayout(props: Props) {
                 className="flex justify-center align-middle items-center text-white text-sm hover:bg-gray-600 bg-gray-500 focus:outline-none rounded-md shadow-md py-1.5 px-4 text-center"
                 onClick={() => props.functions.reload()}
               >
-                重新加载
+                {t('reload')}
               </button>
             </div>
           </div>

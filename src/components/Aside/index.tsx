@@ -1,19 +1,18 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/accessible-emoji */
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
 import Icons from '../Icons/index';
 import Store from '../../lib/Store';
 import logout from '../../services/logout';
 import ApolloClient from '../../lib/GraphQL';
-import { Menu, Transition } from '@headlessui/react';
 import Tooltip from '../Tooltip';
+import { PodcastsDropdown } from '../Dropdown';
+import { useI18n } from '../../hooks';
 
 export default function Aside() {
-  // current podcast
-  const currentPodcastName = Store.get('currentPodcast.name');
-
+  const { t } = useI18n();
   // router navigation hook
   const history = useHistory();
   const location = useLocation();
@@ -54,69 +53,7 @@ export default function Aside() {
         } drag`}
       />
       <div className="menu no-drag overflow-hidden overflow-y-auto px-4">
-        <Menu as="div">
-          <Menu.Button className="grid grid-cols-8 whitespace-nowrap rounded-md text-sm text-gray-500 dark:text-white py-1.5 px-2.5 w-full focus:outline-none bg-select hover:bg-active dark:bg-darkSelect dark:hover:bg-darkSelect mt-1">
-            <span className="col-start-1 col-end-8 overflow-hidden overflow-ellipsis">
-              {currentPodcastName}
-            </span>
-            <span className="col-start-8 col-end-9 text-right w-5 h-5 ml-2 -mr-1 dark:text-violet-200 dark:hover:text-violet-100 text-gray-500 hover:text-gray-600">
-              <Icons name="chevron-down-solid" />
-            </span>
-          </Menu.Button>
-          <Transition
-            as={Fragment}
-            enter="transition ease-out duration-100"
-            enterFrom="transform opacity-0 scale-95"
-            enterTo="transform opacity-100 scale-100"
-            leave="transition ease-in duration-75"
-            leaveFrom="transform opacity-100 scale-100"
-            leaveTo="transform opacity-0 scale-95"
-          >
-            <Menu.Items className="absolute left-4 w-select mt-2 origin-top-right text-gray-600 bg-white dark:bg-darkSelectBg dark:text-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-              <div className="p-1.5 py-2">
-                <Menu.Item>
-                  <Link to="/landing/start">
-                    <button
-                      type="button"
-                      className="group flex rounded-md items-center w-full px-2.5 py-1.5 text-sm hover:bg-select dark:hover:bg-darkSelect focus:bg-active"
-                    >
-                      <span className="flex-1 text-left tracking-wide">
-                        选择播客
-                      </span>
-                      <span>👉</span>
-                    </button>
-                  </Link>
-                </Menu.Item>
-                <Menu.Item>
-                  <Link to="/landing/create/podcast">
-                    <button
-                      type="button"
-                      className="group flex rounded-md items-center w-full px-2.5 py-1.5 text-sm hover:bg-select dark:hover:bg-darkSelect focus:bg-active"
-                    >
-                      <span className="flex-1 text-left tracking-wide">
-                        新建播客
-                      </span>
-                      <span>🎉</span>
-                    </button>
-                  </Link>
-                </Menu.Item>
-                <Menu.Item>
-                  <Link to="/landing/import/podcast">
-                    <button
-                      type="button"
-                      className="group flex rounded-md items-center w-full px-2.5 py-1.5 text-sm hover:bg-select dark:hover:bg-darkSelect focus:bg-active"
-                    >
-                      <span className="flex-1 text-left tracking-wide">
-                        导入播客
-                      </span>
-                      <span>🗂️</span>
-                    </button>
-                  </Link>
-                </Menu.Item>
-              </div>
-            </Menu.Items>
-          </Transition>
-        </Menu>
+        <PodcastsDropdown />
         <div className="my-3">
           <Link to="/snapod/create/episode">
             <button
@@ -127,13 +64,13 @@ export default function Aside() {
               <span className="h-5 w-5 mr-1.5">
                 <Icons name="addEpisode" />
               </span>
-              新建节目
+              {t('newEpisode')}
             </button>
           </Link>
         </div>
         <div className="mt-5 mb-1.5 pl-1.5">
           <h4 className="font-medium text-xs text-gray-400 dark:text-gray-500">
-            管理
+            {t('manage')}
           </h4>
         </div>
         <ul className="menu-list text-sm text-gray-600 dark:text-white">
@@ -142,7 +79,7 @@ export default function Aside() {
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="info" />
               </span>
-              播客信息
+              {t('podcastInfo')}
             </li>
           </NavLink>
           <NavLink
@@ -160,7 +97,7 @@ export default function Aside() {
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="episodes" />
               </span>
-              节目列表
+              {t('epsiodes')}
             </li>
           </NavLink>
           <NavLink exact to="/snapod/manage/metrics" activeClassName="active">
@@ -168,7 +105,7 @@ export default function Aside() {
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="presentation-chart" />
               </span>
-              节目数据
+              {t('analytics')}
             </li>
           </NavLink>
           <NavLink exact to="/snapod/manage/site" activeClassName="active">
@@ -176,13 +113,13 @@ export default function Aside() {
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="globe" />
               </span>
-              播客站点
+              {t('website')}
             </li>
           </NavLink>
         </ul>
         <div className="mt-5 mb-1.5 pl-1.5">
           <h4 className="font-medium text-xs text-gray-400 dark:text-gray-500">
-            设置
+            {t('settings')}
           </h4>
         </div>
         <ul className="menu-list text-sm text-gray-600 dark:text-white">
@@ -195,7 +132,7 @@ export default function Aside() {
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="publish" />
               </span>
-              发布渠道
+              {t('distribution')}
             </li>
           </NavLink>
           <NavLink exact to="/snapod/settings/podcast" activeClassName="active">
@@ -203,7 +140,7 @@ export default function Aside() {
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="adjust" />
               </span>
-              播客设置
+              {t('podcastSetting')}
             </li>
           </NavLink>
           <NavLink exact to="/snapod/settings/app" activeClassName="active">
@@ -211,13 +148,13 @@ export default function Aside() {
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="gear" />
               </span>
-              偏好设置
+              {t('preferences')}
             </li>
           </NavLink>
         </ul>
         <div className="mt-5 mb-1.5 pl-1.5">
           <h4 className="font-medium text-xs text-gray-400 dark:text-gray-500">
-            关于
+            {t('about')}
           </h4>
         </div>
         <ul className="menu-list text-sm text-gray-600 dark:text-white">
@@ -226,7 +163,7 @@ export default function Aside() {
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="questionMark" />
               </span>
-              帮助中心
+              {t('helpCenter')}
             </li>
           </NavLink>
           <NavLink exact to="/snapod/about" activeClassName="active">
@@ -234,7 +171,7 @@ export default function Aside() {
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="qrCode" />
               </span>
-              版本信息
+              {t('versionInfo')}
             </li>
           </NavLink>
         </ul>

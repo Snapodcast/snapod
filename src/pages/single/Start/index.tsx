@@ -7,8 +7,9 @@ import Store from '../../../lib/Store';
 import Icons from '../../../components/Icons';
 import { useHistory, Link } from 'react-router-dom';
 import podcastInit from '../../../lib/Init';
+import { useI18n } from '../../../hooks';
 
-interface QueryInterface {
+interface ContainerProps {
   loading: boolean;
   error: ApolloError | undefined;
   data: any;
@@ -24,7 +25,8 @@ const PodcastsContainer = ({
   history,
   setAnimation,
   refetch,
-}: QueryInterface) => {
+}: ContainerProps) => {
+  const { t } = useI18n();
   if (loading)
     return (
       <div className="flex justify-center">
@@ -44,7 +46,7 @@ const PodcastsContainer = ({
             refetch();
           }}
         >
-          重新加载
+          {t('reload')}
         </button>
         <Link to="/landing/login">
           <button
@@ -52,7 +54,7 @@ const PodcastsContainer = ({
             type="button"
             className="flex justify-center align-middle items-center text-white text-sm hover:bg-gray-700 bg-gray-600 focus:outline-none rounded-md shadow-md py-1.5 px-4 text-center"
           >
-            重新登录
+            {t('loginAgain')}
           </button>
         </Link>
       </div>
@@ -105,7 +107,7 @@ const PodcastsContainer = ({
             }, 500);
           }}
         >
-          创建新播客 →
+          {t('createNewPodcast')} →
         </button>
         <button
           aria-label="create"
@@ -118,7 +120,7 @@ const PodcastsContainer = ({
             }, 500);
           }}
         >
-          导入播客 ↓
+          {t('importExistingPodcast')} ↓
         </button>
       </div>
     </div>
@@ -126,6 +128,7 @@ const PodcastsContainer = ({
 };
 
 export default function StartSingle() {
+  const { t } = useI18n();
   const authorCuid = Store.get('currentUser.cuid');
   const { loading, error, data, refetch } = useQuery(GET_PODCASTS, {
     variables: { authorCuid },
@@ -148,12 +151,12 @@ export default function StartSingle() {
         </h1>
         <p className="text-gray-500 dark:text-gray-400 text-sm mt-1.5 transition-all">
           {loading
-            ? '正在为你加载内容'
+            ? t('loadingContent')
             : error
-            ? '加载失败'
+            ? t('failedToLoad')
             : data.podcasts.length
-            ? '选择或创建一个播客以继续'
-            : '欢迎使用 Snapod, 让我们开始吧'}
+            ? t('selectaPodcastAndContinue')
+            : t('welcomeToSnapodLetsGetStarted')}
         </p>
       </div>
       <div className="justify-center text-center mt-5">

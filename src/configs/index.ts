@@ -1,11 +1,14 @@
 const getConfigs = () => {
   if (
     process.env.NODE_ENV === 'production' ||
-    process.env.USE_CONFIG === 'production'
+    process.env.USE_CONFIG !== 'development'
   ) {
     return {
       backend_url: 'https://api.snapodcast.com/v0/api',
-      graphql_url: 'https://graphql.snapodcast.com',
+      graphql_url:
+        process.env.USE_CONFIG === 'production-cdn'
+          ? 'https://graphql.snapodcast.com'
+          : 'https://api.snapodcast.com/v0/api/graphql',
       qiniu_ak: '4mGogia1PY-PXaYvct65vITq9PeZtZXa1qxE5Ce8',
       qiniu_sk: 'J-NECV03NfUfVgrdIfA1jkSoqMf6PS5XauY-BcxN',
       qiniu_url: 'https://storage.snapaper.com',

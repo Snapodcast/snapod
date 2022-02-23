@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Store from '../../../lib/Store';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_PODCAST, MODIFY_PODCAST } from '../../../lib/GraphQL/queries';
@@ -10,9 +10,11 @@ import LangSelect from '../../../components/LangSelect';
 import Icons from '../../../components/Icons';
 import selectImageAndUploadToCDN from '../../../lib/Upload/Image';
 import { useHistory } from 'react-router';
+import { PodcastContext } from '../../../lib/Context';
 
 export default function ManagePodcast() {
   const podcastCuid = Store.get('currentPodcast.cuid');
+  const { setName } = useContext(PodcastContext);
   const history = useHistory();
   const [modifyPodcast] = useMutation(MODIFY_PODCAST);
   const [podcastInfo, setInfo] = React.useState<any>({
@@ -77,6 +79,7 @@ export default function ManagePodcast() {
       })
         .then((res: any) => {
           Store.set('currentPodcast.name', res.data.modifyPodcast.name);
+          setName(res.data.modifyPodcast.name);
           setSavable(false);
           alert('修改成功');
         })

@@ -1,11 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
+import { useI18n } from '../../hooks';
 
 export default function LangSelect(props: {
   podcastLang: string;
   setLang: any;
   [prop: string]: any;
 }) {
+  const { t } = useI18n();
   const { podcastLang, setLang, ...rest } = props;
   return (
     <select
@@ -17,7 +19,7 @@ export default function LangSelect(props: {
       className="dark:bg-transparent dark:text-gray-300 dark:border-gray-500 mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
     >
       <option value="" disabled>
-        选择节目语言
+        {t('chooseLanguage')}
       </option>
       <option value="af">Afrikaans</option>
       <option value="ak">Akan</option>
@@ -37,8 +39,8 @@ export default function LangSelect(props: {
       <option value="ca">Catalan</option>
       <option value="km">Central Khmer</option>
       <option value="ce">Chechen</option>
-      <option value="zh-cn">Chinese (Simplified)</option>
-      <option value="zh-tw">Chinese (Traditional)</option>
+      <option value="zh-cn">简体中文</option>
+      <option value="zh-tw">繁体中文</option>
       <option value="kw">Cornish</option>
       <option value="hr">Croatian</option>
       <option value="cs">Czech</option>

@@ -1,7 +1,9 @@
 import React from 'react';
 import Icons from '../../../components/Icons';
+import { useI18n } from '../../../hooks';
 
 export default function LoadingPage() {
+  const { t } = useI18n();
   return (
     <div className="z-10 shadow-md rounded-md w-2/5 max-h-100 overflow-y-auto overflow-hidden bg-white px-8 py-7 no-drag animate-slideUp">
       <div className="text-center">
@@ -11,7 +13,7 @@ export default function LoadingPage() {
           </span>
         </h1>
         <p className="text-gray-500 text-sm mt-1.5 transition-all">
-          正在为你加载内容
+          {t('loadingContent')}
         </p>
         <div className="justify-center text-center mt-5">
           <div className="flex justify-center">

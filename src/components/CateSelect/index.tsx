@@ -1,11 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
+import { useI18n } from '../../hooks';
 
 export default function CateSelect(props: {
   podcastCate: string;
   setCate: any;
   [prop: string]: any;
 }) {
+  const { t } = useI18n();
   const { podcastCate, setCate, ...rest } = props;
   return (
     <select
@@ -22,216 +24,308 @@ export default function CateSelect(props: {
         </option>
       ) : (
         <option value="" disabled>
-          选择播客分类...
+          {t('choosePodcastCategory')}
         </option>
       )}
-      <option value="Arts">Arts</option>
-      <option value="Arts|Books">&nbsp;&nbsp;&nbsp;Books</option>
-      <option value="Arts|Design">&nbsp;&nbsp;&nbsp;Design</option>
+      <option value="Arts">{t('podcastCategories.arts')}</option>
+      <option value="Arts|Books">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.books')}
+      </option>
+      <option value="Arts|Design">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.design')}
+      </option>
       <option value="Arts|Fashion &amp; Beauty">
-        &nbsp;&nbsp;&nbsp;Fashion &amp; Beauty
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.fashionAndBeauty')}
       </option>
-      <option value="Arts|Food">&nbsp;&nbsp;&nbsp;Food</option>
+      <option value="Arts|Food">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.food')}
+      </option>
       <option value="Arts|Performing Arts">
-        &nbsp;&nbsp;&nbsp;Performing Arts
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.performingArts')}
       </option>
-      <option value="Arts|Visual Arts">&nbsp;&nbsp;&nbsp;Visual Arts</option>
-      <option value="Business">Business</option>
-      <option value="Business|Careers">&nbsp;&nbsp;&nbsp;Careers</option>
+      <option value="Arts|Visual Arts">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.visualArts')}
+      </option>
+      <option value="Business">{t('podcastCategories.business')}</option>
+      <option value="Business|Careers">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.careers')}
+      </option>
       <option value="Business|Entrepreneurship">
-        &nbsp;&nbsp;&nbsp;Entrepreneurship
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.entrepreneurship')}
       </option>
-      <option value="Business|Investing">&nbsp;&nbsp;&nbsp;Investing</option>
-      <option value="Business|Management">&nbsp;&nbsp;&nbsp;Management</option>
-      <option value="Business|Marketing">&nbsp;&nbsp;&nbsp;Marketing</option>
-      <option value="Business|Non-Profit">&nbsp;&nbsp;&nbsp;Non-Profit</option>
-      <option value="Comedy">Comedy</option>
+      <option value="Business|Investing">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.investing')}
+      </option>
+      <option value="Business|Management">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.management')}
+      </option>
+      <option value="Business|Marketing">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.marketing')}
+      </option>
+      <option value="Business|Non-Profit">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.nonProfit')}
+      </option>
+      <option value="Comedy">{t('podcastCategories.comedy')}</option>
       <option value="Comedy|Comedy Interviews">
-        &nbsp;&nbsp;&nbsp;Comedy Interviews
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.comedyInterviews')}
       </option>
-      <option value="Comedy|Improv">&nbsp;&nbsp;&nbsp;Improv</option>
-      <option value="Comedy|Stand-Up">&nbsp;&nbsp;&nbsp;Stand-Up</option>
-      <option value="Education">Education</option>
-      <option value="Education|Courses">&nbsp;&nbsp;&nbsp;Courses</option>
-      <option value="Education|How To">&nbsp;&nbsp;&nbsp;How To</option>
+      <option value="Comedy|Improv">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.improv')}
+      </option>
+      <option value="Comedy|Stand-Up">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.standup')}
+      </option>
+      <option value="Education">{t('podcastCategories.education')}</option>
+      <option value="Education|Courses">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.courses')}
+      </option>
+      <option value="Education|How To">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.howTo')}
+      </option>
       <option value="Education|Language Learning">
-        &nbsp;&nbsp;&nbsp;Language Learning
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.languageLearning')}
       </option>
       <option value="Education|Self-Improvement">
-        &nbsp;&nbsp;&nbsp;Self-Improvement
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.selfImprovement')}
       </option>
-      <option value="Fiction">Fiction</option>
+      <option value="Fiction">{t('podcastCategories.fiction')}</option>
       <option value="Fiction|Comedy Fiction">
-        &nbsp;&nbsp;&nbsp;Comedy Fiction
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.comedyFiction')}
       </option>
-      <option value="Fiction|Drama">&nbsp;&nbsp;&nbsp;Drama</option>
+      <option value="Fiction|Drama">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.drama')}
+      </option>
       <option value="Fiction|Science Fiction">
-        &nbsp;&nbsp;&nbsp;Science Fiction
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.scienceFiction')}
       </option>
-      <option value="Government">Government</option>
-      <option value="History">History</option>
-      <option value="Health &amp; Fitness">Health &amp; Fitness</option>
+      <option value="Government">{t('podcastCategories.government')}</option>
+      <option value="History">{t('podcastCategories.history')}</option>
+      <option value="Health &amp; Fitness">
+        {t('podcastCategories.healthAndFitness')}
+      </option>
       <option value="Health &amp; Fitness|Alternative Health">
-        &nbsp;&nbsp;&nbsp;Alternative Health
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.alternativeHealth')}
       </option>
       <option value="Health &amp; Fitness|Fitness">
-        &nbsp;&nbsp;&nbsp;Fitness
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.fitness')}
       </option>
       <option value="Health &amp; Fitness|Medicine">
-        &nbsp;&nbsp;&nbsp;Medicine
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.medicine')}
       </option>
       <option value="Health &amp; Fitness|Mental Health">
-        &nbsp;&nbsp;&nbsp;Mental Health
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.mentalHealth')}
       </option>
       <option value="Health &amp; Fitness|Nutrition">
-        &nbsp;&nbsp;&nbsp;Nutrition
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.nutrition')}
       </option>
       <option value="Health &amp; Fitness|Sexuality">
-        &nbsp;&nbsp;&nbsp;Sexuality
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.sexuality')}
       </option>
-      <option value="Kids &amp; Family">Kids &amp; Family</option>
+      <option value="Kids &amp; Family">
+        {t('podcastCategories.kidsAndFamily')}
+      </option>
       <option value="Kids &amp; Family|Education for Kids">
-        &nbsp;&nbsp;&nbsp;Education for Kids
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.educationForKids')}
       </option>
       <option value="Kids &amp; Family|Parenting">
-        &nbsp;&nbsp;&nbsp;Parenting
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.parenting')}
       </option>
       <option value="Kids &amp; Family|Pets &amp; Animals">
-        &nbsp;&nbsp;&nbsp;Pets &amp; Animals
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.petsAndAnimals')}
       </option>
       <option value="Kids &amp; Family|Stories for Kids">
-        &nbsp;&nbsp;&nbsp;Stories for Kids
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.storiesForKids')}
       </option>
-      <option value="Leisure">Leisure</option>
+      <option value="Leisure">{t('podcastCategories.leisure')}</option>
       <option value="Leisure|Animation &amp; Manga">
-        &nbsp;&nbsp;&nbsp;Animation &amp; Manga
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.animationAndManga')}
       </option>
-      <option value="Leisure|Automotive">&nbsp;&nbsp;&nbsp;Automotive</option>
-      <option value="Leisure|Aviation">&nbsp;&nbsp;&nbsp;Aviation</option>
-      <option value="Leisure|Crafts">&nbsp;&nbsp;&nbsp;Crafts</option>
-      <option value="Leisure|Games">&nbsp;&nbsp;&nbsp;Games</option>
-      <option value="Leisure|Hobbies">&nbsp;&nbsp;&nbsp;Hobbies</option>
+      <option value="Leisure|Automotive">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.automotive')}
+      </option>
+      <option value="Leisure|Aviation">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.aviation')}
+      </option>
+      <option value="Leisure|Crafts">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.crafts')}
+      </option>
+      <option value="Leisure|Games">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.games')}
+      </option>
+      <option value="Leisure|Hobbies">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.hobbies')}
+      </option>
       <option value="Leisure|Home &amp; Garden">
-        &nbsp;&nbsp;&nbsp;Home &amp; Garden
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.homeAndGarden')}
       </option>
-      <option value="Leisure|Video Games">&nbsp;&nbsp;&nbsp;Video Games</option>
-      <option value="Music">Music</option>
+      <option value="Leisure|Video Games">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.videoGames')}
+      </option>
+      <option value="Music">{t('podcastCategories.music')}</option>
       <option value="Music|Music Commentary">
-        &nbsp;&nbsp;&nbsp;Music Commentary
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.musicCommentary')}
       </option>
       <option value="Music|Music History">
-        &nbsp;&nbsp;&nbsp;Music History
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.musicHistory')}
       </option>
       <option value="Music|Music Interviews">
-        &nbsp;&nbsp;&nbsp;Music Interviews
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.musicInterviews')}
       </option>
-      <option value="News">News</option>
+      <option value="News">{t('podcastCategories.news')}</option>
       <option value="News|Business News">
-        &nbsp;&nbsp;&nbsp;Business News
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.businessNews')}
       </option>
-      <option value="News|Daily News">&nbsp;&nbsp;&nbsp;Daily News</option>
+      <option value="News|Daily News">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.dailyNews')}
+      </option>
       <option value="News|Entertainment News">
-        &nbsp;&nbsp;&nbsp;Entertainment News
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.entertainmentNews')}
       </option>
       <option value="News|News Commentary">
-        &nbsp;&nbsp;&nbsp;News Commentary
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.newsCommentary')}
       </option>
-      <option value="News|Politics">&nbsp;&nbsp;&nbsp;Politics</option>
-      <option value="News|Sports News">&nbsp;&nbsp;&nbsp;Sports News</option>
-      <option value="News|Tech News">&nbsp;&nbsp;&nbsp;Tech News</option>
+      <option value="News|Politics">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.politics')}
+      </option>
+      <option value="News|Sports News">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.sportsNews')}
+      </option>
+      <option value="News|Tech News">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.techNews')}
+      </option>
       <option value="Religion &amp; Spirituality">
-        Religion &amp; Spirituality
+        {t('podcastCategories.religionAndSpirituality')}
       </option>
       <option value="Religion &amp; Spirituality|Buddhism">
-        &nbsp;&nbsp;&nbsp;Buddhism
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.buddhism')}
       </option>
       <option value="Religion &amp; Spirituality|Christianity">
-        &nbsp;&nbsp;&nbsp;Christianity
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.christianity')}
       </option>
       <option value="Religion &amp; Spirituality|Hinduism">
-        &nbsp;&nbsp;&nbsp;Hinduism
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.hinduism')}
       </option>
       <option value="Religion &amp; Spirituality|Islam">
-        &nbsp;&nbsp;&nbsp;Islam
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.islam')}
       </option>
       <option value="Religion &amp; Spirituality|Judaism">
-        &nbsp;&nbsp;&nbsp;Judaism
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.judaism')}
       </option>
       <option value="Religion &amp; Spirituality|Religion">
-        &nbsp;&nbsp;&nbsp;Religion
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.religion')}
       </option>
       <option value="Religion &amp; Spirituality|Spirituality">
-        &nbsp;&nbsp;&nbsp;Spirituality
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.spirituality')}
       </option>
-      <option value="Science">Science</option>
-      <option value="Science|Astronomy">&nbsp;&nbsp;&nbsp;Astronomy</option>
-      <option value="Science|Chemistry">&nbsp;&nbsp;&nbsp;Chemistry</option>
+      <option value="Science">{t('podcastCategories.science')}</option>
+      <option value="Science|Astronomy">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.astronomy')}
+      </option>
+      <option value="Science|Chemistry">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.chemistry')}
+      </option>
       <option value="Science|Earth Sciences">
-        &nbsp;&nbsp;&nbsp;Earth Sciences
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.earthSciences')}
       </option>
       <option value="Science|Life Sciences">
-        &nbsp;&nbsp;&nbsp;Life Sciences
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.lifeSciences')}
       </option>
-      <option value="Science|Mathematics">&nbsp;&nbsp;&nbsp;Mathematics</option>
+      <option value="Science|Mathematics">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.math')}
+      </option>
       <option value="Science|Natural Sciences">
-        &nbsp;&nbsp;&nbsp;Natural Sciences
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.naturalSciences')}
       </option>
-      <option value="Science|Nature">&nbsp;&nbsp;&nbsp;Nature</option>
-      <option value="Science|Physics">&nbsp;&nbsp;&nbsp;Physics</option>
+      <option value="Science|Nature">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.nature')}
+      </option>
+      <option value="Science|Physics">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.physics')}
+      </option>
       <option value="Science|Social Sciences">
-        &nbsp;&nbsp;&nbsp;Social Sciences
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.socialSciences')}
       </option>
-      <option value="Society &amp; Culture">Society &amp; Culture</option>
+      <option value="Society &amp; Culture">
+        {t('podcastCategories.societyAndCulture')}
+      </option>
       <option value="Society &amp; Culture|Documentary">
-        &nbsp;&nbsp;&nbsp;Documentary
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.documentary')}
       </option>
       <option value="Society &amp; Culture|Personal Journals">
-        &nbsp;&nbsp;&nbsp;Personal Journals
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.personalJournals')}
       </option>
       <option value="Society &amp; Culture|Philosophy">
-        &nbsp;&nbsp;&nbsp;Philosophy
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.philosophy')}
       </option>
       <option value="Society &amp; Culture|Places &amp; Travel">
-        &nbsp;&nbsp;&nbsp;Places &amp; Travel
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.placesAndTravel')}
       </option>
       <option value="Society &amp; Culture|Relationships">
-        &nbsp;&nbsp;&nbsp;Relationships
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.relationships')}
       </option>
-      <option value="Sports">Sports</option>
-      <option value="Sports|Baseball">&nbsp;&nbsp;&nbsp;Baseball</option>
-      <option value="Sports|Basketball">&nbsp;&nbsp;&nbsp;Basketball</option>
-      <option value="Sports|Cricket">&nbsp;&nbsp;&nbsp;Cricket</option>
+      <option value="Sports">{t('podcastCategories.sports')}</option>
+      <option value="Sports|Baseball">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.baseball')}
+      </option>
+      <option value="Sports|Basketball">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.basketball')}
+      </option>
+      <option value="Sports|Cricket">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.cricket')}
+      </option>
       <option value="Sports|Fantasy Sports">
-        &nbsp;&nbsp;&nbsp;Fantasy Sports
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.fantasySports')}
       </option>
-      <option value="Sports|Football">&nbsp;&nbsp;&nbsp;Football</option>
-      <option value="Sports|Golf">&nbsp;&nbsp;&nbsp;Golf</option>
-      <option value="Sports|Hockey">&nbsp;&nbsp;&nbsp;Hockey</option>
-      <option value="Sports|Rugby">&nbsp;&nbsp;&nbsp;Rugby</option>
-      <option value="Sports|Running">&nbsp;&nbsp;&nbsp;Running</option>
-      <option value="Sports|Soccer">&nbsp;&nbsp;&nbsp;Soccer</option>
-      <option value="Sports|Swimming">&nbsp;&nbsp;&nbsp;Swimming</option>
-      <option value="Sports|Tennis">&nbsp;&nbsp;&nbsp;Tennis</option>
-      <option value="Sports|Volleyball">&nbsp;&nbsp;&nbsp;Volleyball</option>
-      <option value="Sports|Wilderness">&nbsp;&nbsp;&nbsp;Wilderness</option>
-      <option value="Sports|Wrestling">&nbsp;&nbsp;&nbsp;Wrestling</option>
-      <option value="Technology">Technology</option>
-      <option value="True Crime">True Crime</option>
-      <option value="TV &amp; Film">TV &amp; Film</option>
+      <option value="Sports|Football">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.football')}
+      </option>
+      <option value="Sports|Golf">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.golf')}
+      </option>
+      <option value="Sports|Hockey">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.hockey')}
+      </option>
+      <option value="Sports|Rugby">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.rugby')}
+      </option>
+      <option value="Sports|Running">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.running')}
+      </option>
+      <option value="Sports|Soccer">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.soccer')}
+      </option>
+      <option value="Sports|Swimming">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.swimming')}
+      </option>
+      <option value="Sports|Tennis">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.tennis')}
+      </option>
+      <option value="Sports|Volleyball">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.volleyball')}
+      </option>
+      <option value="Sports|Wilderness">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.wilderness')}
+      </option>
+      <option value="Sports|Wrestling">
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.wrestling')}
+      </option>
+      <option value="Technology">{t('podcastCategories.technology')}</option>
+      <option value="True Crime">{t('podcastCategories.trueCrime')}</option>
+      <option value="TV &amp; Film">{t('podcastCategories.tvAndFilm')}</option>
       <option value="TV &amp; Film|After Shows">
-        &nbsp;&nbsp;&nbsp;After Shows
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.afterShows')}
       </option>
       <option value="TV &amp; Film|Film History">
-        &nbsp;&nbsp;&nbsp;Film History
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.filmHistory')}
       </option>
       <option value="TV &amp; Film|Film Interviews">
-        &nbsp;&nbsp;&nbsp;Film Interviews
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.filmInterviews')}
       </option>
       <option value="TV &amp; Film|Film Reviews">
-        &nbsp;&nbsp;&nbsp;Film Reviews
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.filmReviews')}
       </option>
       <option value="TV &amp; Film|TV Reviews">
-        &nbsp;&nbsp;&nbsp;TV Reviews
+        &nbsp;&nbsp;&nbsp;{t('podcastCategories.tvReviews')}
       </option>
     </select>
   );

@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Icons from '../../../components/Icons';
+import { useI18n } from '../../../hooks';
 import Store from '../../../lib/Store';
 import signup from '../../../services/signup';
 
 export default function SignUp() {
+  const { t } = useI18n();
   // route navigation hook
   const history = useHistory();
 
@@ -51,12 +53,12 @@ export default function SignUp() {
             // navigate to start page
             history.push('/landing/start');
           } else {
-            alert(`Error signing you up\n${res.message}`);
+            alert(`${t('errorSigningUp')}\n${res.message}`);
             setLoading(false);
           }
         })
         .catch(() => {
-          alert('Snapod 服务暂时不可用\nService is currently unavailable');
+          alert(t('serviceUnavailable'));
           setLoading(false);
         });
     }
@@ -69,14 +71,16 @@ export default function SignUp() {
           <span role="img" aria-label="snapod-logo" className="mr-0.5">
             🎉
           </span>
-          Snapod
+          Signup
         </h1>
-        <p className="text-gray-400 text-sm ml-1 mt-1">创建你的 Snapod 账户</p>
+        <p className="text-gray-400 text-sm ml-1 mt-1">
+          {t('createYourAccount')}
+        </p>
       </div>
       <div className="w-full">
         <p className="w-full">
           <em className="ml-1 text-xs font-medium text-gray-500 not-italic">
-            昵称 / Name
+            {t('nickname')}
           </em>
           <input
             type="text"
@@ -89,13 +93,13 @@ export default function SignUp() {
           />
           {!validName && (
             <span className="text-xs text-gray-400 ml-1 mt-1">
-              用户名长度应在 1 到 30 个字符之间
+              {t('invalidName')}
             </span>
           )}
         </p>
         <p className="w-full mt-3">
           <em className="ml-1 text-xs font-medium text-gray-500 not-italic">
-            邮箱 / Email
+            {t('email')}
           </em>
           <input
             type="email"
@@ -108,13 +112,13 @@ export default function SignUp() {
           />
           {!validEmail && (
             <span className="text-xs text-gray-400 ml-1 mt-1">
-              请检查电子邮箱格式
+              {t('invalidEmail')}
             </span>
           )}
         </p>
         <p className="w-full mt-3">
           <em className="ml-1 text-xs font-medium text-gray-500 not-italic">
-            密码 / Password
+            {t('password')}
           </em>
           <span className="grid grid-cols-7 gap-x-1.5 mt-1">
             <input
@@ -145,7 +149,7 @@ export default function SignUp() {
           </span>
           {!validPwd && (
             <span className="text-xs text-gray-400 ml-1 mt-1">
-              密码长度应在 6 至 20 个字符之间
+              {t('invalidPassword')}
             </span>
           )}
         </p>
@@ -162,11 +166,11 @@ export default function SignUp() {
               <Icons name="spinner" />
             </span>
           ) : (
-            '注册 / Sign Up'
+            t('signUp')
           )}
         </button>
         <Link to="/landing/login" className="text-sm text-gray-400">
-          已有账户? 立刻登录 / Login
+          {t('alreadyHaveAccount')}
         </Link>
       </div>
     </div>

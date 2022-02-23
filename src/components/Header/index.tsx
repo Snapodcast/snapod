@@ -76,17 +76,19 @@ export default function Header() {
       </div>
       <div className="items-center flex justify-end text-gray-500 space-x-2">
         {embedPaths.indexOf(location.pathname) > -1 && (
-          <button
-            type="button"
-            className="focus:outline-none w-8 h-8 p-1 hover:bg-select active:bg-click active:text-neutral-600 dark:hover:bg-black dark:text-gray-200 rounded-md cursor-default flex items-center justify-center"
-            onClick={() => {
-              history.goBack();
-            }}
-          >
-            <span className="w-5 h-5 block">
-              <Icons name="back" />
-            </span>
-          </button>
+          <Tooltip content="Go Back">
+            <button
+              type="button"
+              className="focus:outline-none w-8 h-8 p-1 hover:bg-select active:bg-click active:text-neutral-600 dark:hover:bg-black dark:text-gray-200 rounded-md cursor-default flex items-center justify-center"
+              onClick={() => {
+                history.goBack();
+              }}
+            >
+              <span className="w-5 h-5 block">
+                <Icons name="back" />
+              </span>
+            </button>
+          </Tooltip>
         )}
         <Tooltip content="Home">
           <button

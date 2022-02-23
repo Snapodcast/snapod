@@ -12,8 +12,10 @@ import selectAudioFileAndUploadToCDN from '../../../lib/Upload/Audio';
 import Player from '../../../components/Player';
 import Switch from 'react-switch';
 import { useHistory } from 'react-router';
+import { useI18n } from '../../../hooks';
 
 export default function CreateEpisode() {
+  const { t } = useI18n();
   const podcastCuid = Store.get('currentPodcast.cuid');
   const history = useHistory();
   const [createEpisode] = useMutation(CREATE_EPISODE);
@@ -73,7 +75,7 @@ export default function CreateEpisode() {
       variables,
     })
       .then(() => {
-        alert(`创建成功`);
+        alert(t('successfullySavedAnEpisode'));
         if (draft) {
           setSaving(false);
         } else {
@@ -82,7 +84,7 @@ export default function CreateEpisode() {
         history.push('/snapod/manage/episodes');
       })
       .catch(() => {
-        alert(`创建失败\n请检查信息已填写完整`);
+        alert(t('failedToSave'));
         if (draft) {
           setSaving(false);
         } else {
@@ -93,7 +95,10 @@ export default function CreateEpisode() {
 
   return (
     <div className="mt-4 mb-14">
-      <Head title="新建播客节目" description="为你的播客新增一期音频节目" />
+      <Head
+        title={t('createNewEpisode')}
+        description={t('createNewEpisodeDescription')}
+      />
       <div className="flex justify-center items-center w-full">
         <div className="flex absolute bottom-5 z-10 gap-x-3">
           <button
@@ -107,10 +112,10 @@ export default function CreateEpisode() {
             }}
           >
             {uploading || audioUploading
-              ? '草稿暂不可存'
+              ? t('cannotSaveDraft')
               : saving
-              ? '保存中...'
-              : '保存草稿'}
+              ? t('saving')
+              : t('saveAsDraft')}
           </button>
           <button
             className="bg-blue-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white hover:bg-blue-600"
@@ -123,10 +128,10 @@ export default function CreateEpisode() {
             }}
           >
             {uploading || audioUploading
-              ? '上传中...'
+              ? t('uploading')
               : creating
-              ? '创建中...'
-              : '完成新建'}
+              ? t('saving')
+              : t('finish')}
           </button>
         </div>
       </div>
@@ -164,14 +169,14 @@ export default function CreateEpisode() {
                   <Icons name="microphone" />
                 </span>
                 <br />
-                <span>可选 Optional</span>
+                <span>{t('optional')}</span>
               </span>
             )}
           </button>
           {uploading && (
             <div className="flex justify-center">
               <span className="bg-blue-500 py-1 px-3 text-xs text-white rounded-xl absolute -mt-9 shadow-lg">
-                上传中...
+                {t('uploading')}
               </span>
             </div>
           )}
@@ -180,8 +185,8 @@ export default function CreateEpisode() {
           <div>
             <Input
               disabled={uploading || audioUploading}
-              name="节目标题 / Title"
-              placeholder="节目标题"
+              name={t('episodeTitle')}
+              placeholder={t('episodeTitle')}
               onChange={(e: { target: { value: any } }) => {
                 setInfo({
                   ...episodeInfo,
@@ -194,7 +199,7 @@ export default function CreateEpisode() {
             <div className="flex-1">
               <span className="flex items-center">
                 <em className="ml-1 text-xs font-medium text-gray-500 dark:text-gray-300 not-italic flex-1">
-                  节目类型 / Episode Type
+                  {t('episodeType')}
                 </em>
               </span>
               <select
@@ -206,17 +211,17 @@ export default function CreateEpisode() {
                 className="mt-1 tracking-wide dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
               >
                 <option value="" disabled>
-                  选择节目类型...
+                  {t('chooseEpisodeType')}
                 </option>
-                <option value="full">完整 (Full)</option>
-                <option value="trailer">先导 (Trailer)</option>
-                <option value="bonus">特别 (Bonus)</option>
+                <option value="full">{t('full')}</option>
+                <option value="trailer">{t('trailer')}</option>
+                <option value="bonus">{t('bonus')}</option>
               </select>
             </div>
             <div className="flex-1">
               <span className="flex items-center">
                 <em className="ml-1 text-xs font-medium text-gray-500 dark:text-gray-300 not-italic flex-1">
-                  节目评级 / Rating
+                  {t('episodeRating')}
                 </em>
               </span>
               <select
@@ -231,14 +236,10 @@ export default function CreateEpisode() {
                 className="mt-1 tracking-wide focus:outline-none dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
               >
                 <option value="" disabled>
-                  选择内容评级...
+                  {t('chooseEpisodeRating')}
                 </option>
-                <option value="false">
-                  包含潜在不当内容 (Explicit content)
-                </option>
-                <option value="true">
-                  不包含潜在不当内容 (No explicit content)
-                </option>
+                <option value="false">{t('explicit')}</option>
+                <option value="true">{t('noExplicit')}</option>
               </select>
             </div>
           </div>
@@ -265,7 +266,7 @@ export default function CreateEpisode() {
                   </span>
                 </p>
                 <p className="text-xs whitespace-nowrap flex text-gray-500 items-center">
-                  选择一个{' '}
+                  {t('chooseA')}{' '}
                   <span className="flex gap-x-1 mx-2">
                     <em className="not-italic rounded-md px-1 bg-gray-50 dark:bg-gray-400 border border-gray-300 dark:border-0 dark:text-gray-700">
                       .mp3
@@ -274,7 +275,7 @@ export default function CreateEpisode() {
                       .m4a
                     </em>
                   </span>{' '}
-                  音频文件以上传
+                  {t('audioFileToUpload')}
                 </p>
               </div>
             ) : (
@@ -302,7 +303,7 @@ export default function CreateEpisode() {
                   aria-label="select audio file"
                   className="reupload-btn border-t w-full py-1 rounded-bl-lg rounded-br-lg text-center text-xs mt-1 pt-1 text-gray-500 bg-gray-100 hover:bg-gray-200"
                 >
-                  重新选择 / Reselect
+                  {t('chooseAnother')}
                 </button>
               </div>
             )}
@@ -314,7 +315,7 @@ export default function CreateEpisode() {
           <div className="flex-1">
             <span className="flex items-center">
               <em className="ml-1 text-xs font-medium text-gray-500 dark:text-gray-300 not-italic flex-1">
-                节目季数 / Season Number
+                {t('seasonNumber')}
               </em>
               <Switch
                 disabled={uploading || audioUploading}
@@ -335,7 +336,7 @@ export default function CreateEpisode() {
             </span>
             <input
               disabled={!episodeInfo.useSeason || uploading || audioUploading}
-              placeholder="仅季集类型播客可用"
+              placeholder={t('serialPodcastOnly')}
               type="number"
               min="0"
               onChange={(e: { target: { value: any } }) => {
@@ -350,7 +351,7 @@ export default function CreateEpisode() {
           <div className="flex-1">
             <Input
               disabled={uploading || audioUploading}
-              name="节目期数 / Episode Number"
+              name={t('episodeNumber')}
               type="number"
               min="0"
               placeholder="1, 2..."
@@ -367,7 +368,7 @@ export default function CreateEpisode() {
       <section className="m-5">
         <span className="flex items-center">
           <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
-            节目描述 / Show Notes
+            {t('showNotes')}
           </em>
         </span>
         <div
@@ -382,7 +383,7 @@ export default function CreateEpisode() {
         >
           <Editor
             readOnly={uploading || audioUploading}
-            placeholder="节目描述..."
+            placeholder={t('episodeNotes')}
             onChange={(value) => {
               setInfo({
                 ...episodeInfo,

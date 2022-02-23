@@ -5,8 +5,10 @@ import Store from '../../../lib/Store';
 import Icons from '../../../components/Icons';
 import { GET_PREVIEW, IMPORT_PODCAST } from '../../../lib/GraphQL/queries';
 import { useLazyQuery, useMutation } from '@apollo/client';
+import { useI18n } from '../../../hooks';
 
 export default function ImportPodcast() {
+  const { t } = useI18n();
   const history = useHistory();
   const authorCuid = Store.get('currentUser.cuid');
 
@@ -33,11 +35,11 @@ export default function ImportPodcast() {
         Store.set({
           currentPodcast: res.data.importPodcast,
         });
-        alert(`导入成功`);
+        alert(t('podcastImported'));
         history.push('/snapod');
       })
       .catch(() => {
-        alert(`导入失败\n订阅地址解析可能不正常`);
+        alert(t('errorImportingPodcast'));
         setImporting(false);
       });
   };
@@ -68,10 +70,10 @@ export default function ImportPodcast() {
             <span role="img" aria-label="snapod-logo" className="mr-1">
               🗂️
             </span>
-            导入播客
+            {t('importAPodcast')}
           </h2>
           <span className="text-gray-500 text-sm">
-            步骤 {previewing ? 2 : 1} / 2
+            {t('step')} {previewing ? 2 : 1} / 2
           </span>
         </div>
         {!previewing ? (
@@ -79,7 +81,7 @@ export default function ImportPodcast() {
             <p className="w-full mt-5">
               <span className="flex items-center">
                 <em className="ml-1 text-xs font-medium text-gray-500 not-italic flex-1">
-                  RSS 地址 / Podcast RSS URL
+                  {t('rssAddress')}
                 </em>
               </span>
               <input
@@ -93,7 +95,7 @@ export default function ImportPodcast() {
                 className="mt-1 tracking-wide focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-3 text-gray-700"
               />
               <span className="text-xs text-gray-400 ml-1 mt-1">
-                RSS 地址须于外网可用
+                {t('rssAddressDescription')}
               </span>
             </p>
             <button
@@ -102,7 +104,7 @@ export default function ImportPodcast() {
               type="button"
               onClick={doPreview}
             >
-              下一步 →
+              {t('nextStep')} →
             </button>
           </div>
         ) : (
@@ -117,12 +119,12 @@ export default function ImportPodcast() {
               <div>
                 {error || !data ? (
                   <div className="bg-gray-100 text-gray-500 justify-center text-sm h-20 mt-6 rounded-md flex items-center">
-                    <p>RSS 暂时无法解析</p>
+                    <p>{t('cannotParseRss')}</p>
                   </div>
                 ) : (
                   <div>
                     <p className="text-gray-500 text-sm tracking-wide">
-                      请确认导入播客的信息。部分地址的解析可能无法完全匹配，导入后可重新修改播客与节目详情。现在就完成导入吧...
+                      {t('confirmPodcastImport')}
                     </p>
                     <div className="mb-3 mt-5 rounded-md border dark:border-gray-500 shadow-sm flex podcast-item dark:bg-darkBg dark:hover:bg-black">
                       <div
@@ -186,7 +188,7 @@ export default function ImportPodcast() {
                       setPreview(false);
                     }}
                   >
-                    ← 上一步
+                    ← {t('previousStep')}
                   </button>
                   <button
                     aria-label="next step"
@@ -201,7 +203,7 @@ export default function ImportPodcast() {
                         <Icons name="spinner" />
                       </span>
                     ) : (
-                      '完成导入 →'
+                      `${t('finishImport')} →`
                     )}
                   </button>
                 </div>

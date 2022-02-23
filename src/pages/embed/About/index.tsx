@@ -3,8 +3,10 @@ import Head from '../../../components/Head';
 import snapodLogo from '../../../public/snapod_logo.png';
 import Store from '../../../lib/Store';
 import configs from '../../../configs';
+import { useI18n } from '../../../hooks';
 
 export default function AboutPage() {
+  const { t } = useI18n();
   const appVersion = window.require('electron').remote.app.getVersion();
   const [apiVersion, setApiVersion] = React.useState();
 
@@ -19,7 +21,10 @@ export default function AboutPage() {
 
   return (
     <div className="my-4 mx-5">
-      <Head title="关于此版本" description="查看此版本的关于信息" />
+      <Head
+        title={t('aboutPageTitle')}
+        description={t('aboutPageDescription')}
+      />
       <div>
         <div className="flex items-center gap-x-2 text-gray-600 dark:text-white text-2xl font-medium">
           <img
@@ -30,7 +35,7 @@ export default function AboutPage() {
           <h1>Snapod</h1>
         </div>
         <p className="text-gray-500 dark:text-gray-100 text-sm mt-0.5 pl-0.5">
-          A better independent podcast hosting platform
+          {t('slogan')}
         </p>
 
         <div className="text-gray-500 dark:text-gray-300 mt-8 text-sm">

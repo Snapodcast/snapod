@@ -1,3 +1,4 @@
+/* This file is ported from  */
 /* eslint-disable react/require-default-props */
 /* eslint-disable array-callback-return */
 /* eslint-disable jsx-a11y/media-has-caption */
@@ -11,6 +12,7 @@ import WaveSurfer from 'wavesurfer.js';
 import { FaPlay, FaUndo, FaRedo, FaPause } from 'react-icons/fa';
 import { useEffectOnce } from 'react-use';
 import Icons from '../Icons';
+import { useI18n } from '../../hooks';
 
 export default function Player(props: {
   playBackSpeedOptions?: number[];
@@ -26,6 +28,7 @@ export default function Player(props: {
   imgStyles?: React.CSSProperties;
   audioUrl: string | undefined;
 }) {
+  const { t } = useI18n();
   const waveformRef: any = useRef();
   const trackRef: any = useRef(); // Separated track playing from waveplayer to support bigger audio files
   const [waveSurfer, setWaveSurfer] = useState<any>(null); // Holds the reference to created wavesurfer object
@@ -157,7 +160,7 @@ export default function Player(props: {
             )}
             {error && (
               <p className="text-center text-sm text-gray-500 -mt-5">
-                音频无法加载/识别
+                {t('failedToLoadAudio')}
               </p>
             )}
           </div>

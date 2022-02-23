@@ -5,6 +5,7 @@ import { ipcRenderer } from 'electron';
 import Store from './lib/Store';
 // Utilities
 import { HeadContextProvider } from './lib/Context/head';
+import { PodcastContextProvider } from './lib/Context/podcast';
 import { getCurrentAppVersion } from './utilities/version';
 // Components
 import Header from './components/Header';
@@ -100,6 +101,23 @@ export default function App() {
     };
   });
 
+  /* Podcast Info */
+  const [podcastName, setName] = React.useState<string>(
+    Store.get('currentPodcast.name')
+  );
+  const [podcastCuid, setCuid] = React.useState<string>(
+    Store.get('currentPodcast.cuid')
+  );
+  const podcastInfoValue = React.useMemo(
+    () => ({
+      name: podcastName,
+      cuid: podcastCuid,
+      setName,
+      setCuid,
+    }),
+    [podcastName, podcastCuid]
+  );
+
   return (
     <MemoryRouter>
       {/* Entry */}
@@ -136,60 +154,65 @@ export default function App() {
       </Route>
       {/* Podcast */}
       <Route path="/snapod">
-        <div className="flex w-full h-full transition-all snapod animate-firstShow">
-          <Aside />
-          <div className="absolute bg-white z-10 main h-full main left-220" />
-          <main
-            className={`main h-full bg-white dark:bg-darkMain z-30 absolute ${
-              // eslint-disable-next-line no-nested-ternary
-              extend === 'true'
-                ? 'animate-extendMainBody'
-                : extend === 'unset'
-                ? 'left-220'
-                : 'animate-restoreMainBody'
-            }`}
-          >
-            <HeadContextProvider value={headValue}>
-              <Header />
-              <section className="body p-4 z-20">
-                <Route path="/snapod">
-                  <Redirect to="/snapod/start" />
-                </Route>
-                <Route path="/snapod/start" component={Start} />
-                <Route
-                  path="/snapod/create/episode"
-                  component={CreateEpisode}
-                />
-                <Route
-                  path="/snapod/manage/podcast"
-                  component={ManagePodcast}
-                />
-                <Route path="/snapod/reset" component={Reset} />
-                <Route path="/snapod/manage/episodes" component={EpisodeList} />
-                <Route
-                  path="/snapod/manage/episode"
-                  component={ManageEpisode}
-                />
-                <Route
-                  path="/snapod/manage/metrics"
-                  component={ManageMetrics}
-                />
-                <Route path="/snapod/manage/site" component={ManageSite} />
-                <Route
-                  path="/snapod/settings/distributions"
-                  component={DistributionSettings}
-                />
-                <Route
-                  path="/snapod/settings/podcast"
-                  component={PodcastSettings}
-                />
-                <Route path="/snapod/settings/app" component={AppSettings} />
-                <Route path="/snapod/helpCenter" component={HelpCenter} />
-                <Route path="/snapod/about" component={AboutPage} />
-              </section>
-            </HeadContextProvider>
-          </main>
-        </div>
+        <PodcastContextProvider value={podcastInfoValue}>
+          <div className="flex w-full h-full transition-all snapod animate-firstShow">
+            <Aside />
+            <div className="absolute bg-white z-10 main h-full main left-220" />
+            <main
+              className={`main h-full bg-white dark:bg-darkMain z-30 absolute ${
+                // eslint-disable-next-line no-nested-ternary
+                extend === 'true'
+                  ? 'animate-extendMainBody'
+                  : extend === 'unset'
+                  ? 'left-220'
+                  : 'animate-restoreMainBody'
+              }`}
+            >
+              <HeadContextProvider value={headValue}>
+                <Header />
+                <section className="body p-4 z-20">
+                  <Route path="/snapod">
+                    <Redirect to="/snapod/start" />
+                  </Route>
+                  <Route path="/snapod/start" component={Start} />
+                  <Route
+                    path="/snapod/create/episode"
+                    component={CreateEpisode}
+                  />
+                  <Route
+                    path="/snapod/manage/podcast"
+                    component={ManagePodcast}
+                  />
+                  <Route path="/snapod/reset" component={Reset} />
+                  <Route
+                    path="/snapod/manage/episodes"
+                    component={EpisodeList}
+                  />
+                  <Route
+                    path="/snapod/manage/episode"
+                    component={ManageEpisode}
+                  />
+                  <Route
+                    path="/snapod/manage/metrics"
+                    component={ManageMetrics}
+                  />
+                  <Route path="/snapod/manage/site" component={ManageSite} />
+                  <Route
+                    path="/snapod/settings/distributions"
+                    component={DistributionSettings}
+                  />
+                  <Route
+                    path="/snapod/settings/podcast"
+                    component={PodcastSettings}
+                  />
+                  <Route path="/snapod/settings/app" component={AppSettings} />
+                  <Route path="/snapod/helpCenter" component={HelpCenter} />
+                  <Route path="/snapod/about" component={AboutPage} />
+                </section>
+              </HeadContextProvider>
+            </main>
+          </div>
+        </PodcastContextProvider>
       </Route>
     </MemoryRouter>
   );

@@ -1,7 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useI18n } from '../../../hooks';
 
 export default function OfflinePage() {
+  const { t } = useI18n();
   const history = useHistory();
 
   /* Online status detection */
@@ -18,11 +20,11 @@ export default function OfflinePage() {
           </span>
         </h1>
         <p className="text-gray-500 dark:text-white text-sm mt-1.5 transition-all">
-          请检查互联网连接
+          {t('checkInternet')}
         </p>
       </div>
       <div className="justify-center text-center mt-5 text-gray-600">
-        <p>Snapod 需要互联网连接以正常运行</p>
+        <p>{t('snapodRequiresInternet')}</p>
       </div>
     </div>
   );
