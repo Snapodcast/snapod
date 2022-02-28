@@ -10,8 +10,10 @@ import Head from '../../../components/Head';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { motion } from 'framer-motion';
 import { Motion } from '../../../constants';
+import { useI18n } from '../../../hooks';
 
 export default function EpisodeList() {
+  const { t } = useI18n();
   const podcastCuid = Store.get('currentPodcast.cuid');
   const history = useHistory();
   const { loading, error, data, refetch } = useQuery(GET_EPISODES, {
@@ -25,7 +27,7 @@ export default function EpisodeList() {
   const doDelete = async (episodeCuid: string) => {
     setDeletingCuid(deletingCuid);
     setDeleting(true);
-    if (window.confirm('请确认删除\n此操作将不可重做')) {
+    if (window.confirm(t('pleaseConfirmDelete'))) {
       await deleteEpisode({
         variables: {
           episodeCuid,
@@ -34,13 +36,13 @@ export default function EpisodeList() {
         .then(async () => {
           setDeleting(false);
           setDeletingCuid('');
-          alert('删除成功');
+          alert(t('successfullyDeleted'));
           await refetch();
         })
         .catch(() => {
           setDeleting(false);
           setDeletingCuid('');
-          alert(`删除失败`);
+          alert(t('errorDeleting'));
         });
     } else {
       setDeleting(false);
@@ -75,7 +77,7 @@ export default function EpisodeList() {
                 refetch();
               }}
             >
-              重新加载
+              {t('reload')}
             </button>
           </div>
         </div>
@@ -84,7 +86,10 @@ export default function EpisodeList() {
 
   return (
     <div className="my-4 mx-5">
-      <Head title="管理节目列表" description="查看和修改全部播客节目" />
+      <Head
+        title={t('manageEpisodeListTitle')}
+        description={t('manageEpisodeListDescription')}
+      />
       {data && data.episodes.length > 0 ? (
         <div className="mb-5">
           <motion.ul
@@ -143,28 +148,30 @@ export default function EpisodeList() {
                         <em className="w-4 h-4">
                           <Icons name="online" />
                         </em>
-                        已发布
+                        {t('published')}
                       </div>
                     ) : (
                       <div className="flex gap-x-1">
                         <em className="w-4 h-4">
                           <Icons name="offline" />
                         </em>
-                        草稿
+                        {t('draft')}
                       </div>
                     )}
                     {episode.profile.season_number && (
                       <div>{episode.profile.season_number}</div>
                     )}
-                    <div>第 {episode.profile.episode_number} 期</div>
+                    <div>EP {episode.profile.episode_number}</div>
                     <div className="capitalize">
                       {episode.profile.episode_type === 'full'
-                        ? '完整节目'
+                        ? t('full')
                         : episode.profile.episode_type === 'trailer'
-                        ? '先导节目'
-                        : '特别节目'}
+                        ? t('trailer')
+                        : t('bonus')}
                     </div>
-                    <div>{episode.profile.audio_duration || '时长未知'}</div>
+                    <div>
+                      {episode.profile.audio_duration || t('unknownDuration')}
+                    </div>
                   </div>
                 </div>
                 <div
@@ -203,7 +210,7 @@ export default function EpisodeList() {
                 history.push('/snapod/create/episode');
               }}
             >
-              创建新节目 →
+              {t('createANewEpisode')} →
             </button>
           </div>
         </div>

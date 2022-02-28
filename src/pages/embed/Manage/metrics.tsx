@@ -15,6 +15,7 @@ import Head from '../../../components/Head';
 import { GET_EPISODES_TITLE } from '../../../lib/GraphQL/queries';
 import { useQuery } from '@apollo/client';
 import formatEpisodesPlaysData from '../../../utilities/format/episodesPlaysData';
+import { useI18n } from '../../../hooks';
 
 const fetchData = async (
   setLoading: any,
@@ -62,6 +63,7 @@ const fetchData = async (
 };
 
 export default function ManageMetrics() {
+  const { t } = useI18n();
   const podcastCuid = Store.get('currentPodcast.cuid');
 
   /* Date picker */
@@ -134,7 +136,7 @@ export default function ManageMetrics() {
       },
       meta: {
         plays: {
-          alias: '总播放量',
+          alias: t('totalPlays'),
         },
       },
     },
@@ -149,7 +151,7 @@ export default function ManageMetrics() {
       barWidthRatio: 0.5,
       meta: {
         plays: {
-          alias: '播放量',
+          alias: t('plays'),
         },
       },
     },
@@ -181,13 +183,13 @@ export default function ManageMetrics() {
             fontSize: 16,
           },
           formatter: function formatter() {
-            return '收听设备';
+            return t('listeningDevices');
           },
         },
       },
       meta: {
         plays: {
-          alias: '播放量',
+          alias: t('plays'),
         },
       },
     },
@@ -219,13 +221,13 @@ export default function ManageMetrics() {
             fontSize: 16,
           },
           formatter: function formatter() {
-            return '收听平台';
+            return t('listeningPlatforms');
           },
         },
       },
       meta: {
         plays: {
-          alias: '播放量',
+          alias: t('plays'),
         },
       },
     },
@@ -239,7 +241,7 @@ export default function ManageMetrics() {
       scrollbar: { type: 'horizontal' },
       meta: {
         plays: {
-          alias: '播放量',
+          alias: t('plays'),
         },
       },
     },
@@ -324,9 +326,11 @@ export default function ManageMetrics() {
         <div className="flex items-center">
           <div className="flex-1">
             <h1 className="text-base font-medium -mb-0.5 dark:text-white">
-              播客播放量统计
+              {t('analyticsPlaysSectionTitle')}
             </h1>
-            <p className="text-xs text-gray-600 dark:text-gray-300">Plays</p>
+            <p className="text-xs text-gray-600 dark:text-gray-300">
+              {t('analyticsPlaysSectionDescription')}
+            </p>
           </div>
           <div className="flex gap-x-3 items-center">
             <div className="flex">
@@ -341,7 +345,7 @@ export default function ManageMetrics() {
                 </span>
                 {startDate && endDate
                   ? `${toDateString(startDate)} - ${toDateString(endDate)}`
-                  : '选择日期区间'}
+                  : t('selectDateRange')}
               </button>
               {showPicker && (
                 <DatePicker
@@ -376,9 +380,9 @@ export default function ManageMetrics() {
                   );
                 }}
               >
-                <option value="86400000">按日 / Daily</option>
-                <option value="604800000">按周 / Weekly</option>
-                <option value="2678400000">按月 / Monthly</option>
+                <option value="86400000">{t('byDay')}</option>
+                <option value="604800000">{t('byWeek')}</option>
+                <option value="2678400000">{t('byMonth')}</option>
               </select>
             </div>
           </div>
@@ -389,7 +393,7 @@ export default function ManageMetrics() {
           </div>
         ) : (
           <div className="mt-5 flex items-center justify-center bg-gray-100 rounded-md h-12">
-            <p className="text-gray-500 text-sm">暂无数据 / Not enough data</p>
+            <p className="text-gray-500 text-sm">{t('notEnoughData')}</p>
           </div>
         )}
       </section>
@@ -397,10 +401,10 @@ export default function ManageMetrics() {
         <div className="flex items-center">
           <div className="flex-1">
             <h1 className="text-base font-medium -mb-0.5 dark:text-white">
-              节目播放量统计
+              {t('analyticsPlaysByEpisodeSectionTitle')}
             </h1>
             <p className="text-xs text-gray-600 dark:text-gray-300">
-              Plays by episode
+              {t('analyticsPlaysByEpisodeSectionDescription')}
             </p>
           </div>
         </div>
@@ -410,7 +414,7 @@ export default function ManageMetrics() {
           </div>
         ) : (
           <div className="mt-5 flex items-center justify-center bg-gray-100 rounded-md h-12">
-            <p className="text-gray-500 text-sm">暂无数据 / Not enough data</p>
+            <p className="text-gray-500 text-sm">{t('notEnoughData')}</p>
           </div>
         )}
       </section>
@@ -418,10 +422,10 @@ export default function ManageMetrics() {
         <div className="flex items-center">
           <div className="flex-1">
             <h1 className="text-base font-medium -mb-0.5 dark:text-white">
-              听众地理信息
+              {t('analyticsListenerGeoSectionTitle')}
             </h1>
             <p className="text-xs text-gray-600 dark:text-gray-300">
-              Geographic location
+              {t('analyticsListenerGeoSectionDescription')}
             </p>
           </div>
         </div>
@@ -431,7 +435,7 @@ export default function ManageMetrics() {
           </div>
         ) : (
           <div className="mt-5 flex items-center justify-center bg-gray-100 rounded-md h-12">
-            <p className="text-gray-500 text-sm">暂无数据 / Not enough data</p>
+            <p className="text-gray-500 text-sm">{t('notEnoughData')}</p>
           </div>
         )}
       </section>
@@ -439,10 +443,10 @@ export default function ManageMetrics() {
         <div className="flex items-center">
           <div className="flex-1">
             <h1 className="text-base font-medium -mb-0.5 dark:text-white">
-              听众设备及平台信息
+              {t('analyticsListenerDevicesAndPlatformSectionTitle')}
             </h1>
             <p className="text-xs text-gray-600 dark:text-gray-300">
-              Listening devices and platforms
+              {t('analyticsListenerDevicesAndPlatformSectionDescription')}
             </p>
           </div>
         </div>
@@ -455,7 +459,7 @@ export default function ManageMetrics() {
           </div>
         ) : (
           <div className="mt-5 flex items-center justify-center bg-gray-100 rounded-md h-12">
-            <p className="text-gray-500 text-sm">暂无数据 / Not enough data</p>
+            <p className="text-gray-500 text-sm">{t('notEnoughData')}</p>
           </div>
         )}
       </section>
