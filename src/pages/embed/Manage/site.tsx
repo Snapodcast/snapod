@@ -12,8 +12,10 @@ import { useHistory } from 'react-router';
 import SnapodLogoImage from '../../../public/snapod_logo.png';
 import NetlifyLogoImage from '../../../public/netlify_logo.png';
 import Configs from '../../../configs';
+import { useI18n } from '../../../hooks';
 
 export default function ManageSite() {
+  const { t } = useI18n();
   const podcastCuid = Store.get('currentPodcast.cuid');
   const history = useHistory();
   const [podcastInfo, setInfo] = React.useState<{
@@ -54,11 +56,11 @@ export default function ManageSite() {
       variables,
     })
       .then(() => {
-        alert('启用成功');
+        alert(t('successfullyActivated'));
         history.push('/snapod/reset');
       })
       .catch(() => {
-        alert(`启用失败`);
+        alert(t('errorActivating'));
         setActivating(false);
       });
   };
@@ -75,11 +77,11 @@ export default function ManageSite() {
       variables,
     })
       .then(() => {
-        alert('提交成功');
+        alert(t('successfullySubmitted'));
         history.push('/snapod/reset');
       })
       .catch(() => {
-        alert(`提交失败`);
+        alert(t('errorSubmitting'));
         setSaving(false);
       });
   };
@@ -112,7 +114,7 @@ export default function ManageSite() {
                 refetch();
               }}
             >
-              重新加载
+              {t('reload')}
             </button>
           </div>
         </div>
@@ -124,7 +126,10 @@ export default function ManageSite() {
   if (!data.podcast.profile.snapod_site_url) {
     return (
       <div className="my-4 mx-5">
-        <Head title="开启播客站点" description="为你的播客创建一个独立站点" />
+        <Head
+          title={t('activateSnapodSiteTitle')}
+          description={t('activateSnapodSiteDescription')}
+        />
         <div className="flex justify-center items-center w-full">
           <div className="flex absolute bottom-5 z-10 gap-x-3">
             <button
@@ -135,7 +140,7 @@ export default function ManageSite() {
                 doActivate();
               }}
             >
-              {activating ? '提交中...' : '同意并启用'}
+              {activating ? t('submitting') : t('acceptAndActivate')}
             </button>
           </div>
         </div>
@@ -165,30 +170,16 @@ export default function ManageSite() {
             <div>
               <div className="mb-8 text-center">
                 <h1 className="text-2xl text-gray-700 dark:text-white font-medium mb-0.5 tracking-wide">
-                  Snapod 播客站点
+                  {t('snapodSite')}
                 </h1>
                 <p className="text-sm tracking-wide text-gray-500 dark:text-gray-300">
-                  Snapod Site
+                  {t('snapodSiteDescription')}
                 </p>
               </div>
               <div className="text-sm text-gray-600">
-                <p className="mb-1.5">
-                  Snapod Site 是 Snapod
-                  提供的播客站点生成、托管服务，借助领先的云服务平台 Netlify
-                  提供的站点部署、CDN 及其他有关服务，面向在 Snapod
-                  平台上新建或导入的播客开放。
-                </p>
-                <p className="mb-1.5">
-                  在你的使用过程中，Snapod 将无法对播客、节目信息及相关数据
-                  (不含密码等隐私内容) 的安全、完整性负责。第三方平台 (Netlify
-                  及其合作伙伴) 可能会对以上信息进行储存、展示和传播，Snapod
-                  将无法做出任何限制。
-                </p>
-                <p>
-                  请在开启此功能前知悉并同意以上内容以确保你的权益得到保障。同意并开启
-                  Snapod Site
-                  后此播客将获得一个唯一站点地址，你也可在稍后进行自定义域名绑定。
-                </p>
+                <p className="mb-1.5">{t('snapodSiteIntroSectionOne')}</p>
+                <p className="mb-1.5">{t('snapodSiteIntroSectionTwo')}</p>
+                <p>{t('snapodSiteIntroSectionThree')}</p>
               </div>
             </div>
           </section>
@@ -199,19 +190,22 @@ export default function ManageSite() {
 
   return (
     <div className="my-4 mx-5">
-      <Head title="管理播客站点" description="修改播客站点设置与自定义域名" />
+      <Head
+        title={t('manageSnapodSiteTitle')}
+        description={t('manageSnapodSiteDescription')}
+      />
       <section className="border rounded-md py-5 text-center">
         <h1 className="text-lg font-medium mb-3 flex gap-x-2 justify-center items-center dark:text-white">
           <span className="w-5 h-5">
             <Icons name="globe" />
           </span>
-          播客站点 / Snapod Site
+          {t('snapodSite')}
         </h1>
         {data.podcast.profile.snapod_site_custom_url ? (
           <div className="rounded-md border text-sm inline-block text-gray-600 shadow-sm">
             <p className="border-b py-2 px-3.5 flex gap-2 items-center">
               <span className="rounded-full bg-green-500 text-white text-xs h-5 px-2 flex items-center">
-                Default
+                {t('default')}
               </span>
               <span className="dark:text-gray-300">
                 {data.podcast.profile.snapod_site_url}
@@ -219,7 +213,7 @@ export default function ManageSite() {
             </p>
             <p className="py-2 px-3.5 flex gap-2 items-center">
               <span className="rounded-full bg-yellow-500 text-white text-xs h-5 px-2 flex items-center">
-                Custom
+                {t('custom')}
               </span>
               <span className="dark:text-gray-300">
                 https://
@@ -231,7 +225,7 @@ export default function ManageSite() {
           <div className="inline-block shadow-sm">
             <p className="rounded-md border py-2 px-3.5 gap-2 items-center text-sm flex text-gray-600">
               <span className="rounded-full bg-green-500 text-white text-xs h-5 px-2 flex items-center">
-                Default
+                {t('default')}
               </span>
               {data.podcast.profile.snapod_site_url}
             </p>
@@ -242,15 +236,14 @@ export default function ManageSite() {
         <div className="flex-1 border rounded-lg px-3 py-3.5">
           <span className="flex items-center">
             <em className="ml-1 text-base font-medium text-gray-500 dark:text-white not-italic">
-              自定义域名
+              {t('customDomainTitle')}
             </em>
             <em className="ml-1 text-sm font-medium text-gray-400 dark:text-gray-300 not-italic">
-              Custom Domain
+              {t('customDomainDescription')}
             </em>
           </span>
           <p className="text-xs text-gray-500 mx-1 py-2">
-            域名格式为 <code>example.com</code>, 不含 <code>http</code> 或{' '}
-            <code>https://</code>, 如 <code>snapodcast.com</code>。
+            {t('customDomainFormat')}
           </p>
           <div>
             <input
@@ -277,7 +270,7 @@ export default function ManageSite() {
                   doModifyDomain(false);
                 }}
               >
-                {saving ? '提交中...' : '提交域名'}
+                {saving ? t('submitting') : t('submitDomain')}
               </button>
               <button
                 disabled={saving || activating}
@@ -288,7 +281,7 @@ export default function ManageSite() {
                   doModifyDomain(true);
                 }}
               >
-                重置 / Reset
+                {t('reset')}
               </button>
             </p>
           </div>
@@ -297,21 +290,22 @@ export default function ManageSite() {
           <div className="flex-1 border rounded-lg px-3 py-3.5">
             <span className="flex items-center">
               <em className="ml-1 text-base font-medium text-gray-500 dark:text-white not-italic">
-                自定义域名配置指南
+                {t('customDomainConfigurationGuide')}
               </em>
               <em className="ml-1 text-sm font-medium text-gray-400 dark:text-gray-300 not-italic">
-                Configuration Guide
+                {t('customDomainConfigurationGuideDescription')}
               </em>
+              ``
             </span>
             <div className="text-xs text-gray-500 mx-1 py-2">
               <p>
-                提交后请前往域名注册/解析服务提供方配置{' '}
+                {t('addADns')}{' '}
                 <b>
                   {podcastInfo.snapod_site_custom_url.split('.').length >= 3
                     ? 'CNAME'
                     : 'A'}
                 </b>{' '}
-                解析记录, 预计在 24 小时内生效
+                {t('record')}
                 {podcastInfo.snapod_site_custom_url ? ':' : '。'}
               </p>
               {podcastInfo.snapod_site_custom_url && (

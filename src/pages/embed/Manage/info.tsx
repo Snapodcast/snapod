@@ -11,8 +11,10 @@ import Icons from '../../../components/Icons';
 import selectImageAndUploadToCDN from '../../../lib/Upload/Image';
 import { useHistory } from 'react-router';
 import { PodcastContext } from '../../../lib/Context';
+import { useI18n } from '../../../hooks';
 
 export default function ManagePodcast() {
+  const { t } = useI18n();
   const podcastCuid = Store.get('currentPodcast.cuid');
   const { setName } = useContext(PodcastContext);
   const history = useHistory();
@@ -81,10 +83,10 @@ export default function ManagePodcast() {
           Store.set('currentPodcast.name', res.data.modifyPodcast.name);
           setName(res.data.modifyPodcast.name);
           setSavable(false);
-          alert('修改成功');
+          alert(t('successfullyModified'));
         })
         .catch(() => {
-          alert(`修改失败`);
+          alert(t('errorModifying'));
         });
       setSaving(false);
     }
@@ -130,7 +132,7 @@ export default function ManagePodcast() {
                 refetch();
               }}
             >
-              重新加载
+              {t('reload')}
             </button>
           </div>
         </div>
@@ -140,7 +142,10 @@ export default function ManagePodcast() {
 
   return (
     <div className="mt-4 mb-14">
-      <Head title="管理播客信息" description="修改播客信息和元数据" />
+      <Head
+        title={t('manageInfoTitle')}
+        description={t('manageInfoDescription')}
+      />
       {savable && (
         <div className="flex justify-center items-center w-full">
           <div className="flex absolute bottom-5 z-10 gap-x-3">
@@ -152,7 +157,7 @@ export default function ManagePodcast() {
                 history.push('/snapod/reset');
               }}
             >
-              重置
+              {t('reset')}
             </button>
             <button
               className="bg-blue-500 tracking-wide text-center text-sm py-1 px-5 shadow-lg rounded-2xl whitespace-nowrap text-white hover:bg-blue-600"
@@ -162,7 +167,11 @@ export default function ManagePodcast() {
                 doSave();
               }}
             >
-              {saving ? '保存中...' : uploading ? '上传中...' : '保存更改'}
+              {saving
+                ? t('saving')
+                : uploading
+                ? t('uploading')
+                : t('saveChanges')}
             </button>
           </div>
         </div>
@@ -194,14 +203,14 @@ export default function ManagePodcast() {
                   <Icons name="microphone" />
                 </span>
                 <br />
-                <span>封面图 Cover Art</span>
+                <span>{t('coverArt')}</span>
               </span>
             )}
           </button>
           {uploading && (
             <div className="flex justify-center">
               <span className="bg-blue-500 py-1 px-3 text-xs text-white rounded-xl absolute -mt-9 shadow-lg">
-                上传中...
+                {t('uploading')}
               </span>
             </div>
           )}
@@ -210,7 +219,7 @@ export default function ManagePodcast() {
           <div>
             <Input
               disabled={uploading}
-              name="播客名称 / Name"
+              name={t('podcastName')}
               placeholder={data.podcast.name}
               defaultValue={data.podcast.name}
               onChange={(e: { target: { value: any } }) => {
@@ -225,7 +234,7 @@ export default function ManagePodcast() {
           <div className="mt-5">
             <TextArea
               disabled={uploading}
-              name="播客简介 / Description"
+              name={t('podcastDescription')}
               placeholder={data.podcast.description}
               defaultValue={data.podcast.description}
               onChange={(e: { target: { value: any } }) => {
@@ -244,7 +253,7 @@ export default function ManagePodcast() {
             <div className="flex-1">
               <span className="flex items-center">
                 <em className="ml-1 text-xs font-medium text-gray-500 dark:text-white not-italic flex-1">
-                  播客类型 / Podcast Type
+                  {t('podcastType')}
                 </em>
               </span>
               <select
@@ -257,16 +266,16 @@ export default function ManagePodcast() {
                 className="mt-1 tracking-wide dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
               >
                 <option value="" disabled>
-                  选择播客类型...
+                  {t('choosePodcastType')}
                 </option>
-                <option value="episodic">单集 (Episodic)</option>
-                <option value="serial">季集 (Serial)</option>
+                <option value="episodic">{t('episodic')}</option>
+                <option value="serial">{t('serial')}</option>
               </select>
             </div>
             <div className="flex-1">
               <span className="flex items-center">
                 <em className="ml-1 text-xs font-medium text-gray-500 dark:text-white not-italic flex-1">
-                  节目评级 / Rating
+                  {t('podcastRating')}
                 </em>
               </span>
               <select
@@ -284,14 +293,10 @@ export default function ManagePodcast() {
                 className="mt-1 tracking-wide dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
               >
                 <option value="" disabled>
-                  选择播客节目类型...
+                  {t('choosePodcastRating')}
                 </option>
-                <option value="false">
-                  包含潜在不当内容 (Explicit content)
-                </option>
-                <option value="true">
-                  不包含潜在不当内容 (No explicit content)
-                </option>
+                <option value="false">{t('explicit')}</option>
+                <option value="true">{t('noExplicit')}</option>
               </select>
             </div>
           </div>
@@ -302,17 +307,17 @@ export default function ManagePodcast() {
           <div className="items-center mb-4">
             <span className="flex-1 items-center">
               <em className="ml-1 text-base font-medium text-gray-500 dark:text-white not-italic">
-                播客元数据
+                {t('podcastMetadata')}
               </em>
               <em className="ml-1 text-sm font-medium text-gray-400 dark:text-white not-italic">
-                Podcast metadata
+                {t('podcastMetadataDescription')}
               </em>
             </span>
           </div>
           <div>
             <span className="flex items-center">
               <em className="ml-1 text-xs font-medium text-gray-500 dark:text-gray-300 not-italic flex-1">
-                播客语言 / Language
+                {t('podcastLanguage')}
               </em>
             </span>
             <LangSelect
@@ -327,7 +332,7 @@ export default function ManagePodcast() {
           <div className="mt-5">
             <span className="flex items-center">
               <em className="ml-1 text-xs font-medium text-gray-500 dark:text-gray-300 not-italic flex-1">
-                播客分类 / Category
+                {t('podcastCategory')}
               </em>
             </span>
             <CateSelect
@@ -342,7 +347,7 @@ export default function ManagePodcast() {
           <div className="mt-5">
             <span className="flex items-center">
               <em className="ml-1 text-xs font-medium text-gray-500 dark:text-gray-300 not-italic flex-1">
-                版权字段 / Copyright
+                {t('podcastCopyright')}
               </em>
               <Switch
                 disabled={uploading}
@@ -382,10 +387,10 @@ export default function ManagePodcast() {
             <div className="flex items-center mb-4">
               <span className="flex-1 items-center">
                 <em className="ml-1 text-base font-medium text-gray-500 dark:text-white not-italic">
-                  播客实际所有
+                  {t('podcastOwnerInfo')}
                 </em>
                 <em className="ml-1 text-sm font-medium text-gray-400 dark:text-white not-italic">
-                  Podcast owner
+                  {t('podcastOwnerInfoDescription')}
                 </em>
               </span>
               <Switch
@@ -409,7 +414,7 @@ export default function ManagePodcast() {
             <div>
               <Input
                 disabled={!podcastInfo.useOwner || uploading}
-                name="所有者名称 / Owner Name"
+                name={t('podcastOwnerName')}
                 placeholder={data.podcast.profile.ownerName}
                 defaultValue={data.podcast.profile.ownerName}
                 onChange={(e: { target: { value: any } }) => {
@@ -424,7 +429,7 @@ export default function ManagePodcast() {
             <div className="mt-3">
               <Input
                 disabled={!podcastInfo.useOwner || uploading}
-                name="所有者邮箱 / Owner Email"
+                name={t('podcastOwnerEmail')}
                 placeholder={data.podcast.profile.ownerEmail}
                 defaultValue={data.podcast.profile.ownerEmail}
                 onChange={(e: { target: { value: any } }) => {
@@ -441,7 +446,7 @@ export default function ManagePodcast() {
             <div className="flex-1">
               <span className="flex items-center">
                 <em className="ml-1 text-xs font-medium text-gray-500 dark:text-white not-italic flex-1">
-                  已完结 / Completion
+                  {t('podcastCompletion')}
                 </em>
               </span>
               <select
@@ -457,16 +462,16 @@ export default function ManagePodcast() {
                 className="mt-1 tracking-wide focus:outline-none dark:bg-transparent dark:text-white dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
               >
                 <option value="" disabled>
-                  播客是否完结...
+                  {t('isPodcastCompleted')}
                 </option>
-                <option value="true">已完结 (Completed)</option>
-                <option value="false">未完结 (Incomplete)</option>
+                <option value="true">{t('completed')}</option>
+                <option value="false">{t('incomplted')}</option>
               </select>
             </div>
             <div className="flex-1">
               <span className="flex items-center">
                 <em className="ml-1 text-xs font-medium text-gray-500 dark:text-gray-300 not-italic flex-1">
-                  屏蔽收录 / Block
+                  {t('podcastSearchEngineIndexing')}
                 </em>
               </span>
               <select
@@ -482,10 +487,10 @@ export default function ManagePodcast() {
                 className="mt-1 tracking-wide focus:outline-none dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
               >
                 <option value="" disabled>
-                  是否屏蔽收录...
+                  {t('blockSearchEngineIndexing')}
                 </option>
-                <option value="true">屏蔽 (Blocked)</option>
-                <option value="false">不屏蔽 (Unblocked)</option>
+                <option value="true">{t('blocked')}</option>
+                <option value="false">{t('notBlocked')}</option>
               </select>
             </div>
           </section>

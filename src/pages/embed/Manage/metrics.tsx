@@ -311,7 +311,7 @@ export default function ManageMetrics() {
                 );
               }}
             >
-              重新加载
+              {t('reload')}
             </button>
           </div>
         </div>
@@ -321,7 +321,10 @@ export default function ManageMetrics() {
 
   return (
     <div className="my-4 mb-12 mx-5">
-      <Head title="播客统计数据" description="播客播放数据及听众详情" />
+      <Head
+        title={t('podcastAnalytics')}
+        description={t('podcastAnalyticsDescription')}
+      />
       <section>
         <div className="flex items-center">
           <div className="flex-1">
