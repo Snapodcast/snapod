@@ -16,6 +16,7 @@ const getConfigs = () => {
       site_url: 'https://podcast.snapodcast.com',
     };
   }
+
   return {
     backend_url: 'http://localhost:3333/v0/api',
     graphql_url: 'http://localhost:3333/v0/api/graphql',

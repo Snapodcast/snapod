@@ -101,6 +101,10 @@ export default function ManageEpisode() {
           typeof episodeInfo.episode_number !== 'number'
             ? parseInt(episodeInfo.episode_number, 10)
             : episodeInfo.episode_number,
+        season_number:
+          typeof episodeInfo.season_number !== 'number'
+            ? parseInt(episodeInfo.season_number, 10)
+            : episodeInfo.season_number,
       };
 
       await modifyEpisode({

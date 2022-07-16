@@ -148,13 +148,13 @@ export default function ImportPodcast() {
                     </div>
                     <div className="mb-3 grid grid-cols-2 gap-x-3 text-sm text-gray-600">
                       <div className="flex gap-x-2 px-2 py-1.5 rounded-md shadow-sm border items-center">
-                        <span className="flex h-5 w-5 -mt-1">
+                        <span className="h-5 w-5">
                           <Icons name="user" />
                         </span>
                         <p>{data.previewPodcast.podcast.author}</p>
                       </div>
                       <div className="flex gap-x-2 px-2 py-1.5 rounded-md shadow-sm border items-center">
-                        <span className="flex h-5 w-5 -mt-1">
+                        <span className="h-5 w-5">
                           <Icons name="translate" />
                         </span>
                         <p className="uppercase">

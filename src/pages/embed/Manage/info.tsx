@@ -302,8 +302,8 @@ export default function ManagePodcast() {
           </div>
         </div>
       </section>
-      <section className="flex gap-x-4 pt-3 mx-5">
-        <section className="flex-1 border dark:border-gray-500 rounded-lg px-3 py-3.5">
+      <section className="grid grid-cols-5 gap-x-4 pt-3 mx-5">
+        <section className="col-start-1 col-end-3 border dark:border-gray-500 rounded-lg px-3 py-3.5">
           <div className="items-center mb-4">
             <span className="flex-1 items-center">
               <em className="ml-1 text-base font-medium text-gray-500 dark:text-white not-italic">
@@ -382,7 +382,7 @@ export default function ManagePodcast() {
             />
           </div>
         </section>
-        <section>
+        <section className="col-start-3 col-end-6">
           <section className="border dark:border-gray-500 rounded-lg px-3 py-3.5">
             <div className="flex items-center mb-4">
               <span className="flex-1 items-center">

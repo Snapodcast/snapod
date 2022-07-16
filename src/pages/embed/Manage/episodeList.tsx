@@ -159,7 +159,7 @@ export default function EpisodeList() {
                       </div>
                     )}
                     {episode.profile.season_number && (
-                      <div>{episode.profile.season_number}</div>
+                      <div>S {episode.profile.season_number}</div>
                     )}
                     <div>EP {episode.profile.episode_number}</div>
                     <div className="capitalize">
