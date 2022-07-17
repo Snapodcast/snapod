@@ -9,12 +9,14 @@ interface DataItem {
   };
 }
 
+export interface FormattedDataItem {
+  country: string;
+  city: string;
+  plays: number;
+}
+
 export default function formatCountriesData(data: DataItem[]) {
-  const newData: {
-    country: string;
-    city: string;
-    plays: number;
-  }[] = [];
+  const newData: FormattedDataItem[] = [];
 
   const newDataCitiesObject: {
     [city: string]: { plays: number; country: string };

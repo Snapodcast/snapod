@@ -269,6 +269,8 @@
   "analyticsPlaysByEpisodeSectionDescription": "按节目",
   "analyticsListenerGeoSectionTitle": "听众地理信息",
   "analyticsListenerGeoSectionDescription": "按国家",
+  "barChart": "柱状图",
+  "map": "地图",
   "analyticsListenerDevicesAndPlatformSectionTitle": "听众渠道信息",
   "analyticsListenerDevicesAndPlatformSectionDescription": "设备及平台",
   "manageInfoTitle": "管理播客信息",

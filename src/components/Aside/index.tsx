@@ -75,7 +75,7 @@ export default function Aside() {
         </div>
         <ul className="menu-list text-sm text-gray-600 dark:text-white">
           <NavLink exact to="/snapod/manage/podcast" activeClassName="active">
-            <li className="rounded-md py-1.5 px-2 flex items-center mt-1 hover:bg-hover dark:hover:bg-darkActive active:bg-click active:text-gray-800 dark:active:text-white/80 dark:active:bg-darkClick transition-colors cursor-pointer">
+            <li className="rounded-md py-1.5 px-2 flex items-center mt-1 transition-colors cursor-pointer">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="info" />
               </span>
@@ -93,7 +93,7 @@ export default function Aside() {
                 : ''
             }
           >
-            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover dark:hover:bg-darkActive active:bg-click active:text-gray-800 dark:active:text-white/80 dark:active:bg-darkClick transition-colors cursor-pointer">
+            <li className="rounded-md py-1.5 px-2 flex items-center transition-colors cursor-pointer">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="episodes" />
               </span>
@@ -101,7 +101,7 @@ export default function Aside() {
             </li>
           </NavLink>
           <NavLink exact to="/snapod/manage/metrics" activeClassName="active">
-            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover dark:hover:bg-darkActive active:bg-click active:text-gray-800 dark:active:text-white/80 dark:active:bg-darkClick transition-colors cursor-pointer">
+            <li className="rounded-md py-1.5 px-2 flex items-center transition-colors cursor-pointer">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="presentation-chart" />
               </span>
@@ -109,7 +109,7 @@ export default function Aside() {
             </li>
           </NavLink>
           <NavLink exact to="/snapod/manage/site" activeClassName="active">
-            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover dark:hover:bg-darkActive active:bg-click active:text-gray-800 dark:active:text-white/80 dark:active:bg-darkClick transition-colors cursor-pointer">
+            <li className="rounded-md py-1.5 px-2 flex items-center transition-colors cursor-pointer">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="globe" />
               </span>
@@ -128,7 +128,7 @@ export default function Aside() {
             to="/snapod/settings/distributions"
             activeClassName="active"
           >
-            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover dark:hover:bg-darkActive active:bg-click active:text-gray-800 dark:active:text-white/80 dark:active:bg-darkClick transition-colors cursor-pointer">
+            <li className="rounded-md py-1.5 px-2 flex items-center transition-colors cursor-pointer">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="publish" />
               </span>
@@ -136,7 +136,7 @@ export default function Aside() {
             </li>
           </NavLink>
           <NavLink exact to="/snapod/settings/podcast" activeClassName="active">
-            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover dark:hover:bg-darkActive active:bg-click active:text-gray-800 dark:active:text-white/80 dark:active:bg-darkClick transition-colors cursor-pointer">
+            <li className="rounded-md py-1.5 px-2 flex items-center transition-colors cursor-pointer">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="adjust" />
               </span>
@@ -144,7 +144,7 @@ export default function Aside() {
             </li>
           </NavLink>
           <NavLink exact to="/snapod/settings/app" activeClassName="active">
-            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover dark:hover:bg-darkActive active:bg-click active:text-gray-800 dark:active:text-white/80 dark:active:bg-darkClick transition-colors cursor-pointer">
+            <li className="rounded-md py-1.5 px-2 flex items-center transition-colors cursor-pointer">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="gear" />
               </span>
@@ -159,7 +159,7 @@ export default function Aside() {
         </div>
         <ul className="menu-list text-sm text-gray-600 dark:text-white">
           <NavLink exact to="/snapod/helpCenter" activeClassName="active">
-            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover dark:hover:bg-darkActive active:bg-click active:text-gray-800 dark:active:text-white/80 dark:active:bg-darkClick transition-colors cursor-pointer">
+            <li className="rounded-md py-1.5 px-2 flex items-center transition-colors cursor-pointer">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="questionMark" />
               </span>
@@ -167,7 +167,7 @@ export default function Aside() {
             </li>
           </NavLink>
           <NavLink exact to="/snapod/about" activeClassName="active">
-            <li className="rounded-md py-1.5 px-2 flex items-center hover:bg-hover dark:hover:bg-darkActive active:bg-click active:text-gray-800 dark:active:text-white/80 dark:active:bg-darkClick transition-colors cursor-pointer">
+            <li className="rounded-md py-1.5 px-2 flex items-center transition-colors cursor-pointer">
               <span className="w-5 h-5 mr-1.5 dark:text-blue-500">
                 <Icons name="qrCode" />
               </span>

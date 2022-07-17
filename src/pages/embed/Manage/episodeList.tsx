@@ -169,7 +169,7 @@ export default function EpisodeList() {
                         ? t('trailer')
                         : t('bonus')}
                     </div>
-                    <div>
+                    <div className="whitespace-nowrap">
                       {episode.profile.audio_duration || t('unknownDuration')}
                     </div>
                   </div>

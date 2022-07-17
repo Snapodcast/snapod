@@ -16,6 +16,7 @@ import { GET_EPISODES_TITLE } from '../../../lib/GraphQL/queries';
 import { useQuery } from '@apollo/client';
 import formatEpisodesPlaysData from '../../../utilities/format/episodesPlaysData';
 import { useI18n } from '../../../hooks';
+import Map from '../../../components/Map';
 
 const fetchData = async (
   setLoading: any,
@@ -89,6 +90,7 @@ export default function ManageMetrics() {
   const [devicesData, setDevicesDate] = React.useState<any>([]);
   const [clientsData, setClientsData] = React.useState<any>([]);
   const [episodesPlaysData, setEpisodesPlaysData] = React.useState<any>([]);
+  const [geoDataDisplay, setGeoDataDisplay] = React.useState<string>('map');
 
   /* Fetch episodes titles */
   const { loading, error, data } = useQuery(GET_EPISODES_TITLE, {
@@ -422,8 +424,8 @@ export default function ManageMetrics() {
         )}
       </section>
       <section className="mt-7 pt-7 border-t">
-        <div className="flex items-center">
-          <div className="flex-1">
+        <div className="flex items-center justify-between">
+          <div>
             <h1 className="text-base font-medium -mb-0.5 dark:text-white">
               {t('analyticsListenerGeoSectionTitle')}
             </h1>
@@ -431,11 +433,29 @@ export default function ManageMetrics() {
               {t('analyticsListenerGeoSectionDescription')}
             </p>
           </div>
+          <div>
+            <select
+              className="interval-select dark:bg-transparent dark:text-gray-300 dark:border-gray-500 justify-center align-middle items-center text-gray-500 text-sm hover:bg-gray-50 dark:hover:text-white dark:hover:bg-transparent border focus:outline-none rounded-md py-1 px-3 text-center"
+              defaultValue={geoDataDisplay}
+              onChange={(e) => {
+                setGeoDataDisplay(e.target.value);
+              }}
+            >
+              <option value="map">{t('map')}</option>
+              <option value="bar">{t('barChart')}</option>
+            </select>
+          </div>
         </div>
         {countriesData.length ? (
-          <div className="mt-5">
-            <Bar {...chartConfigs.countries} />
-          </div>
+          geoDataDisplay === 'bar' ? (
+            <div className="mt-5">
+              <Bar {...chartConfigs.countries} />
+            </div>
+          ) : (
+            <div className="mt-5">
+              <Map data={countriesData} />
+            </div>
+          )
         ) : (
           <div className="mt-5 flex items-center justify-center bg-gray-100 rounded-md h-12">
             <p className="text-gray-500 text-sm">{t('notEnoughData')}</p>

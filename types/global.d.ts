@@ -1,3 +1,5 @@
+declare module 'd3-scale';
+
 declare interface Podcast {
   dir: string;
   logo: string;

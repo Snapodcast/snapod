@@ -270,6 +270,8 @@
   "analyticsListenerGeoSectionTitle": "Listeners",
   "analyticsListenerGeoSectionDescription": "Geographic location",
   "analyticsListenerDevicesAndPlatformSectionTitle": "Listeners",
+  "barChart": "Bar Chart",
+  "map": "Map",
   "analyticsListenerDevicesAndPlatformSectionDescription": "Listening devices and platforms",
   "manageInfoTitle": "Edit Podcast Info",
   "manageInfoDescription": "Edit your podcast info",

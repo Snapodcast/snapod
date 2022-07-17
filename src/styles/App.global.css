@@ -7,6 +7,7 @@
 :not(input):not(textarea)::before {
   -webkit-user-select: none;
   user-select: none;
+  outline: none;
 }
 
 a:not([draggable='true']),
@@ -26,6 +27,8 @@ a[href^="ftp://"]
 body,
 html {
   @apply w-full h-full;
+  margin: 0;
+  padding: 0;
 }
 
 .header {
@@ -144,8 +147,16 @@ html {
 
 button,
 input {
-  @apply outline-none focus:outline-none transition-all;
+  @apply !outline-none transition-all;
 }
+
+/* select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.625rem center;
+  background-size: 1.2em;
+} */
 
 div::-webkit-scrollbar {
   width: 0;
@@ -335,4 +346,29 @@ div::-webkit-scrollbar {
 
 .spinner-start svg {
   color: #333 !important;
+}
+
+.rsm-svg:focus {
+  outline: none !important;
+}
+
+.__react_component_tooltip.show {
+  transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s,
+    top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s;
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgb(174, 174, 174) 0px 0px 10px;
+  border-radius: 3px;
+  color: rgb(89, 89, 89);
+  font-size: 12px;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+  line-height: 12px;
+  padding: 12px;
+  opacity: 0.95 !important;
+  pointer-events: none;
+}
+
+.__react_component_tooltip::after {
+  @apply !border-t-white;
 }
