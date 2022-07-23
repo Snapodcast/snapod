@@ -312,5 +312,20 @@
   "customDomainConfigurationGuideDescription": "Configuration Guide",
   "addADns": "提交后请前往域名注册/解析服务提供方配置",
   "record": "解析记录, 预计在 24 小时内生效",
-  "submitDomain": "提交域名"
+  "submitDomain": "提交域名",
+  "system": {
+    "selectAnImage": "选择一张图片",
+    "selectAnAudioFile": "选择一个音频文件",
+    "failedToCreateAppWindow": "创建 Snapod 应用窗口失败",
+    "snapod": "Snapod",
+    "aboutSnapod": "关于 Snapod",
+    "hideSnapod": "隐藏 Snapod",
+    "hideOthers": "隐藏其他",
+    "showAll": "展示所有应用",
+    "quit": "退出 Snapod",
+    "quitAndInstall": "退出并安装",
+    "later": "暂时忽略",
+    "applicationUpdate": "新版本已推出",
+    "updateDescription": "有新版本的 Snapod 可用，是否立即更新?"
+  }
 }

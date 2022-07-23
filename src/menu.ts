@@ -12,17 +12,26 @@ interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
 }
 
 export default class MenuBuilder {
+  // App main window
   mainWindow: BrowserWindow;
 
-  constructor(mainWindow: BrowserWindow) {
+  // App translation
+  tSystem: (key: string) => string;
+
+  // App environment
+  isDevEnv: boolean;
+
+  constructor(mainWindow: BrowserWindow, tSystem: (key: string) => string) {
     this.mainWindow = mainWindow;
+    this.tSystem = tSystem;
+    this.isDevEnv =
+      process.env.NODE_ENV === 'development' ||
+      process.env.DEBUG_PROD === 'true';
   }
 
+  // Build and set the application menu
   buildMenu(): Menu {
-    if (
-      process.env.NODE_ENV === 'development' ||
-      process.env.DEBUG_PROD === 'true'
-    ) {
+    if (this.isDevEnv) {
       this.setupDevelopmentEnvironment();
     }
 
@@ -37,6 +46,7 @@ export default class MenuBuilder {
     return menu;
   }
 
+  // Add inspect element to right click menu if in dev env
   setupDevelopmentEnvironment(): void {
     this.mainWindow.webContents.on('context-menu', (_, props) => {
       const { x, y } = props;
@@ -52,6 +62,7 @@ export default class MenuBuilder {
     });
   }
 
+  // macOS
   buildDarwinTemplate(): MenuItemConstructorOptions[] {
     const subMenuAbout: DarwinMenuItemConstructorOptions = {
       label: 'Snapod',
@@ -168,15 +179,12 @@ export default class MenuBuilder {
       ],
     };
 
-    const subMenuView =
-      process.env.NODE_ENV === 'development' ||
-      process.env.DEBUG_PROD === 'true'
-        ? subMenuViewDev
-        : subMenuViewProd;
+    const subMenuView = this.isDevEnv ? subMenuViewDev : subMenuViewProd;
 
     return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
   }
 
+  // Windows and Linux
   buildDefaultTemplate() {
     const templateDefault = [
       {

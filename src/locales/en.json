@@ -312,5 +312,14 @@
   "customDomainConfigurationGuideDescription": "Custom Domain",
   "addADns": "Add a DNS",
   "record": "Record, effective in the next 24 hours",
-  "submitDomain": "Submit Domain"
+  "submitDomain": "Submit Domain",
+  "system": {
+    "selectAnImage": "Select an image",
+    "selectAnAudioFile": "Select an audio file",
+    "failedToCreateAppWindow": "Failed to create Snapod app window",
+    "quitAndInstall": "Quit and Install",
+    "later": "Later",
+    "applicationUpdate": "Hooray!",
+    "updateDescription": "A new version of Snapod is now available."
+  }
 }

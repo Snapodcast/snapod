@@ -6,10 +6,18 @@ import { useI18n } from '../../../hooks';
 
 export default function AppSettings() {
   const { language, changeLanguage } = useI18n();
-  const currentTheme = ipcRenderer.sendSync('get-theme');
 
+  const currentTheme = ipcRenderer.sendSync('get-theme');
   const handleThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     ipcRenderer.invoke('set-theme', e.target.value);
+  };
+
+  const updateChannel =
+    ipcRenderer.sendSync('store-get', 'updateChannel') || 'stable';
+  const handleUpdateChannelChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    ipcRenderer.invoke('store-set', 'updateChannel', e.target.value);
   };
 
   return (
@@ -61,6 +69,30 @@ export default function AppSettings() {
           >
             <option value="en">English</option>
             <option value="zh">简体中文</option>
+          </select>
+        </div>
+        <div className="border rounded-lg py-3.5 px-4">
+          <div className="items-center mb-1.5 flex">
+            <span className="items-center flex ml-1 flex-1">
+              <span className="w-4 h-4 text-gray-500 dark:text-white">
+                <Icons name="translate" />
+              </span>
+              <em className="ml-1 text-base font-medium text-gray-500 dark:text-white not-italic">
+                更新频道
+              </em>
+              <em className="ml-1 text-sm font-medium text-gray-400 dark:text-gray-300 not-italic">
+                Update Channel
+              </em>
+            </span>
+          </div>
+          <select
+            onChange={handleUpdateChannelChange}
+            defaultValue={updateChannel}
+            className="mt-1 tracking-wide dark:bg-transparent dark:text-gray-300 dark:border-gray-500 focus:outline-none focus:border-gray-400 border rounded-md w-full text-sm py-1.5 px-1.5 text-gray-700"
+          >
+            <option value="stable">稳定版本 (Stable)</option>
+            <option value="beta">测试版本 (Beta)</option>
+            <option value="alpha">先行版本 (Alpha)</option>
           </select>
         </div>
       </section>

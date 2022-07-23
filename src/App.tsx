@@ -6,7 +6,6 @@ import Store from './lib/Store';
 // Utilities
 import { HeadContextProvider } from './lib/Context/head';
 import { PodcastContextProvider } from './lib/Context/podcast';
-import { getCurrentAppVersion } from './utilities/version';
 // Components
 import Header from './components/Header';
 import Aside from './components/Aside';
@@ -39,25 +38,12 @@ import Configs from './configs';
 
 export default function App() {
   const userToken = Store.get('currentUser.token');
-  const localAppVersion = window.require('electron').remote.app.getVersion();
 
   const [start, setStart] = React.useState(false);
   const [heartBeat, setHeartBeat] = React.useState('pong');
-  const [latestVersion, setLatestVersion] = React.useState(
-    getCurrentAppVersion()
-  );
 
   /* Check for version update & validate JWT token */
   useEffectOnce(() => {
-    // fetch latest version from remote
-    fetch(`${Configs.backend_url}/latestAppVersion`)
-      .then(async (res) => {
-        const result = await res.json();
-        setLatestVersion(result.version || 'error');
-      })
-      .catch(() => {
-        setLatestVersion('error');
-      });
     // validate JWT token by sending ping to backend
     fetch(`${Configs.backend_url}/ping/auth`, {
       headers: {
@@ -124,9 +110,6 @@ export default function App() {
       <Route exact path="">
         {!start ? (
           <Redirect to="/landing/loading" />
-        ) : process.env.NODE_ENV === 'production' &&
-          latestVersion !== localAppVersion ? (
-          <Redirect to="/landing/update" />
         ) : !userToken || heartBeat !== 'pong' ? (
           <Redirect to="/landing/login" />
         ) : (

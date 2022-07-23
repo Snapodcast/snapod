@@ -11,6 +11,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
+import os from 'os';
 import {
   app,
   BrowserWindow,
@@ -18,38 +19,53 @@ import {
   ipcMain,
   dialog,
   nativeTheme,
+  autoUpdater,
 } from 'electron';
+import Store from 'electron-store';
 import MenuBuilder from './menu';
+import enLang from './locales/en.json';
+import zhLang from './locales/zh.json';
 
-const Store = require('electron-store');
-
+// Create a new Electron Store instance
 const store = new Store();
 
-let mainWindow: BrowserWindow | null = null;
+// Constants
+const isDevEnv =
+  process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
+const isProdEnv = process.env.NODE_ENV === 'production';
+const appLang = store.get('appLang') || 'en';
+const tSystem = (key: string) => {
+  const lang = appLang === 'en' ? enLang : zhLang;
+  return lang.system[key];
+};
+const appPlatform = `${os.platform()}_${os.arch()}`;
+const appVersion = app.getVersion();
+const updateChannel = store.get('appUpdateChannel') || 'stable';
 
-if (process.env.NODE_ENV === 'production') {
+// Install source map support
+if (isProdEnv) {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
 }
 
-if (
-  process.env.NODE_ENV === 'development' ||
-  process.env.DEBUG_PROD === 'true'
-) {
+// Require electron debug when in development mode or debugging
+if (isDevEnv) {
   require('electron-debug')();
 }
 
+let mainWindow: BrowserWindow | null = null;
+
 const createWindow = async () => {
-  // Prep
   const storedTheme = store.get('theme');
 
-  // set app theme
+  // Set app theme
   if (storedTheme) {
-    nativeTheme.themeSource = storedTheme;
+    nativeTheme.themeSource = storedTheme === 'dark' ? 'dark' : 'light';
   } else {
     nativeTheme.themeSource = 'system';
   }
 
+  // Locate resources
   const RESOURCES_PATH = app.isPackaged
     ? path.join(process.resourcesPath, 'resources')
     : path.join(__dirname, '../resources');
@@ -58,9 +74,9 @@ const createWindow = async () => {
     return path.join(RESOURCES_PATH, ...paths);
   };
 
-  // Create main window
-  // macOS
+  // Create & load the main window
   if (process.platform === 'darwin') {
+    // macOS
     mainWindow = new BrowserWindow({
       show: false,
       center: true,
@@ -80,6 +96,7 @@ const createWindow = async () => {
       },
     });
   } else {
+    // Windows and Linux
     mainWindow = new BrowserWindow({
       show: false,
       center: true,
@@ -94,22 +111,22 @@ const createWindow = async () => {
       },
     });
   }
-
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
+  // Open Devtools if in development mode
   mainWindow.webContents.once('dom-ready', () => {
-    if (
-      process.env.NODE_ENV === 'development' ||
-      process.env.DEBUG_PROD === 'true'
-    ) {
-      mainWindow.webContents.openDevTools({ mode: 'undocked' });
+    if (isDevEnv) {
+      mainWindow?.webContents.openDevTools({ mode: 'undocked' });
     }
   });
 
+  // Show and focus the window when it's ready
   mainWindow.webContents.on('did-finish-load', () => {
     if (!mainWindow) {
-      throw new Error('"mainWindow" is not defined');
+      throw new Error(tSystem('failedToCreateAppWindow'));
     }
+
+    // Minimize window on start (if required)
     if (process.env.START_MINIMIZED) {
       mainWindow.minimize();
     } else {
@@ -118,37 +135,96 @@ const createWindow = async () => {
     }
   });
 
+  // Send fullscreen state to React
   mainWindow.on('enter-full-screen', () => {
-    mainWindow.webContents.send(
+    mainWindow?.webContents.send(
       'full-screen-change',
-      mainWindow.isFullScreen()
+      mainWindow?.isFullScreen()
     );
   });
   mainWindow.on('leave-full-screen', () => {
-    mainWindow.webContents.send(
+    mainWindow?.webContents.send(
       'full-screen-change',
-      mainWindow.isFullScreen()
+      mainWindow?.isFullScreen()
     );
   });
 
+  // Destroy the window when it closes
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
 
-  const menuBuilder = new MenuBuilder(mainWindow);
+  // Create app menu
+  const menuBuilder = new MenuBuilder(mainWindow, tSystem);
   menuBuilder.buildMenu();
 
-  // Open urls in the user's browser
-  const handleRedirect = (e, url) => {
-    if (url !== mainWindow.webContents.getURL()) {
+  // Handle opening external urls within the app
+  const handleRedirect = (e: Event, url: string) => {
+    if (url !== mainWindow?.webContents.getURL()) {
       e.preventDefault();
+      // Open links in the user's browser
       shell.openExternal(url);
     }
   };
-
   mainWindow.webContents.on('will-navigate', handleRedirect);
   mainWindow.webContents.on('new-window', handleRedirect);
+
+  if (isProdEnv) {
+    let releaseServerUrl = 'https://download.snapodcast.com/update';
+    if (updateChannel !== 'stable') {
+      releaseServerUrl = `${releaseServerUrl}/channel/${updateChannel}`;
+    }
+
+    // Activate auto updater
+    autoUpdater.setFeedURL({
+      url: `${releaseServerUrl}/${appPlatform}/${appVersion}`,
+    });
+
+    // Check for updates on startup
+    autoUpdater.checkForUpdates();
+
+    // Then check for updates every hour
+    setInterval(() => {
+      autoUpdater.checkForUpdates();
+    }, 3600000);
+  }
 };
+
+/**
+ * Auto updater event handlers
+ */
+
+autoUpdater.on('update-downloaded', (_event, releaseNotes, releaseName) => {
+  const dialogOpts = {
+    type: 'info',
+    buttons: [tSystem('quitAndInstall'), tSystem('later')],
+    title: tSystem('applicationUpdate'),
+    message: process.platform === 'win32' ? releaseNotes : releaseName,
+    detail: tSystem('updateDescription'),
+  };
+
+  dialog
+    .showMessageBox(dialogOpts)
+    .then((returnValue) => {
+      if (returnValue.response === 0) {
+        autoUpdater.quitAndInstall();
+      }
+    })
+    .catch(() => {
+      console.log('Failed to quit and install');
+    });
+});
+
+autoUpdater.on('error', (message) => {
+  console.error('There was a problem updating the application:');
+  console.log('Platform:', appPlatform);
+  console.log('Version:', appVersion);
+  console.error(message);
+});
+
+autoUpdater.on('update-not-available', () => {
+  console.log('Update not available.');
+});
 
 /**
  * App event listeners
@@ -178,16 +254,19 @@ app.on('activate', () => {
 
 // Select directory
 ipcMain.handle('select-dir', async () => {
-  const result = await dialog.showOpenDialog(mainWindow, {
-    properties: ['openDirectory'],
-  });
-  return result.filePaths;
+  if (mainWindow) {
+    const result = await dialog.showOpenDialog(mainWindow, {
+      properties: ['openDirectory'],
+    });
+    return result.filePaths;
+  }
+  return [];
 });
 
 // Select image
 ipcMain.handle('select-image', async () => {
   const result = await dialog.showOpenDialog({
-    title: '选择图像 Select an image file',
+    title: tSystem('selectAnImage'),
     filters: [
       {
         name: 'Image Files',
@@ -202,7 +281,7 @@ ipcMain.handle('select-image', async () => {
 // Select audio file
 ipcMain.handle('select-audio-file', async () => {
   const result = await dialog.showOpenDialog({
-    title: '选择节目音频 Select an audio file',
+    title: tSystem('selectAnAudioFile'),
     filters: [
       {
         name: 'Audio Files',
@@ -221,14 +300,14 @@ ipcMain.handle('hide-sidebar', async () => {
     status = !store.get('sidebar-hidden');
   }
   store.set('sidebar-hidden', status);
-  mainWindow.webContents.send('hide-sidebar', status);
+  mainWindow?.webContents.send('hide-sidebar', status);
 });
 
 /* Appearance setting event handlers */
 // Set theme
 ipcMain.handle(
   'set-theme',
-  async (_, targetTheme: 'light' | 'dark' | 'system') => {
+  async (_event, targetTheme: 'light' | 'dark' | 'system') => {
     // update current app theme
     nativeTheme.themeSource = targetTheme;
     // store theme setting in store
@@ -244,7 +323,8 @@ ipcMain.on('get-theme', async (event) => {
 /*
  * Electron store event handlers
  */
-// Get from store
+
+// Get the value of a key from store
 ipcMain.on(
   'store-get',
   async (
@@ -259,11 +339,11 @@ ipcMain.on(
   }
 );
 
-// Set in store
+// Update a key in store
 ipcMain.handle(
   'store-set',
   (
-    _,
+    _event,
     arg: {
       key: any;
       value?: string;
@@ -278,11 +358,11 @@ ipcMain.handle(
   }
 );
 
-// Delete in store
+// Delete a key in store
 ipcMain.handle(
   'store-delete',
   (
-    _,
+    _event,
     arg: {
       key: string;
     }
