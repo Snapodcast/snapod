@@ -86,7 +86,7 @@ const PodcastsContainer = ({
                   <h3 className="text-sm text-gray-600 dark:text-gray-400 font-medium mb-1">
                     {podcast.name}
                   </h3>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-3">
                     {podcast.description}
                   </p>
                 </div>

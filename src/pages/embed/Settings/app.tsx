@@ -71,6 +71,8 @@ export default function AppSettings() {
             <option value="zh">简体中文</option>
           </select>
         </div>
+      </section>
+      <section className="mb-5 grid grid-cols-2 gap-x-3">
         <div className="border rounded-lg py-3.5 px-4">
           <div className="items-center mb-1.5 flex">
             <span className="items-center flex ml-1 flex-1">

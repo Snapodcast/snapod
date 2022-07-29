@@ -12,6 +12,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'react/destructuring-assignment': 'off',
     'react/jsx-key': 'warn',
+    'global-require': 'off',
   },
   parserOptions: {
     ecmaVersion: 2020,
